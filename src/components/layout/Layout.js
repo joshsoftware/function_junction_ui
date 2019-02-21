@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Icon } from 'antd';
-
-const { Header, Sider, Content } = Layout;
+import { Layout, Icon } from 'antd';
+import Sidebar from '../sidebar/Sidebar';
+const { Header, Content } = Layout;
 
 class AppLayout extends Component {
   state = {
@@ -14,36 +14,20 @@ class AppLayout extends Component {
     });
   }
 
+  getSideBarMenu = (collapsed) => <Sidebar open={collapsed}/>
+
   render() {
+    const { collapsed } = this.state;
     return (
       <Layout>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span>nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+        {this.getSideBarMenu(collapsed)}
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
+          <Header style={{ background: '#fff', padding: 0, textAlign: 'start' }}>
             <Icon
               className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+              type={collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
+              style={{ paddingLeft: '2%'}}
             />
           </Header>
           <Content style={{
