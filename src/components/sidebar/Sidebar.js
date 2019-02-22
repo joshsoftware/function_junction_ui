@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Menu, Layout, Icon } from 'antd';
+import MENU from './Constants';
+import './Sidebar.css';
 
-const Sidebar = ({open}) => (
+const MenuItem = (handleMenuChange) =>(
+    <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${window.location.pathname}`]}>
+    {MENU.map(({name, icon, path}) => (
+        <Menu.Item key={path} onClick={() => handleMenuChange(path)}>
+            <Icon type={icon}/>
+            <span>{name}</span>
+        </Menu.Item>)
+    )}
+    </Menu>
+);
+
+const Sidebar = ({open, handleMenuChange}) => (
     <Layout.Sider
         trigger={null}
         collapsible
         collapsed={open}
     >
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1">
-            <Icon type="user" />
-            <span>nav 1</span>
-        </Menu.Item>
-        <Menu.Item key="2">
-            <Icon type="video-camera" />
-            <span>nav 2</span>
-        </Menu.Item>
-        <Menu.Item key="3">
-            <Icon type="upload" />
-            <span>nav 3</span>
-        </Menu.Item>
-        </Menu>
+        {MenuItem(handleMenuChange)}
     </Layout.Sider>
 )
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Layout, Icon } from 'antd';
+import { withRouter } from 'react-router-dom'
 import Sidebar from '../sidebar/Sidebar';
+import MainContent from '../mainContent/MainContent';
 const { Header, Content } = Layout;
 
 class AppLayout extends Component {
@@ -14,7 +16,13 @@ class AppLayout extends Component {
     });
   }
 
-  getSideBarMenu = (collapsed) => <Sidebar open={collapsed}/>
+  handleMenuChange = (path) => {
+    const { history } = this.props;
+    history.push(path);
+  }
+
+
+  getSideBarMenu = (collapsed) => <Sidebar open={collapsed} handleMenuChange={this.handleMenuChange}/>
 
   render() {
     const { collapsed } = this.state;
@@ -31,10 +39,9 @@ class AppLayout extends Component {
             />
           </Header>
           <Content style={{
-            margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
-          }}
-          >
-            Content
+            margin: '24px 16px', padding: 24, background: '#fff', minHeight: 600,
+          }}>
+            <MainContent />
           </Content>
         </Layout>
       </Layout>
@@ -42,4 +49,4 @@ class AppLayout extends Component {
   }
 }
 
-export default AppLayout;
+export default withRouter(AppLayout);

@@ -1,0 +1,13 @@
+.ant-menu-item {
+    text-align: left;
+}
+.ant-layout-sider {
+
+}
+.ant-menu-dar{
+
+}
+.ant-menu-item-selected {
+    background-color: #FF5722 !important;
+    font-weight: 700;
+}
