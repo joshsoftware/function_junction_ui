@@ -1,3 +1,29 @@
+.navbar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: flex-end;
+}
+.logoWrapper {
+    margin-right: auto;
+}
 .logo {
     width: 13.5rem;
+}
+
+.create-link {
+    background-color: #f32000;
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+.create-link:hover {
+    background-color: #db1f06;
 }

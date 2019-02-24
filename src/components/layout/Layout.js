@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd';
 import { withRouter, NavLink } from 'react-router-dom'
+import routes from '../../config/routes';
 import Sidebar from '../sidebar/Sidebar';
 import MainContent from '../mainContent/MainContent';
 import Logo from '../../josh-logo.svg';
@@ -19,6 +20,17 @@ class AppLayout extends Component {
 
   getSideBarMenu = (collapsed) => <Sidebar open={collapsed} handleMenuChange={this.handleMenuChange}/>
 
+  getHeaderContent = () => <div className='navbar'>
+    <NavLink className='logoWrapper' to={routes.allEvents}>
+      <img className='logo' src={Logo} alt='Logo'/>
+    </NavLink>
+    <NavLink
+      to={routes.createEvent}
+    >
+      <span className='create-link'>Create</span>
+    </NavLink>
+  </div>
+
   render() {
     return (
       <Layout>
@@ -29,12 +41,9 @@ class AppLayout extends Component {
               zIndex: 1,
               width: '100%',
               background: '#fff',
-              textAlign: 'start'
             }}
           >
-            <NavLink to='/'>
-              <img className='logo' src={Logo} alt='Logo'/>
-            </NavLink>
+            {this.getHeaderContent()}
           </Header>
           <Content style={{
             margin: '75px 16px', padding: 24, background: '#fff', minHeight: 600,
