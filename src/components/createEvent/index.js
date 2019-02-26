@@ -9,75 +9,114 @@ import {
   CustomButton,
   CustomCard,
 } from '../shared';
-import { Row, Col } from 'antd';
+import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { changeHandler, submitHandler } = this.props;
+        const { title, description, venue, startDate, endDate, startTime, endTime, registerEndDate,
+                isShowcasable, isIndividual, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <Row>
               <Col span={18} offset={3}>
-                <CustomCard title="Create Event">
+                <CustomCard title="Create Event" extra={<Icon type="close" onClick={() => redirectToBrowse()} />}>
                   <Row>
                     <InputWithLabel
                       label="Title of Event:"
                       placeholder="title"
+                      name="title"
                       onChange={changeHandler}
-                      value={this.props.title}
+                      value={title}
                     />
+                    <Col span={2} />
                     <TextAreaWithLabel
                       label="Description:"
                       placeholder="description"
+                      name="description"
                       onChange={changeHandler}
-                      value={this.props.description}
+                      value={description}
                     />
                   </Row>
                   <Row className="margin20px">
                     <TextAreaWithLabel
                       label="Venue:"
                       placeholder="venue"
+                      name="venue"
                       onChange={changeHandler}
-                      value={this.props.venue}
+                      value={venue}
+                    />
+                    <Col span={2} />
+                    <DatePickerWithLabel
+                      label="Register End Date:"
+                      placeholder="Registartion End date"
+                      name="registerEndDate"
+                      onChange={changeHandler}
+                      value={registerEndDate}
                     />
                   </Row>
                   <Row className="margin20px">
                     <DatePickerWithLabel
                       label="Start Date:"
                       placeholder="start date"
+                      name="startDate"
                       onChange={changeHandler}
-                      value={this.props.startDate}
+                      value={startDate}
                     />
+                    <Col span={2} />
+                    <TimePickerWithLabel
+                      label="Start Time"
+                      name="startTime"
+                      onChange={changeHandler}
+                      value={startTime}
+                    />
+                  </Row>
+                  <Row className="margin20px">
                     <DatePickerWithLabel
                       label="End Date:"
                       placeholder="end date"
+                      name="endDate"
                       onChange={changeHandler}
-                      value={this.props.endDate}
+                      value={endDate}
+                    />
+                    <Col span={2} />
+                    <TimePickerWithLabel
+                      label="End Time"
+                      name="endTime"
+                      onChange={changeHandler}
+                      value={endTime}
                     />
                   </Row>
                   <Row className="margin20px">
                     <SwitchWithLabel
                       label="Showcasable:"
+                      name="isShowcasable"
                       onChange={changeHandler}
-                      value={this.props.isShowcasable}
+                      value={isShowcasable}
                     />
+                    <Col span={2} />
                     <SwitchWithLabel
                       label="Individual:"
+                      name="isIndividual"
                       onChange={changeHandler}
-                      value={this.props.isIndividual}
+                      value={isIndividual}
                     />
                   </Row>
-                  <Row className="margin20px">
-                    <InputNumberWithLabel
-                      label="Min size"
-                      onChange={changeHandler}
-                      value={this.props.minSize}
-                    />
-                    <InputNumberWithLabel
-                      label="Max size"
-                      onChange={changeHandler}
-                      value={this.props.maxSize}
-                    />
-                  </Row>
+                  { !isIndividual && (
+                    <Row className="margin20px">
+                      <InputNumberWithLabel
+                        label="Min size"
+                        name="minSize"
+                        onChange={changeHandler}
+                        value={minSize}
+                      />
+                      <Col span={2} />
+                      <InputNumberWithLabel
+                        label="Max size"
+                        name="maxSize"
+                        onChange={changeHandler}
+                        value={maxSize}
+                      />
+                    </Row>
+                  )}
                   <Row className="margin20px">
                     <Col span={5} offset={9}>
                       <CustomButton
