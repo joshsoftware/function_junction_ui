@@ -13,14 +13,15 @@
     margin-right: auto;
 }
 .logo {
-    width: 13.5rem;
+    width: 10.5rem;
+    margin-bottom: 5px;
 }
 
 .create-link {
     background-color: #f32000;
     padding: 10px 15px;
     color: #fff;
-    border-radius: 3px;
+    border-radius: 0.25rem;
     font-weight: 700;
 }
 

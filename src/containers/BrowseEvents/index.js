@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Row, Col } from 'antd';
 import EventCard from '../../components/EventCard/EventCard';
 
 export class BrowseEvents extends PureComponent {
@@ -9,9 +10,26 @@ export class BrowseEvents extends PureComponent {
     }
     render() { 
         return (
-            <div>
-                <EventCard/>
-            </div>
+            <Row gutter={20}>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+                <Col md={6} style={{ marginBottom: '15px' }}>
+                    <EventCard/>
+                </Col>
+            </Row>
         );
     }
 }

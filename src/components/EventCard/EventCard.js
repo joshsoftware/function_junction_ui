@@ -1,13 +1,17 @@
+import './EventCard.css'
 import React from 'react';
-import { Card } from 'antd';
+import { Card, Avatar, Icon, Tooltip } from 'antd';
 const { Meta } = Card;
 const eventCard = () => <Card
 hoverable
-style={{ width: 440 }}
+cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+actions={[<Tooltip placement='top' title='Invite' ><Icon type="user" /></Tooltip>, <Tooltip placement='top' title='Edit'><Icon type="edit" /></Tooltip>]}
 >
     <Meta
-      title="Elastic Search Workshop"
-      description="This event is organized internally by Josh"
+      // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+      avatar={<div><div>March 15</div><div>10:00 AM</div></div>}
+      title="Web Security"
+      description="This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
     />
 </Card>;
 

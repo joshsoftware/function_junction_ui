@@ -1,0 +1,14 @@
+.ant-card-meta-avatar {
+    display: flex;
+    width: 80px;
+}
+
+.ant-card-meta-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ant-card-meta-title {
+    white-space: normal;
+}
