@@ -13,9 +13,13 @@ class CreateEventContainer extends PureComponent {
           registerEndDate: null,
           isShowcasable: false,
           isIndividual: true,
-          minSize: 0,
-          maxSize: 0,
+          minSize: 1,
+          maxSize: 1,
         }
+    }
+
+    redirectToBrowse = () => {
+      this.props.history.push('/');
     }
 
     changeHandler = (key, value) => {
@@ -34,6 +38,7 @@ class CreateEventContainer extends PureComponent {
           <CreateEvent
           {...this.state}
           changeHandler={this.changeHandler}
+          redirectToBrowse={this.redirectToBrowse}
           submitHandler={this.submitHandler}
           />
         );

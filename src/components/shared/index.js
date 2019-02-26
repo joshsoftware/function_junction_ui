@@ -1,40 +1,32 @@
 import React from 'react';
 import moment from 'moment';
-import {
-  Input,
-  DatePicker,
-  TimePicker,
-  Switch,
-  InputNumber,
-  Button,
-  Card,
-  Row,
-  Col,
-} from 'antd';
+import { Input, DatePicker, TimePicker, Switch, InputNumber, Button, Card, Col } from 'antd';
 
 export const InputWithLabel = (props) => {
-  const { placeholder, onChange, label, value } = props;
+  const { placeholder, onChange, label, value, name } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9}>
-        <Input placeholder={placeholder} onChange={onChange} value={value} />
+      <Col span={8}>
+        <Input name={name} placeholder={placeholder} value={value}
+          onChange={(event) => onChange(name, event.target.value)}  />
       </Col>
     </>
   )
 }
 
 export const InputNumberWithLabel = (props) => {
-  const { placeholder, onChange, label } = props;
+  const { name, value, placeholder, onChange, label } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9} align="left">
-        <InputNumber min={1} onChange={onChange} placeholder={placeholder} />
+      <Col span={8}>
+        <InputNumber className="fullWidth" min={1} onChange={(number) => onChange(name, number)}
+          placeholder={placeholder} name={name} value={value} />
       </Col>
     </>
   )
@@ -42,56 +34,59 @@ export const InputNumberWithLabel = (props) => {
 
 export const TextAreaWithLabel = (props) => {
   const { TextArea } = Input;
-  const { placeholder, onChange, label } = props;
+  const { name, value, placeholder, onChange, label } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9}>
-        <TextArea placeholder={placeholder} onChange={onChange} rows={3} />
+      <Col span={8}>
+        <TextArea name={name} value={value} placeholder={placeholder} rows={3}
+        onChange={(event) => onChange(name, event.target.value)} />
       </Col>
     </>
   )
 }
 
 export const DatePickerWithLabel = (props) => {
-  const { placeholder, onChange, label } = props;
+  const { placeholder, onChange, label, name, value } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9} align="left">
-        <DatePicker placeholder={placeholder} onChange={onChange} />
+      <Col span={8}>
+        <DatePicker name={name} value={value} className="fullWidth" placeholder={placeholder}
+        onChange={(date) => onChange(name, date)} />
       </Col>
     </>
   )
 }
 
 export const TimePickerWithLabel = (props) => {
-  const { placeholder, onChange, label } = props;
+  const { onChange, label, name, value } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9} align="left">
-        <TimePicker placeholder={placeholder} onChange={onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+      <Col span={8}>
+        <TimePicker name={name} value={value} onChange={(time) => onChange(name, time)}
+         defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
       </Col>
     </>
   )
 }
 
 export const SwitchWithLabel = (props) => {
-  const { onChange, label } = props;
+  const { onChange, label, name, value } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
-      <Col span={9} align="left">
-        <Switch defaultChecked onChange={onChange} />
+      <Col span={8}>
+        <Switch checked={value} name={name} onChange={(checked) => onChange(name, checked)} />
       </Col>
     </>
   )
@@ -105,9 +100,9 @@ export const CustomButton = (props) => {
 }
 
 export const CustomCard = (props) => {
-  const { title, children } = props;
+  const { title, extra, children } = props;
   return (
-      <Card title={title}>
+      <Card title={title} extra={extra}>
         {children}
       </Card>
   )
