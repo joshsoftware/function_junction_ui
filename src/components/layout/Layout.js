@@ -41,12 +41,13 @@ class AppLayout extends Component {
               zIndex: 1,
               width: '100%',
               background: '#fff',
+              boxShadow: '5px 7px 20px 8px #aba4a485'
             }}
           >
             {this.getHeaderContent()}
           </Header>
           <Content style={{
-            margin: '75px 16px', padding: 24, background: '#fff', minHeight: 600,
+            margin: '90px 16px', padding: 24, background: '#fff', minHeight: 600,
           }}>
             <MainContent />
           </Content>
