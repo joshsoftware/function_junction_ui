@@ -26,6 +26,7 @@ class AppLayout extends Component {
     </NavLink>
     <NavLink
       to={routes.createEvent}
+      style={{ textDecoration: 'none' }}
     >
       <span className='create-link'>Create</span>
     </NavLink>
