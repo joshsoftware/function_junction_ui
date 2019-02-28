@@ -51,15 +51,15 @@ export class BrowseEvents extends PureComponent {
         ));
     };
 
-    render() { 
+    render() {
         return (
-            
+
             <div className="container">
                 <div className="slider">
                     <Slider items={items}/>
                 </div>
                 <div className="events">
-                    <Row gutter={20}>
+                    <Row>
                         {this.getEventsCards()}
                     </Row>
                 </div>
@@ -67,6 +67,5 @@ export class BrowseEvents extends PureComponent {
         );
     }
 }
- 
-export default BrowseEvents;
 
+export default BrowseEvents;
