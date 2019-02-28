@@ -66,7 +66,6 @@ class AppLayout extends Component {
               zIndex: 1,
               width: '100%',
               background: '#fff',
-              boxShadow: '5px 7px 20px 8px #aba4a485'
             }}
           >
             {this.getHeaderContent()}
