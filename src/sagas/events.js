@@ -7,7 +7,7 @@ function* fetchEvents() {
   try {
     const response = yield call(fetch, `http://intranet.joshsoftware.com/events`);
     const data = yield call(() => response.json.bind(response)());
-    yield put(fetchEventListSuccess(data.events);
+    yield put(fetchEventListSuccess(data.events));
   } catch (error) {
     yield put(fetchEventListFail(error))
   }
