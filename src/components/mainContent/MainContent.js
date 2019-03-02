@@ -11,6 +11,7 @@ class MainContent extends Component {
             <Switch>
                 <Route exact path={routes.allEvents} component={BrowseEvents}/>
                 <Route exact path={routes.createEvent} component={CreateEventContainer}/>
+                <Route exact path={routes.updateEvent} component={CreateEventContainer}/>
             </Switch>
         </div>
     )

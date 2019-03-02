@@ -5,7 +5,7 @@ import { FETCH_EVENT_INITIATED, CREATE_EVENT_INITIATED, UPDATE_EVENT_INITIATED, 
 // Worker saga
 function* fetchEvent(action) {
   try {
-    const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users/${action.payload.id}`));
+    const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users/${action.payload}`));
     const data = yield call(() => response.json.bind(response)());
     yield put(fetchEventSuccess(data))
   } catch (error) {
@@ -30,7 +30,7 @@ function* updateEvent(action) {
   try {
     const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users/${action.payload.id}`, {
       method: 'PUT',
-      data: action.payload,
+      body: JSON.stringify(action.payload),
     }));
     const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(data))

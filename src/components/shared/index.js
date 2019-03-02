@@ -59,7 +59,7 @@ export const DatePickerWithLabel = (props) => {
       </Col>
       <Col span={8}>
         <DatePicker name={name} value={value} className="fullWidth" placeholder={placeholder}
-        onChange={(date) => onChange(name, date)} />
+        onChange={(date) => onChange(name, date)} disabledTime={true} format="DD-MM-YYYY" />
       </Col>
     </>
   )

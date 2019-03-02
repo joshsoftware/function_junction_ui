@@ -1,9 +1,8 @@
 const routes = {
     root: '/',
     allEvents: '/',
-    upcomingEvents: '/upcoming-events',
-    myEvents: '/my-events',
-    createEvent: '/create'
+    createEvent: '/create',
+    updateEvent: '/update/:id'
 }
 
 export default routes;
