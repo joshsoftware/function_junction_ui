@@ -34,18 +34,18 @@ class CreateEventContainer extends PureComponent {
 
     componentWillReceiveProps (nextProps) {
       if(this.props.event.isLoading && !nextProps.event.isLoading) {
-        //TODO: set state from nextprops event data
+        const { data } = nextProps.event;
         this.setState({
-          title: 'Title',
-          description: 'description',
-          venue: 'Venue',
-          startDate: null,
-          endDate: null,
-          registerBefore: null,
-          isShowcasable: false,
-          isIndividualParticipation: true,
-          minSize: 1,
-          maxSize: 1,
+          title: data.title,
+          description: data.description,
+          venue: data.venue,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          registerBefore: data.registerBefore,
+          isShowcasable: data.isShowcasable,
+          isIndividualParticipation: data.isIndividualParticipation,
+          minSize: data.minSize,
+          maxSize: data.maxSize,
         })
       }
     }
