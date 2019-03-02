@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
+import { createEventInitiated } from '../../actions/event';
 import CreateEvent from '../../components/createEvent';
 
 class CreateEventContainer extends PureComponent {
@@ -11,9 +13,9 @@ class CreateEventContainer extends PureComponent {
           venue: '',
           startDate: null,
           endDate: null,
-          registerEndDate: null,
+          registerBefore: null,
           isShowcasable: false,
-          isIndividual: true,
+          isIndividualParticipation: true,
           minSize: 1,
           maxSize: 1,
         }
@@ -30,20 +32,31 @@ class CreateEventContainer extends PureComponent {
       })
     }
 
-    submitHandler = () => {
-      alert('create event!!')
+    submitHandler = (isPublished) => {
+      this.props.createEventInitiated({
+        ...this.state,
+        isPublished, 
+      })
     }
 
     render() {
         return (
           <CreateEvent
-          {...this.state}
-          changeHandler={this.changeHandler}
-          redirectToBrowse={this.redirectToBrowse}
-          submitHandler={this.submitHandler}
+            {...this.state}
+            changeHandler={this.changeHandler}
+            redirectToBrowse={this.redirectToBrowse}
+            submitHandler={this.submitHandler}
           />
         );
     }
 }
 
-export default CreateEventContainer;
+const mapStateToProps = (state) => ({
+  events: state.events,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  createEventInitiated: (data) => dispatch(createEventInitiated(data)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (CreateEventContainer);

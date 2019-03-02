@@ -17,7 +17,7 @@ function* createEvent(action) {
   try {
     const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users`, {
       method: 'POST',
-      body: action.payload,
+      body: JSON.stringify(action.payload),
     }));
     const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(data))
