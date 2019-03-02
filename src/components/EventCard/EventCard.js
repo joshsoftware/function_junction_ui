@@ -1,6 +1,6 @@
 import './EventCard.css'
 import React from 'react';
-import { Card, Avatar, Icon, Tooltip } from 'antd';
+import { Card, Icon, Tooltip } from 'antd';
 const { Meta } = Card;
 
 const eventCard = ({title, desc, ...rest}) => (

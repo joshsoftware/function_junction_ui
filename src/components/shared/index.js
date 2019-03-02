@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { Input, DatePicker, TimePicker, Switch, InputNumber, Button, Card, Col } from 'antd';
+
+import { Input, DatePicker, TimePicker, Switch, InputNumber, Button, Card, Col, Spin } from 'antd';
+import './index.css';
 
 export const InputWithLabel = (props) => {
   const { placeholder, onChange, label, value, name } = props;
@@ -102,8 +104,15 @@ export const CustomButton = (props) => {
 export const CustomCard = (props) => {
   const { title, extra, children } = props;
   return (
-      <Card title={title} extra={extra}>
+      <Card className='card' title={title} extra={extra}>
         {children}
       </Card>
+  )
+}
+
+export const Spinner = (props) => {
+  const { margin } = props;
+  return (
+      <Spin />
   )
 }

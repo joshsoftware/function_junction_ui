@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+
 import CreateEvent from '../../components/createEvent';
 
 class CreateEventContainer extends PureComponent {
