@@ -2,7 +2,7 @@ import {
   FETCH_EVENT_LIST_INITIATED,
   FETCH_EVENT_LIST_SUCCESS,
   FETCH_EVENT_LIST_FAIL,
-} from '../constants';
+} from '../utils/constants';
 
 export function fetchEventListInitiated() {
   return {

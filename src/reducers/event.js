@@ -5,7 +5,7 @@ import {
   UPDATE_EVENT_INITIATED,
   UPDATE_EVENT_SUCCESS,
   UPDATE_EVENT_FAIL,
-} from '../constants';
+} from '../utils/constants';
 
 const initialState = {
   isLoading: false,

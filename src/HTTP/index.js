@@ -1,70 +1,97 @@
-import axios from 'axios';
-import { API_ROOT } from '../config';
+/* eslint-disable no-undef */
 
-let axiosInstance = axios.create({
-    baseURL: API_ROOT,
-    headers: {
-        'Accept': 'application/vnd.server.v1',
+import handleError from './handleHTTPError';
+import { showFailureNotification } from '../components/shared/Notification';
+
+const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : `${window.location.origin}/questionbank`;
+
+export default class RequestHandler {
+  // returns header object
+  static getHeader(type, data = {}, isFile = false) {
+    const header = {
+      method: type,
+      // mode: 'cors',
+      // credentials: 'same-origin',
+      headers: {
+        Accept: 'application/vnd.server.v1',
+        // 'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
+      },
+    };
+    if (!isFile) {
+      header.headers['Content-Type'] = 'application/json';
     }
-    // add code to send cookie here
-});
+    if (type !== 'get') {
+      if (isFile) {
+        header.body = data;
+      } else {
+        header.body = JSON.stringify(data);
+      }
+    }
+    return header;
+  }
 
-axiosInstance.interceptors.request.use(request => {
-    // generic error handler
-    return request;
-});
-
-axiosInstance.interceptors.response.use(response => {
+  static isSuccess(response) {
+    if (!(response.ok || response.status === 200 || response.status === 201)) {
+      showFailureNotification(handleError(response));
+      throw Error(response.statusText);
+    }
     return response;
-}, (error) => {
-    Promise.reject(error);
-});
+  }
 
-export async function get(url) {
-    try {
-        const response = await axiosInstance.get(url);
-        if (response.data.status === 200) {
-            return response.data;
-        }
-        throw new Error(response.data.error);
-    } catch (error) {
-        throw error;
-    }
-}
+  // HTTP Method get
+  static get(action, params = '') {
+    return new Promise((resolve, reject) => {
+      fetch(`${API_BASE_URL}${action}${params}`, RequestHandler.getHeader('get'))
+        .then(RequestHandler.isSuccess)
+        .then(response => resolve(response.json()))
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
-export async function post(url, data) {
-    try {
-        const response = await axiosInstance.post(url, data);
-        if (response.status) {
-            return response.data;
-        }
-        throw new Error(response.data.error);
-    } catch (error) {
-        throw error;
-    }
-}
+  // HTTP Method post
+  static post(action, data, isFile = false) {
+    return new Promise((resolve, reject) => {
+      fetch(`${API_BASE_URL}${action}`, RequestHandler.getHeader('post', data, isFile))
+        .then(RequestHandler.isSuccess)
+        .then(response => resolve(response.json()))
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
-export async function put(url, data) {
-    try {
-        const response = await axiosInstance.put(url, data);
-        if (response.status) {
-            return response.data;
-        }
-        return new Error(response.data.error);
-    } catch (error) {
-        throw error;
-    }
-}
+  // HTTP Method put
+  static put(action, data, isFile = false) {
+    return new Promise((resolve, reject) => {
+      fetch(`${API_BASE_URL}${action}`, RequestHandler.getHeader('put', data, isFile))
+        .then(RequestHandler.isSuccess)
+        .then(response => resolve(response.json()))
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
-export async function del(url, data) {
-    try {
-        const response = await axiosInstance.delete(url, data);
-        if (response.status) {
-            return response.data;
-        }
-        return new Error(response.data.error);
-    } catch (error) {
-        throw error;
-    }
+  // HTTP Method delete
+  static delete(action) {
+    return new Promise((resolve, reject) => {
+      fetch(`${API_BASE_URL}${action}`, RequestHandler.getHeader('delete', {}))
+        .then(RequestHandler.isSuccess)
+        .then(response => resolve(response.json()))
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  static fileUploadPost(action, payload) {
+    return RequestHandler.post(action, payload, true);
+  }
+
+  static fileUploadPut(action, payload) {
+    return RequestHandler.put(action, payload, true);
+  }
 }

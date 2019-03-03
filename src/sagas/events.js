@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { fetchEventListSuccess, fetchEventListFail } from '../actions/events';
-import { FETCH_EVENT_LIST_INITIATED } from '../constants';
+import { FETCH_EVENT_LIST_INITIATED } from '../utils/constants';
 
 // Worker saga
 function* fetchEvents() {
