@@ -46,6 +46,7 @@ export class BrowseEvents extends PureComponent {
                     title={title}
                     desc={desc}
                     className="card-container"
+                    {...this.props}
                 />
             </Col>
         ));

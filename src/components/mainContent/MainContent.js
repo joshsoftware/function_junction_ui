@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import routes from '../../config/routes';
 import asyncComponent from '../../HOC/AsyncComponent';
 import CreateEventContainer from '../createEventContainer';
+import EventDetails from '../EventDetails';
 
 const BrowseEvents = asyncComponent(() => import('../BrowseEvents'), 'BrowseEvents')
 
@@ -17,6 +18,8 @@ class MainContent extends Component {
                 <Route exact path={routes.upcomingEvents} component={upcomingEvents}/>
                 <Route exact path={routes.myEvents} component={myEvents}/>
                 <Route exact path={routes.createEvent} component={CreateEventContainer}/>
+                <Route exact path={routes.eventDetails} component={EventDetails}/>
+                <Route exact path={routes.eventDetailsInvite} component={EventDetails}/>
             </Switch>
         </div>
     )

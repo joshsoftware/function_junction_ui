@@ -1,0 +1,63 @@
+.event-details-container {
+    margin-top: 5%;
+    .background {
+        background-color: white;
+        padding: 20px 20px;
+        margin: 10px 10px;
+        border: 1px solid #eee;
+        border-radius: 7px;
+    }
+    .event-details-wrapper {
+        .ev-container {
+            .ev-header {
+                display: flex;
+                justify-content: center;
+                .title {
+                    font-size: 23px;
+                    width: 90%;
+                    height: 30px;
+                    white-space: nowrap;
+                    font-weight: 700;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .date {
+                    height: 50px;
+                    width: 54px;
+                    padding: 3px 6px;
+                    margin-right: 2%;
+                    border: 1px solid #dca3ad;
+                    background-color: #fef0ff;
+                    display: flex;
+                    border-radius: 8px;
+                    font-weight: 700;
+                    flex-direction: column;
+                    span {
+                        text-align: center;
+                    }
+                }
+            }
+            .ev-details {
+                margin-left: 9%;
+                font-size: 12px;
+                .register-before {
+                    font-weight: 600;
+                    span {
+                        font-weight: 100;
+                    }
+                }
+            }
+            .ev-description {
+                padding: 5% 5%;
+                border: 1px solid #afa5a5;
+                border-radius: 10px;
+            }
+        }
+       
+    }
+}
+.success-text {
+    text-align: center;
+    color: #4ba757;
+    font-weight: 600;
+}
