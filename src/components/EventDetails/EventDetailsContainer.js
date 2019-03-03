@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Skeleton, Button } from 'antd';
+import { Row, Col, Skeleton, Button, Icon, Divider, Affix } from 'antd';
+import moment from 'moment';
 import EventDetails from './EventDetails';
 import './EventDetails.scss';
+
 
 const initialState = {
     loading: false,
@@ -67,34 +69,71 @@ class EventDetailsContainer extends Component {
         console.log(match);
         if (match.params.userID) {
             return <>
-                <Row style={{ display: 'flex', justifyContent: "center"}}>
-                    <Button
-                        type="primary"
-                        name="Accept"
-                        icon="check"
-                        onClick={this.handleAcceptInviteClick}
-                        >
-                        Accept
-                    </Button>
-                    <Button
-                        type="danger"
-                        name="Accept"
-                        icon="stop"
-                        style={{ marginLeft: 10}}
-                        onClick={this.handleDeclineEventClick}
-                        >
-                        Decline
-                    </Button>
+                <Row style={{ display: 'flex', justifyContent: "center", textAlign: 'center'}}>
+                    <Col span={12} >
+                        <Button
+                            type="primary"
+                            name="Accept"
+                            icon="check"
+                            onClick={this.handleAcceptInviteClick}
+                            >
+                            Accept
+                        </Button>
+                    </Col>
+                    <Col span={12} >
+                        <Button
+                            type="danger"
+                            name="Accept"
+                            icon="stop"
+                            onClick={this.handleDeclineEventClick}
+                            >
+                            Decline
+                        </Button>
+                    </Col>
                 </Row>
             </>
         }
     }
+
+    getEventLocation = ({
+        startDateTime,
+        endDateTime,
+        venue
+    }) => (
+        <>
+        <Row>
+            <Col span={3}>
+                <Icon type="clock-circle" />
+            </Col>
+            <Col span={21}>
+                <span>
+                    {moment(startDateTime).format("ddd, MMM YY hh:mm a")}
+                </span>
+                    <Divider type="vertical"/>
+                <span>
+                    {moment(endDateTime).format("ddd, MMM YY hh:mm a")}
+                </span>
+            </Col>
+        </Row>
+        <Row>
+            <Col span={3}>
+                <Icon type="home" />
+            </Col>
+            <Col span={21}>
+                {venue}
+            </Col>
+        </Row>
+        </>
+    )
 
     getPanel = () => {
         const { isRegistered } =  this.state;
 
         return (
             <>
+                <div className="location">
+                    {this.getEventLocation(eventDetails)}
+                </div>
                 { !isRegistered && this.getRegisterButton()}
                 {isRegistered && <div className="success-text"> You are going</div>}
             </>
@@ -116,8 +155,13 @@ class EventDetailsContainer extends Component {
                     {this.getEventDetailsContainers(this.state)}
                 </Col>
                 <Col span={6}>
-                    {this.getRightSidePanel(this.state)}
+                    <Affix>
+                        {this.getRightSidePanel(this.state)}
+                    </Affix>
                 </Col>
+            </Row>
+            <Row>
+                Test
             </Row>
         </div>
     )

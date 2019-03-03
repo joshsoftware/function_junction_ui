@@ -1,15 +1,7 @@
 import React from 'react';
 import { Divider, Tooltip } from 'antd';
 import moment from 'moment';
-
-const registrationDateFormat = {
-    sameDay: '[Today] hh:mm a',
-    nextDay: '[Tomorrow] hh:mm a',
-    nextWeek: '[Upcoming] dddd hh:mm a',
-    lastDay: '[Yesterday] hh:mm a',
-    lastWeek: '[Last] dddd hh:mm a',
-    sameElse: 'DD, MMM YYYY hh:mm a'
-};
+import { getFormatedDate } from './Constant';
 
 function getRegistrationLabel(date) {
     if (moment(date).diff(moment(), 'days') >= 0) {
@@ -69,7 +61,8 @@ const RegistrationDetails = ({
                 <span>Created By :</span> {createdBy.name}
             </div>
             <div>
-                <span>{`Registration ${getRegistrationLabel(registerBefore)} on :`}</span> {moment(registerBefore).calendar(null, registrationDateFormat)}
+                <span>{`Registration ${getRegistrationLabel(registerBefore)} on :`}</span>
+                {getFormatedDate(registerBefore)}
             </div>
             
         </div>
