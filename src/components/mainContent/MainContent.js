@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import routes from '../../config/routes';
 import asyncComponent from '../../HOC/AsyncComponent';
-import CreateEventContainer from '../../containers/createEventContainer';
+import CreateEventContainer from '../createEvent';
 
-const BrowseEvents = asyncComponent(() => import('../../containers/BrowseEvents'), 'BrowseEvents')
+const BrowseEvents = asyncComponent(() => import('../BrowseEvents'), 'BrowseEvents')
 
 const upcomingEvents =() => <h1>Upcomming Events</h1>;
 const myEvents =() => <h1>My Events</h1>;
