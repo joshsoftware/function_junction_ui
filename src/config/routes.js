@@ -1,7 +1,7 @@
 const routes = {
     root: '/',
     allEvents: '/',
-    createEvent: '/create',
+    createEvent: '/create-event',
     updateEvent: '/update/:id'
 }
 
