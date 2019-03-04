@@ -5,9 +5,9 @@ import { FETCH_EVENT_LIST_INITIATED } from '../utils/constants';
 // Worker saga
 function* fetchEvents() {
   try {
-    const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users`));
+    const response = yield call(fetch, `http://intranet.joshsoftware.com/events`);
     const data = yield call(() => response.json.bind(response)());
-    yield put(fetchEventListSuccess(data))
+    yield put(fetchEventListSuccess(data.events));
   } catch (error) {
     yield put(fetchEventListFail(error))
   }

@@ -7,7 +7,6 @@ import MainContent from '../mainContent/MainContent';
 import Logo from '../../josh-logo.svg';
 import './Layout.css';
 const { Header, Content } = Layout;
-const {Option} = Select;
 
 class AppLayout extends Component {
   state = {
