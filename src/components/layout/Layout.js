@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Layout, Select, Icon } from 'antd';
 import { withRouter, NavLink } from 'react-router-dom'
-import routes from '../../utils/routes';
+import routes from 'UTILS/routes';
 import Sidebar from '../sidebar/Sidebar';
 import MainContent from '../mainContent/MainContent';
 import Logo from '../../josh-logo.svg';

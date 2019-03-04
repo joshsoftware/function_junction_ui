@@ -1,6 +1,9 @@
 .container {
     .slider {
         margin-top: 65px;
+        .slick-list {
+            height: 376px;
+        }
     }
     .events {
         padding-top: 1%;

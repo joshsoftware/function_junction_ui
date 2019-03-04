@@ -1,4 +1,4 @@
-import { HTTP_STANDARD_ERRORS } from '../utils/constants';
+import { HTTP_STANDARD_ERRORS } from 'UTILS/constants';
 
 export default (err) => {
   const { status, statusText } = err;

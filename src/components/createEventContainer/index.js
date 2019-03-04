@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from '../../actions/event';
-import CreateEvent from '../../components/createEvent';
+import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/event';
+import CreateEvent from 'COMPONENTS/createEvent';
 
 class CreateEventContainer extends PureComponent {
     constructor(props) {

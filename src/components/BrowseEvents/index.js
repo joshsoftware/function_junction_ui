@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import { connect } from 'react-redux';
 
 import { fetchEventListInitiated } from '../../actions/events';
@@ -28,6 +28,9 @@ class BrowseEvents extends PureComponent {
 
     getEventsCards = () => {
         const { events: { data } } = this.props;
+        if (data.length === 0) {
+            return <Empty description="No events found."/>;
+        }
         return data.map(({id, title, description}) => (
             <Col md={6} key={id}>
                 <EventCard

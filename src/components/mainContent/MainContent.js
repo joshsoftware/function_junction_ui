@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import routes from '../../utils/routes';
+import routes from 'UTILS/routes';
 // import asyncComponent from '../../HOC/AsyncComponent';
 import CreateEventContainer from '../createEventContainer';
 import EventDetails from '../EventDetails';
 
 // const BrowseEvents = asyncComponent(() => import('../BrowseEvents'), 'BrowseEvents')
 import BrowseEvents from '../BrowseEvents';
-
-
 
 class MainContent extends Component {
       render = () => (
