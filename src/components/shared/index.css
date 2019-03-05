@@ -1,0 +1,7 @@
+.card:hover {
+  box-shadow: 1px 13px 19px 4px #c1b9b9;
+}
+
+.fullWidth {
+  width: 100% !important;
+}

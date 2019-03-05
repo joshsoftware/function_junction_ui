@@ -1,8 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
+import { connect } from 'react-redux';
+
+import { fetchEventListInitiated } from '../../actions/events';
 import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
+
 import './BrowseEvents.scss';
+
 const items=[
     <img src="/assets/img/1.jpg" alt="1" width="100%"/>,
     <img src="/assets/img/2.jpg" alt="2" width="100%"/>,
@@ -10,42 +15,29 @@ const items=[
     <img src="/assets/img/4.jpg" alt="4" width="100%"/>,
  ]
 
- const EVENTS = [
-     {
-        title: "Web Security",
-        desc: "This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
-     },
-     {
-        title: "Web Security",
-        desc: "This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
-     },
-     {
-        title: "Web Security",
-        desc: "This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
-     },
-     {
-        title: "Web Security",
-        desc: "This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
-     },
-     {
-        title: "Web Security",
-        desc: "This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh This event is organized internally by Josh"
-     },
- ]
-export class BrowseEvents extends PureComponent {
+class BrowseEvents extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
         }
     }
 
+    componentDidMount () {
+      this.props.fetchEventListInitiated();
+    }
+
     getEventsCards = () => {
-        return EVENTS.map(({title, desc}) => (
-            <Col md={6}>
+        const { events: { data } } = this.props;
+        if (data.length === 0) {
+            return <Empty description="No events found."/>;
+        }
+        return data.map(({id, title, description}) => (
+            <Col md={6} key={id}>
                 <EventCard
                     title={title}
-                    desc={desc}
+                    desc={description}
                     className="card-container"
+                    id={id}
                     {...this.props}
                 />
             </Col>
@@ -53,15 +45,15 @@ export class BrowseEvents extends PureComponent {
     };
 
     render() {
+        console.log(this.props);
         return (
-
             <div className="container">
                 <div className="slider">
                     <Slider items={items}/>
                 </div>
                 <div className="events">
                     <Row>
-                        {this.getEventsCards()}
+                      {this.getEventsCards()}
                     </Row>
                 </div>
             </div>
@@ -69,4 +61,12 @@ export class BrowseEvents extends PureComponent {
     }
 }
 
-export default BrowseEvents;
+const mapStateToProps = (state) => ({
+  events: state.events,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchEventListInitiated: () => dispatch(fetchEventListInitiated()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (BrowseEvents);

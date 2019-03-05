@@ -1,13 +1,14 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { fetchEventListSuccess, fetchEventListFail } from '../actions/events';
-import { FETCH_EVENT_LIST_INITIATED } from '../utils/constants';
-
+import { FETCH_EVENT_LIST_INITIATED } from 'UTILS/constants';
+import RequestHandler from '../HTTP'
 // Worker saga
 function* fetchEvents() {
   try {
-    const response = yield call(() => fetch(`https://jsonplaceholder.typicode.com/users`));
-    const data = yield call(() => response.json.bind(response)());
-    yield put(fetchEventListSuccess(data))
+    const response = yield call(() => RequestHandler.get(
+      'events'
+    ));
+    yield put(fetchEventListSuccess(response.events));
   } catch (error) {
     yield put(fetchEventListFail(error))
   }

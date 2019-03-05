@@ -6,11 +6,12 @@ import {
   UPDATE_EVENT_INITIATED,
   UPDATE_EVENT_SUCCESS,
   UPDATE_EVENT_FAIL,
-} from '../utils/constants';
+} from 'UTILS/constants';
 
-export function fetchEventInitiated() {
+export function fetchEventInitiated(id) {
   return {
     type: FETCH_EVENT_INITIATED,
+    payload: id,
   }
 }
 
@@ -28,15 +29,17 @@ export function fetchEventFail(error) {
   }
 }
 
-export function createEventInitiated() {
+export function createEventInitiated(data) {
   return {
     type: CREATE_EVENT_INITIATED,
+    payload: data,
   }
 }
 
-export function updateEventInitiated() {
+export function updateEventInitiated(data) {
   return {
     type: UPDATE_EVENT_INITIATED,
+    payload: data,
   }
 }
 

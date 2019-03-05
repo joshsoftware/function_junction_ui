@@ -155,7 +155,7 @@ class EventDetailsContainer extends Component {
                     {this.getEventDetailsContainers(this.state)}
                 </Col>
                 <Col span={6}>
-                    <Affix>
+                    <Affix offsetTop={68}>
                         {this.getRightSidePanel(this.state)}
                     </Affix>
                 </Col>

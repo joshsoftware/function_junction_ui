@@ -13,8 +13,8 @@ import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { title, description, venue, startDate, endDate, startTime, endTime, registerEndDate,
-                isShowcasable, isIndividual, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
+        const { title, description, venue, startDate, endDate, startTime, endTime, registerBefore,
+                isShowcasable, isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <div className="container">
               <Row>
@@ -49,9 +49,9 @@ class CreateEvent extends PureComponent {
                       <DatePickerWithLabel
                         label="Register End Date:"
                         placeholder="Registartion End date"
-                        name="registerEndDate"
+                        name="registerBefore"
                         onChange={changeHandler}
-                        value={registerEndDate}
+                        value={registerBefore}
                       />
                     </Row>
                     <Row className="margin20px">
@@ -96,12 +96,12 @@ class CreateEvent extends PureComponent {
                       <Col span={2} />
                       <SwitchWithLabel
                         label="Individual:"
-                        name="isIndividual"
+                        name="isIndividualParticipation"
                         onChange={changeHandler}
-                        value={isIndividual}
+                        value={isIndividualParticipation}
                       />
                     </Row>
-                    { !isIndividual && (
+                    { !isIndividualParticipation && (
                       <Row className="margin20px">
                         <InputNumberWithLabel
                           label="Min size"
@@ -122,14 +122,14 @@ class CreateEvent extends PureComponent {
                       <Col span={5} offset={9}>
                         <CustomButton
                           type="default"
-                          onClick={submitHandler}
+                          onClick={() => submitHandler(false)}
                           label="Save as draft"
                         />
                       </Col>
                       <Col span={3}>
                         <CustomButton
                           type="primary"
-                          onClick={submitHandler}
+                          onClick={() => submitHandler(true)}
                           label="Save and publish"
                         />
                       </Col>

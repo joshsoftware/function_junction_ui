@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Layout, Select, Icon } from 'antd';
 import { withRouter, NavLink } from 'react-router-dom'
-import routes from '../../utils/routes';
+import routes from 'UTILS/routes';
 import Sidebar from '../sidebar/Sidebar';
 import MainContent from '../mainContent/MainContent';
 import Logo from '../../josh-logo.svg';
 import './Layout.css';
 const { Header, Content } = Layout;
-const {Option} = Select;
 
 class AppLayout extends Component {
   state = {
@@ -21,39 +20,64 @@ class AppLayout extends Component {
 
   getSideBarMenu = (collapsed) => <Sidebar open={collapsed} handleMenuChange={this.handleMenuChange}/>
 
+  getFilters = () => {
+   const { location } = this.props;
+   console.log(location);
+   if (location.pathname === '/') {
+    return (
+      <>
+        <Select
+          placeholder='Filter Events'
+          filterOption
+          // onSearch={this.handleSearch}
+          // onChange={this.handleChange}
+          style={{ width: 200, marginRight: '10px' }}
+          suffixIcon={<Icon type="filter" />}
+        >
+        </Select>
+        <Select
+          showSearch
+          value={this.state.value}
+          placeholder='Search Event'
+          defaultActiveFirstOption={false}
+          showArrow
+          filterOption={false}
+          // onSearch={this.handleSearch}
+          // onChange={this.handleChange}
+          // notFoundContent={null}
+          style={{ width: 200, marginRight: '10px' }}
+          suffixIcon={<Icon type="search" />}
+        >
+        </Select>
+      </>
+    );
+   }
+   return null;
+  }
+
+  getCreateEventButton = () => {
+    const { location } = this.props;
+    if (location.pathname !== routes.createEvent) {
+        return (
+          <>
+            <NavLink
+              to={routes.createEvent}
+              style={{ textDecoration: 'none' }}
+            >
+              <span className='create-link'>Create</span>
+            </NavLink>
+          </>
+        )
+    }
+    return null;
+  }
+
   getHeaderContent = () => <div className='navbar'>
     <NavLink className='logoWrapper' to={routes.allEvents}>
       <img className='logo' src={Logo} alt='Logo'/>
     </NavLink>
-    <Select
-        placeholder='Filter Events'
-        filterOption
-        // onSearch={this.handleSearch}
-        // onChange={this.handleChange}
-        style={{ width: 200, marginRight: '10px' }}
-        suffixIcon={<Icon type="filter" />}
-      >
-      </Select>
-    <Select
-        showSearch
-        value={this.state.value}
-        placeholder='Search Event'
-        defaultActiveFirstOption={false}
-        showArrow
-        filterOption={false}
-        // onSearch={this.handleSearch}
-        // onChange={this.handleChange}
-        // notFoundContent={null}
-        style={{ width: 200, marginRight: '10px' }}
-        suffixIcon={<Icon type="search" />}
-      >
-      </Select>
-    <NavLink
-      to={routes.createEvent}
-      style={{ textDecoration: 'none' }}
-    >
-      <span className='create-link'>Create</span>
-    </NavLink>
+    {this.getFilters()}
+    {this.getCreateEventButton()}
   </div>
 
   render() {
