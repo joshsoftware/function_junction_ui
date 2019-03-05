@@ -3,7 +3,7 @@
 import handleError from './handleHTTPError';
 import { showFailureNotification } from '../components/shared/Notification';
 
-const API_BASE_URL = process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : `${window.location.origin}/questionbank`;
+const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/' : 'http://intranet.joshsoftware.com/'
 
 export default class RequestHandler {
   // returns header object

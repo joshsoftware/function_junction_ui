@@ -66,7 +66,6 @@ class EventDetailsContainer extends Component {
 
     getRegisterButton = () => {
         const { match } = this.props;
-        console.log(match);
         if (match.params.userID) {
             return <>
                 <Row style={{ display: 'flex', justifyContent: "center", textAlign: 'center'}}>

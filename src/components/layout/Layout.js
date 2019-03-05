@@ -22,7 +22,6 @@ class AppLayout extends Component {
 
   getFilters = () => {
    const { location } = this.props;
-   console.log(location);
    if (location.pathname === '/') {
     return (
       <>
