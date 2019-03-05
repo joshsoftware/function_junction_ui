@@ -3,14 +3,13 @@ import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
 const { Meta } = Card;
 
-const eventCard = ({title, desc, history, ...rest}) => {
-  console.log(rest);
+const eventCard = ({id, title, desc, history, ...rest}) => {
   return (
   <Card
     hoverable
     cover={<img alt="example" src="https://image.shutterstock.com/image-vector/vector-hand-drawn-acrylic-stroke-450w-450333322.jpg" />}
     actions={[<Tooltip placement='top' title='Invite' ><Icon type="user" /></Tooltip>, <Tooltip placement='top' title='Edit'><Icon type="edit" /></Tooltip>]}
-    onClick={() => history.push(`/event-details/${123}/${987}`)}
+    onClick={() => history.push(`/functions/event-details/${id}`)}
     {...rest}
   >
     <Meta

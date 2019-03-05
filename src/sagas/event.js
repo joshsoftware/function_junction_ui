@@ -5,7 +5,7 @@ import { FETCH_EVENT_INITIATED, CREATE_EVENT_INITIATED, UPDATE_EVENT_INITIATED, 
 // Worker saga
 function* fetchEvent(action) {
   try {
-    const response = yield call(() => fetch(`http://intranet.joshsoftware.com/events/${action.payload}`));
+    const response = yield call(() => fetch(`http://localhost:8000/event/${action.payload}`));
     const data = yield call(() => response.json.bind(response)());
     yield put(fetchEventSuccess(data.event))
   } catch (error) {
