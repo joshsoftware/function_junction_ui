@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Input, DatePicker, TimePicker, Switch, InputNumber, Button, Card, Col, Spin } from 'antd';
+import { Input, DatePicker, Switch, InputNumber, Button, Card, Col, Spin } from 'antd';
 import './index.css';
 
 export const InputWithLabel = (props) => {
@@ -65,16 +65,17 @@ export const DatePickerWithLabel = (props) => {
   )
 }
 
-export const TimePickerWithLabel = (props) => {
-  const { onChange, label, name, value } = props;
+export const DateTimePickerWithLabel = (props) => {
+  const { placeholder, onChange, label, name, value } = props;
   return (
     <>
       <Col span={3}>
         {label}
       </Col>
       <Col span={8}>
-        <TimePicker name={name} value={value} onChange={(time) => onChange(name, time)}
-         defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+        <DatePicker name={name} value={value} className="fullWidth" placeholder={placeholder}
+        onChange={(date) => onChange(name, date)} disabledTime={false} format="DD-MM-YYYY HH:mm:ss"
+        showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }} />
       </Col>
     </>
   )
