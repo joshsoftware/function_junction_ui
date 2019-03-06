@@ -29,7 +29,9 @@ class CreateEventContainer extends PureComponent {
     }
 
     componentDidMount () {
-      this.props.fetchEventInitiated(this.id);
+      if(this.id) {
+        this.props.fetchEventInitiated(this.id);
+      }
     }
 
     componentWillReceiveProps (nextProps) {
@@ -47,6 +49,10 @@ class CreateEventContainer extends PureComponent {
           minSize: data.minSize,
           maxSize: data.maxSize,
         })
+      }
+
+      if(this.props.event.isUpdating && !nextProps.event.isUpdating) {
+        this.redirectToBrowse();
       }
     }
 
