@@ -14,8 +14,8 @@ class CreateEventContainer extends PureComponent {
           title: '',
           description: '',
           venue: '',
-          startDate: null,
-          endDate: null,
+          startDateTime: null,
+          endDateTime: null,
           registerBefore: null,
           isShowcasable: false,
           isIndividualParticipation: true,
@@ -29,7 +29,9 @@ class CreateEventContainer extends PureComponent {
     }
 
     componentDidMount () {
-      this.props.fetchEventInitiated(this.id);
+      if(this.id) {
+        this.props.fetchEventInitiated(this.id);
+      }
     }
 
     componentWillReceiveProps (nextProps) {
@@ -39,14 +41,18 @@ class CreateEventContainer extends PureComponent {
           title: data.title,
           description: data.description,
           venue: data.venue,
-          startDate: data.startDate,
-          endDate: data.endDate,
+          startDateTime: data.startDateTime,
+          endDateTime: data.endDateTime,
           registerBefore: data.registerBefore,
           isShowcasable: data.isShowcasable,
           isIndividualParticipation: data.isIndividualParticipation,
           minSize: data.minSize,
           maxSize: data.maxSize,
         })
+      }
+
+      if(this.props.event.isUpdating && !nextProps.event.isUpdating) {
+        this.redirectToBrowse();
       }
     }
 

@@ -4,7 +4,7 @@ import {
   InputNumberWithLabel,
   TextAreaWithLabel,
   DatePickerWithLabel,
-  TimePickerWithLabel,
+  DateTimePickerWithLabel,
   SwitchWithLabel,
   CustomButton,
   CustomCard,
@@ -13,8 +13,8 @@ import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { title, description, venue, startDate, endDate, startTime, endTime, registerBefore,
-                isShowcasable, isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
+        const { title, description, venue, startDateTime, endDateTime, registerBefore, isShowcasable,
+           isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <div className="container">
               <Row>
@@ -55,35 +55,20 @@ class CreateEvent extends PureComponent {
                       />
                     </Row>
                     <Row className="margin20px">
-                      <DatePickerWithLabel
-                        label="Start Date:"
-                        placeholder="start date"
-                        name="startDate"
+                      <DateTimePickerWithLabel
+                        label="Start Date Time:"
+                        placeholder="start date and time"
+                        name="startDateTime"
                         onChange={changeHandler}
-                        value={startDate}
+                        value={startDateTime}
                       />
                       <Col span={2} />
-                      <TimePickerWithLabel
-                        label="Start Time"
-                        name="startTime"
+                      <DateTimePickerWithLabel
+                        label="End Date Time:"
+                        placeholder="end date and time"
+                        name="endDateTime"
                         onChange={changeHandler}
-                        value={startTime}
-                      />
-                    </Row>
-                    <Row className="margin20px">
-                      <DatePickerWithLabel
-                        label="End Date:"
-                        placeholder="end date"
-                        name="endDate"
-                        onChange={changeHandler}
-                        value={endDate}
-                      />
-                      <Col span={2} />
-                      <TimePickerWithLabel
-                        label="End Time"
-                        name="endTime"
-                        onChange={changeHandler}
-                        value={endTime}
+                        value={endDateTime}
                       />
                     </Row>
                     <Row className="margin20px">

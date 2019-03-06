@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { fetchEventSuccess, fetchEventFail, updateEventSuccess, updateEventFail } from '../actions/event';
 import { FETCH_EVENT_INITIATED, CREATE_EVENT_INITIATED, UPDATE_EVENT_INITIATED, } from 'UTILS/constants';
+import RequestHandler from '../HTTP'
 
 // Worker saga
 function* fetchEvent(action) {
@@ -15,10 +16,10 @@ function* fetchEvent(action) {
 
 function* createEvent(action) {
   try {
-    const response = yield call(() => fetch(`http://intranet.joshsoftware.com/events`, {
-      method: 'POST',
-      body: JSON.stringify(action.payload),
-    }));
+    const response = yield call(() => RequestHandler.post(
+      'events',
+      action.payload,
+    ))
     const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(data))
   } catch (error) {
