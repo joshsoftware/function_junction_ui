@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/event';
 import CreateEvent from 'COMPONENTS/createEvent';
@@ -41,9 +42,9 @@ class CreateEventContainer extends PureComponent {
           title: data.title,
           description: data.description,
           venue: data.venue,
-          startDateTime: data.startDateTime,
-          endDateTime: data.endDateTime,
-          registerBefore: data.registerBefore,
+          startDateTime: moment(data.startDateTime),
+          endDateTime: moment(data.endDateTime),
+          registerBefore: moment(data.RegisterBefore),
           isShowcasable: data.isShowcasable,
           isIndividualParticipation: data.isIndividualParticipation,
           minSize: data.minSize,

@@ -6,9 +6,10 @@ import RequestHandler from '../HTTP'
 // Worker saga
 function* fetchEvent(action) {
   try {
-    const response = yield call(() => fetch(`http://localhost:8000/event/${action.payload}`));
-    const data = yield call(() => response.json.bind(response)());
-    yield put(fetchEventSuccess(data.event))
+    const response = yield call(() => RequestHandler.get(
+      `events/${action.payload}`,
+    ));
+    yield put(fetchEventSuccess(response.event))
   } catch (error) {
     yield put(fetchEventFail(error))
   }
