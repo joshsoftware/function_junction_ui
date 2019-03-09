@@ -13,7 +13,7 @@ import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { isEdit, title, description, venue, startDateTime, endDateTime, registerBefore, isShowcasable,
+        const { isEdit, title, description, venue, startDateTime, endDateTime, RegisterBefore, isShowcasable,
            isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <div className="container">
@@ -49,9 +49,9 @@ class CreateEvent extends PureComponent {
                       <DatePickerWithLabel
                         label="Registration End Date:"
                         placeholder="Registartion End date"
-                        name="registerBefore"
+                        name="RegisterBefore"
                         onChange={changeHandler}
-                        value={registerBefore}
+                        value={RegisterBefore}
                       />
                     </Row>
                     <Row className="margin20px">

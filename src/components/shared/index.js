@@ -112,7 +112,6 @@ export const CustomCard = (props) => {
 }
 
 export const Spinner = (props) => {
-  const { margin } = props;
   return (
       <Spin />
   )

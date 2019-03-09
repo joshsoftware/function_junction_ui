@@ -30,10 +30,10 @@ function* createEvent(action) {
 
 function* updateEvent(action) {
   try {
-    const response = yield call(() => fetch(`http://intranet.joshsoftware.com/events/${action.payload.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(action.payload),
-    }));
+    const response = yield call(() => RequestHandler.put(
+      `events/${action.payload.id}`,
+      action.payload,
+    ))
     const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(data))
   } catch (error) {
