@@ -87,6 +87,7 @@ class CreateEventContainer extends PureComponent {
         return (
           <CreateEvent
             {...this.state}
+            isEdit={this.id}
             changeHandler={this.changeHandler}
             redirectToBrowse={this.redirectToBrowse}
             submitHandler={this.submitHandler}
