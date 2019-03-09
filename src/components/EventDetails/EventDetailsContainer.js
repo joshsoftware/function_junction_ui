@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Skeleton, Button, Icon, Divider, Affix } from 'antd';
+import { connect } from 'react-redux';
 import moment from 'moment';
+import { fetchEventInitiated } from '../../actions/event';
 import EventDetails from './EventDetails';
 import './EventDetails.scss';
 
@@ -42,17 +44,18 @@ class EventDetailsContainer extends Component {
 
     componentDidMount() {
         const { match } = this.props;
+        this.props.fetchEventListInitiated(match.params.eventID);
         if (match.params.userID) {
             console.log("FETCH USER regiserd or not")
         }
     }
     
-    getEventDetails = () => <EventDetails {...eventDetails} />;
+    getEventDetails = (event) => <EventDetails {...event} />;
 
-    getEventDetailsContainers = ({ eventDetailsLoading }) => (
+    getEventDetailsContainers = ({ loading, event }) => (
         <div className="event-details-wrapper background">
-            {!eventDetailsLoading && this.getEventDetails()}
-            {eventDetailsLoading && <Skeleton active avatar paragraph={{rows: 5}} />}        
+            {!loading && this.getEventDetails(event)}
+            {loading && <Skeleton active avatar paragraph={{rows: 5}} />}        
         </div>
     );
 
@@ -66,6 +69,7 @@ class EventDetailsContainer extends Component {
 
     getRegisterButton = () => {
         const { match } = this.props;
+        console.log(this.props);
         if (match.params.userID) {
             return <>
                 <Row style={{ display: 'flex', justifyContent: "center", textAlign: 'center'}}>
@@ -106,11 +110,11 @@ class EventDetailsContainer extends Component {
             </Col>
             <Col span={21}>
                 <span>
-                    {moment(startDateTime).format("ddd, MMM YY hh:mm a")}
+                    {moment(startDateTime).format("DD, MMM YY hh:mm a")}
                 </span>
                     <Divider type="vertical"/>
                 <span>
-                    {moment(endDateTime).format("ddd, MMM YY hh:mm a")}
+                    {moment(endDateTime).format("DD, MMM YY hh:mm a")}
                 </span>
             </Col>
         </Row>
@@ -127,11 +131,12 @@ class EventDetailsContainer extends Component {
 
     getPanel = () => {
         const { isRegistered } =  this.state;
-
+        const { event } = this.props;
+        console.log(event, "%%%%%%%%%")
         return (
             <>
                 <div className="location">
-                    {this.getEventLocation(eventDetails)}
+                    {this.getEventLocation(event)}
                 </div>
                 { !isRegistered && this.getRegisterButton()}
                 {isRegistered && <div className="success-text"> You are going</div>}
@@ -139,31 +144,54 @@ class EventDetailsContainer extends Component {
         );
     };
 
-    getRightSidePanel = ({ sidePanelLoading }) => (
+    getRightSidePanel = ({ loading }) => (
         <div className="right-panel background">
-            {!sidePanelLoading && this.getPanel()}
-            {sidePanelLoading && <Skeleton active />}
+            {!loading && this.getPanel()}
+            {loading && <Skeleton active />}
         </div>
     )
 
-
-    render = () => (
+    getEvent = (props) => (
         <div className="event-details-container">
-            <Row>
-                <Col span={18}>
-                    {this.getEventDetailsContainers(this.state)}
-                </Col>
-                <Col span={6}>
-                    <Affix offsetTop={68}>
-                        {this.getRightSidePanel(this.state)}
-                    </Affix>
-                </Col>
-            </Row>
-            <Row>
-                Test
-            </Row>
+        <Row>
+            <Col span={18}>
+                {this.getEventDetailsContainers(props)}
+            </Col>
+            <Col span={6}>
+                <Affix offsetTop={68}>
+                    {this.getRightSidePanel(props)}
+                </Affix>
+            </Col>
+        </Row>
+        <Row>
+            Test
+        </Row>
         </div>
     )
+
+    render = () => {
+        const { loading, event } = this.props;
+        return (
+            <>
+            {/* {loading && <Skeleton active />} */}
+            {!loading && this.getEvent(this.props)}
+            </>
+        )
+}
 }
 
-export default EventDetailsContainer;
+function mapStateToProp({event}) {
+    return {
+        event: event.data,
+        loading: event.loading,
+        error: event.error
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchEventListInitiated: (id) => dispatch(fetchEventInitiated(id))
+    }
+}
+
+export default connect(mapStateToProp, mapDispatchToProps)(EventDetailsContainer);
