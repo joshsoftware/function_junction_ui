@@ -13,17 +13,17 @@ import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { title, description, venue, startDateTime, endDateTime, registerBefore, isShowcasable,
+        const { isEdit, title, description, venue, startDateTime, endDateTime, registerBefore, isShowcasable,
            isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <div className="container">
               <Row>
                 <Col span={18} offset={3}>
-                  <CustomCard title="Create Event" extra={<Icon type="close" onClick={() => redirectToBrowse()} />}>
+                  <CustomCard title={isEdit? "Update Event" : "Create Event"} extra={<Icon type="close" onClick={() => redirectToBrowse()} />}>
                     <Row>
                       <InputWithLabel
                         label="Title of Event:"
-                        placeholder="title"
+                        placeholder="Title"
                         name="title"
                         onChange={changeHandler}
                         value={title}
@@ -31,7 +31,7 @@ class CreateEvent extends PureComponent {
                       <Col span={2} />
                       <TextAreaWithLabel
                         label="Description:"
-                        placeholder="description"
+                        placeholder="Description"
                         name="description"
                         onChange={changeHandler}
                         value={description}
@@ -40,14 +40,14 @@ class CreateEvent extends PureComponent {
                     <Row className="margin20px">
                       <TextAreaWithLabel
                         label="Venue:"
-                        placeholder="venue"
+                        placeholder="Venue"
                         name="venue"
                         onChange={changeHandler}
                         value={venue}
                       />
                       <Col span={2} />
                       <DatePickerWithLabel
-                        label="Register End Date:"
+                        label="Registration End Date:"
                         placeholder="Registartion End date"
                         name="registerBefore"
                         onChange={changeHandler}
@@ -57,7 +57,7 @@ class CreateEvent extends PureComponent {
                     <Row className="margin20px">
                       <DateTimePickerWithLabel
                         label="Start Date Time:"
-                        placeholder="start date and time"
+                        placeholder="Start date and time"
                         name="startDateTime"
                         onChange={changeHandler}
                         value={startDateTime}
@@ -65,7 +65,7 @@ class CreateEvent extends PureComponent {
                       <Col span={2} />
                       <DateTimePickerWithLabel
                         label="End Date Time:"
-                        placeholder="end date and time"
+                        placeholder="End date and time"
                         name="endDateTime"
                         onChange={changeHandler}
                         value={endDateTime}
