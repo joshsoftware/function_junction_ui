@@ -7,8 +7,6 @@ import {
   Icon,
   Divider,
   Affix,
-  Input,
-  Select
 } from "antd";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -146,16 +144,8 @@ class EventDetailsContainer extends Component {
     </div>
   );
 
-  handleOkClick = () => {
-    const form = this.formRef.props.form;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      console.log("Received values of form: ", values);
-      form.resetFields();
-      this.setState({ isCreateTeamModalOpen: false });
-    });
+  handleCreateTeam = (createFormValues) => {
+    console.log('Form Values:', createFormValues);
   };
 
   saveFormRef = formRef => {
@@ -183,27 +173,17 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className="background create-team">
-              <Button
-                className="create-team-button"
-                onClick={this.toggleCreateTeamModal}
-              >
-                <Icon type="usergroup-add" />
-                Create Team
-              </Button>
-            </div>
+            {!props.event.isIndividualParticipation && <div className="background">
+              <CreateTeam
+                action='Create'
+                handleSubmit={this.handleCreateTeam}
+                isShowcasable={this.props.event.isShowcasable}
+              />
+            </div>}
           </Affix>
         </Col>
       </Row>
       <Row>Test</Row>
-      {this.state.isCreateTeamModalOpen && (
-        <CreateTeam
-          handleClickOk={this.handleOkClick}
-          handleClickCancel={this.toggleCreateTeamModal}
-          wrappedComponentRef={this.saveFormRef}
-          handleEmailChange={this.handleEmailChange}
-        />
-      )}
     </div>
   );
 

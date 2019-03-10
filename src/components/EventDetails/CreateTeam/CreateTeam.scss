@@ -1,0 +1,15 @@
+.create-team-button-wrapper{
+    text-align: center;
+    .create-team-button{
+        border-color: #f32000;
+        background-color: #f32000;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .create-team-button:hover{
+        background-color: #db1f06;
+        border: 1px solid #db1f06;
+        color: #fff;
+    }
+}
