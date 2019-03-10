@@ -3,6 +3,8 @@ import { Row, Col, Skeleton, Button, Icon, Divider, Affix } from 'antd';
 import moment from 'moment';
 import EventDetails from './EventDetails';
 import './EventDetails.scss';
+import CreateTeam from './CreateTeam/CreateTeam';
+import { validateEmail } from '../../utils/util';
 
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
     eventDetailsLoading: false,
     sidePanelLoading: false,
     isRegistered: false,
+    isCreateTeamModalOpen: false,
 }
 
 const eventDetails = {
@@ -62,6 +65,14 @@ class EventDetailsContainer extends Component {
 
     handleDeclineEventClick = () => {
 
+    }
+
+    toggleCreateTeamModal = () => {
+        this.setState((oldState) => {
+            return {
+                isCreateTeamModalOpen: !oldState.isCreateTeamModalOpen
+            }
+        });
     }
 
     getRegisterButton = () => {
@@ -147,6 +158,35 @@ class EventDetailsContainer extends Component {
         </div>
     )
 
+    handleOkClick = () => {
+        const form = this.formRef.props.form;
+        form.validateFields((err, values) => {
+        if (err) {
+            return;
+        }
+        console.log('Received values of form: ', values);
+        form.resetFields();
+        this.setState({ isCreateTeamModalOpen: false });
+        });
+    }
+
+    saveFormRef = (formRef) => {
+        this.formRef = formRef;
+    }
+
+    handleEmailChange = (rule, values, callback) => {
+        if (values) {
+            const isValidEmail = values.reduce((isEmail, email) => {
+                isEmail = validateEmail(email);
+                return isEmail;
+            }, true);
+            if (!isValidEmail) {
+                callback(true);
+                return;
+            }
+        }
+        callback();
+    }
 
     render = () => (
         <div className="event-details-container">
@@ -157,12 +197,25 @@ class EventDetailsContainer extends Component {
                 <Col span={6}>
                     <Affix offsetTop={68}>
                         {this.getRightSidePanel(this.state)}
+                        <div className='background create-team'>
+                            <Button className='create-team-button' onClick={this.toggleCreateTeamModal}><Icon type="usergroup-add" />Create Team</Button>
+                        </div>
                     </Affix>
                 </Col>
             </Row>
+
             <Row>
                 Test
             </Row>
+            {
+                this.state.isCreateTeamModalOpen &&
+                <CreateTeam
+                    handleClickOk={this.handleOkClick}
+                    handleClickCancel={this.toggleCreateTeamModal}
+                    wrappedComponentRef={this.saveFormRef}
+                    handleEmailChange={this.handleEmailChange}
+                />
+            }
         </div>
     )
 }

@@ -65,6 +65,19 @@
         }
     }
 }
+.background.create-team {
+    text-align: center;
+    .create-team-button{
+        border-color: #f32000;
+        background-color: #f32000;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .create-team-button:hover{
+        background-color: #db1f06;
+    }
+}
 .success-text {
     text-align: center;
     color: #4ba757;
