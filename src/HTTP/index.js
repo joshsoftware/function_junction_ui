@@ -3,7 +3,7 @@
 import handleError from './handleHTTPError';
 import { showFailureNotification } from '../components/shared/Notification';
 
-const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:8003/' : 'http://intranet.joshsoftware.com/events'
+const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/' : 'http://intranet.joshsoftware.com/events'
 export default class RequestHandler {
   // returns header object
   static getHeader(type, data = {}, isFile = false) {
