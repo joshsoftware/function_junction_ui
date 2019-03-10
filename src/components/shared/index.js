@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import { Input, DatePicker, Switch, InputNumber, Button, Card, Col, Spin } from 'antd';
-import './index.css';
+import './index.scss';
 
 export const InputWithLabel = (props) => {
   const { placeholder, onChange, label, value, name } = props;

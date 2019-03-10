@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { fetchEventInitiated } from '../../actions/event';
 import EventDetails from './EventDetails';
+import Attendees from '../Attendees/';
+
 import './EventDetails.scss';
 
 
@@ -143,7 +145,9 @@ class EventDetailsContainer extends Component {
             </Col>
         </Row>
         <Row>
-            Test
+            <Col span={18}>
+                <Attendees {...props}/>
+            </Col>
         </Row>
         </div>
     )
