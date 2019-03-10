@@ -22,7 +22,6 @@ class AppLayout extends Component {
 
   getFilters = () => {
    const { location } = this.props;
-   console.log(location);
    if (location.pathname === '/') {
     return (
       <>
@@ -57,7 +56,7 @@ class AppLayout extends Component {
 
   getCreateEventButton = () => {
     const { location } = this.props;
-    if (location.pathname !== routes.createEvent) {
+    if (location.pathname !== routes.createEvent && !location.pathname.includes('event-details')) {
         return (
           <>
             <NavLink

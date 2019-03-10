@@ -31,13 +31,14 @@ class BrowseEvents extends PureComponent {
         if (data.length === 0) {
             return <Empty description="No events found."/>;
         }
-        return data.map(({id, title, description}) => (
+        return data.map(({id, title, description, ...rest}) => (
             <Col md={6} key={id}>
                 <EventCard
                     title={title}
                     desc={description}
                     className="card-container"
                     id={id}
+                    {...rest}
                     {...this.props}
                 />
             </Col>
@@ -45,7 +46,6 @@ class BrowseEvents extends PureComponent {
     };
 
     render() {
-        console.log(this.props);
         return (
             <div className="container">
                 <div className="slider">

@@ -5,6 +5,7 @@ import {
   UPDATE_EVENT_INITIATED,
   UPDATE_EVENT_SUCCESS,
   UPDATE_EVENT_FAIL,
+  CREATE_EVENT_INITIATED,
 } from 'UTILS/constants';
 
 const initialState = {
@@ -30,6 +31,10 @@ export default function eventReducer (state = initialState, action) {
       isLoading: false,
       data: {},
       error: action.payload,
+    }
+    case CREATE_EVENT_INITIATED: return {
+      isUpdating: true,
+      error: null,
     }
     case UPDATE_EVENT_INITIATED: return {
       isUpdating: true,

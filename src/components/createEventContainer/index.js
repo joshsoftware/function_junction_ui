@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/event';
 import CreateEvent from 'COMPONENTS/createEvent';
@@ -14,8 +15,8 @@ class CreateEventContainer extends PureComponent {
           title: '',
           description: '',
           venue: '',
-          startDate: null,
-          endDate: null,
+          startDateTime: null,
+          endDateTime: null,
           registerBefore: null,
           isShowcasable: false,
           isIndividualParticipation: true,
@@ -29,7 +30,9 @@ class CreateEventContainer extends PureComponent {
     }
 
     componentDidMount () {
-      this.props.fetchEventInitiated(this.id);
+      if(this.id) {
+        this.props.fetchEventInitiated(this.id);
+      }
     }
 
     componentWillReceiveProps (nextProps) {
@@ -39,14 +42,18 @@ class CreateEventContainer extends PureComponent {
           title: data.title,
           description: data.description,
           venue: data.venue,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          registerBefore: data.registerBefore,
+          startDateTime: moment(data.startDateTime),
+          endDateTime: moment(data.endDateTime),
+          registerBefore: moment(data.RegisterBefore),
           isShowcasable: data.isShowcasable,
           isIndividualParticipation: data.isIndividualParticipation,
           minSize: data.minSize,
           maxSize: data.maxSize,
         })
+      }
+
+      if(this.props.event.isUpdating && !nextProps.event.isUpdating) {
+        this.redirectToBrowse();
       }
     }
 
