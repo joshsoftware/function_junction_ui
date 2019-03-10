@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { fetchEventSuccess, fetchEventFail, updateEventSuccess, updateEventFail } from '../actions/event';
+import { fetchEventSuccess, fetchEventFail, updateEventSuccess, updateEventFail } from 'ACTION/eventAction';
 import { FETCH_EVENT_INITIATED, CREATE_EVENT_INITIATED, UPDATE_EVENT_INITIATED, } from 'UTILS/constants';
 import RequestHandler from '../HTTP'
 

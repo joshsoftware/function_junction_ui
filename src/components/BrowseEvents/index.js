@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Row, Col, Empty } from 'antd';
 import { connect } from 'react-redux';
 
-import { fetchEventListInitiated } from '../../actions/events';
+import { fetchEventListInitiated } from 'ACTION/eventsAction';
 import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
 

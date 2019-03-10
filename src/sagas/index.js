@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
 
-import eventsSaga from './events';
-import eventSaga from './event';
+import eventsSaga from './eventsSaga';
+import eventSaga from './eventSaga';
 
 //Watcher saga
 export default function* rootSaga() {

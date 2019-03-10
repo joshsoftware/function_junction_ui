@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/event';
+import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/eventAction';
 import CreateEvent from 'COMPONENTS/createEvent';
 
 class CreateEventContainer extends PureComponent {
