@@ -50,7 +50,6 @@ class EventDetailsContainer extends Component {
 
     getRegisterButton = () => {
         const { match } = this.props;
-        console.log(this.props);
         if (match.params.userID) {
             return <>
                 <Row style={{ display: 'flex', justifyContent: "center", textAlign: 'center'}}>
@@ -113,7 +112,6 @@ class EventDetailsContainer extends Component {
     getPanel = () => {
         const { isRegistered } =  this.state;
         const { event } = this.props;
-        console.log(event, "%%%%%%%%%")
         return (
             <>
                 <div className="location">

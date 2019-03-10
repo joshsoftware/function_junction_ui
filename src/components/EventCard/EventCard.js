@@ -5,7 +5,6 @@ import moment from 'moment';
 const { Meta } = Card;
 
 const eventCard = ({id, title, desc, startDateTime, history, ...rest}) => {
-  console.log('startDateTime:', startDateTime);
   return (
   <Card
     hoverable
