@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import moment from "moment";
 import { fetchEventInitiated } from "../../actions/event";
+import { createTeamInitiated } from 'ACTION/team'
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import CreateTeam from "./CreateTeam/CreateTeam";
@@ -145,7 +146,10 @@ class EventDetailsContainer extends Component {
   );
 
   handleCreateTeam = (createFormValues) => {
-    console.log('Form Values:', createFormValues);
+    this.props.createTeamInitiated({
+      ...createFormValues,
+      eventId: this.props.event.id,
+    }); 
   };
 
   saveFormRef = formRef => {
@@ -177,7 +181,7 @@ class EventDetailsContainer extends Component {
               <CreateTeam
                 action='Create'
                 handleSubmit={this.handleCreateTeam}
-                isShowcasable={this.props.event.isShowcasable}
+                isShowcasable={this.props.event.is_showcasable}
               />
             </div>}
           </Affix>
@@ -208,7 +212,8 @@ function mapStateToProp({ event }) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchEventListInitiated: id => dispatch(fetchEventInitiated(id))
+    fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
+    createTeamInitiated: data => dispatch(createTeamInitiated(data))
   };
 }
 

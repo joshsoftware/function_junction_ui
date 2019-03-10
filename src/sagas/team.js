@@ -17,8 +17,11 @@ function* fetchTeam(action) {
 
 function* createTeam(action) {
   try {
+    console.log('In Create Team Saga:', action);
+    const eventId = action.payload.eventId;
+    delete action.payload.eventId;
     const response = yield call(() => RequestHandler.post(
-      'teams',
+      `events/${eventId}/teams`,
       action.payload,
     ))
     const data = yield call(() => response.json.bind(response)());

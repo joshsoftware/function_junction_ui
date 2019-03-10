@@ -31,7 +31,7 @@ class TeamCreateForm extends React.PureComponent {
         <h3 style={{ textAlign: "center" }}>{this.props.action} Team</h3>
         <Form layout="vertical" onSubmit={this.onSubmit}>
           <Form.Item>
-            {getFieldDecorator("teamName", {
+            {getFieldDecorator("name", {
               rules: [
                 {
                   required: true,
@@ -42,7 +42,7 @@ class TeamCreateForm extends React.PureComponent {
           </Form.Item>
           {this.props.isShowcasable && (
             <Form.Item>
-              {getFieldDecorator("showcaseableUrl", {
+              {getFieldDecorator("showcase_url", {
                 rules: [
                   {
                     required: true,
