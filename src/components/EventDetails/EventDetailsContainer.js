@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Skeleton, Button, Icon, Divider, Affix, Input, Select } from 'antd';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { fetchEventInitiated } from '../../actions/event';
+import { fetchEventInitiated } from 'ACTION/eventAction';
 import EventDetails from './EventDetails';
 import Attendees from '../Attendees/';
 
