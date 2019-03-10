@@ -52,7 +52,7 @@ const EventHeader = ({
 );
 
 const RegistrationDetails = ({
-    registerBefore,
+    RegisterBefore,
     createdBy
 }) => (
     <>
@@ -61,8 +61,8 @@ const RegistrationDetails = ({
                 <span>Created By :</span> {createdBy}
             </div>
             <div>
-                <span>{`Registration ${getRegistrationLabel(registerBefore)} on :`}</span>
-                {getFormatedDate(registerBefore)}
+                <span>{`Registration ${getRegistrationLabel(RegisterBefore)} on :`}</span>
+                {getFormatedDate(RegisterBefore)}
             </div>
             
         </div>
