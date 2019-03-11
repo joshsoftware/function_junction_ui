@@ -13,3 +13,17 @@
         color: #fff;
     }
 }
+
+.show-team{
+    display: flex;
+    align-items: center;
+    .team-name{
+        margin-right: 10px;
+    }
+}
+.showcasable-url{
+    margin-top: 10px !important;
+    a{
+        text-decoration: none;
+    }
+}

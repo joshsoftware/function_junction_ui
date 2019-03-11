@@ -14,7 +14,8 @@ import { fetchEventInitiated } from "../../actions/event";
 import { createTeamInitiated } from 'ACTION/team'
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
-import CreateTeam from "./CreateTeam/CreateTeam";
+import CreateTeam from "./Team/Create";
+import { ShowTeam } from './Team/Show';
 import { validateEmail } from "../../utils/util";
 
 const initialState = {
@@ -177,13 +178,20 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            {!props.event.isIndividualParticipation && <div className="background">
+            <div className="background">
+              {/* !props.event.isIndividualParticipation &&
               <CreateTeam
                 action='Create'
                 handleSubmit={this.handleCreateTeam}
                 isShowcasable={this.props.event.is_showcasable}
+              /> */}
+              <ShowTeam
+                team={{name: 'MY TEAM', showcasable_url: 'https://www.google.com'}}
+                isShowcasable={this.props.event.is_showcasable}
+                handleNameChange={value => console.log('Updated Name:', value)}
+                handleShowcasableURLChange={value => console.log('Updated URL:',value)}
               />
-            </div>}
+            </div>
           </Affix>
         </Col>
       </Row>

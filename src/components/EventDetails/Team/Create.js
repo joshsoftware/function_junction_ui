@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Icon, Form, Input } from "antd";
-import "./CreateTeam.scss";
+import "./Team.scss";
 import { validateURL } from "../../../utils/util";
 
 class TeamCreateForm extends React.PureComponent {
