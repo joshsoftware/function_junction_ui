@@ -9,10 +9,19 @@
         padding: 8px 1px;
         background: white;
         border-radius: 8px;
-        box-shadow: 7px 4px 6px #ada8a8;
+        box-shadow: 7px 4px 6px #ada8a800;
         margin: 10px;
+        border: 1px solid #a79797;
         .ant-avatar-string {
             position: unset;
         }
+        .ant-avatar {
+            width: 60px;
+            height: 60px;
+        }
+    }
+    .user-container:hover {
+        box-shadow:  3px 5px 20px 5px #ada8a8;
+        cursor: pointer;
     }
 }

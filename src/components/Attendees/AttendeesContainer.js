@@ -37,7 +37,7 @@ class Attendees extends Component {
     getUserDetails = () => {
         return Users.map(({name, email}) => {
             return (
-                <Col span={6} >
+                <Col span={4} >
                     <div className="user-container">
                         <User
                             name={name}
