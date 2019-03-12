@@ -1,28 +1,74 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ErrorBoundary from '../shared/ErrorBoundary';
+import { fetchAttendeesInitiated } from 'ACTION/attendeesAction';
+import User from './User';
 import './Attendees.scss';
 
+const Users = [
+    {name: 'Suhas More', email: 'suhas@gmail.com'},
+    {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
+    {name: 'Shweta Kale', email: 'shweta@gmail.com'},
+    {name: 'Tania More', email: 'taniya@gmail.com'},
+    {name: 'Priyanak More', email: 'priyanka@gmail.com'},
+    {name: 'Suhas More', email: 'suhas@gmail.com'},
+    {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
+    {name: 'Shweta Kale', email: 'shweta@gmail.com'},
+    {name: 'Tania More', email: 'taniya@gmail.com'},
+    {name: 'Priyanak More', email: 'priyanka@gmail.com'},
+    {name: 'Suhas More', email: 'suhas@gmail.com'},
+    {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
+    {name: 'Shweta Kale', email: 'shweta@gmail.com'},
+    {name: 'Tania More', email: 'taniya@gmail.com'},
+    {name: 'Priyanak More', email: 'priyanka@gmail.com'},
+]
+
 class Attendees extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: false,
+
+    componentDidMount() {
+        if (this.props.event.id ) {
+            const { event } = this.props;
+            console.log(event, "EEEEEEEE")
+            this.props.getAttendees(event.id);
         }
     }
 
-    componentDidMount() {
-        console.log(this.props);
+    getUserDetails = () => {
+        return Users.map(({name, email}) => {
+            return (
+                <div className="user-container">
+                    <User
+                        name={name}
+                        email={email}
+                    />
+                </div>
+            );
+        })
     }
 
     render = () => (
         <div className="attendees-container">
             <ErrorBoundary name="Attendees">
                 <div className="title">Attendees </div>
-                {}
+                {this.getUserDetails()}
             </ErrorBoundary>
         </div>
     );
     
 }
 
-export default Attendees;
+function mapStateToProps({ attendees, event }) {
+    console.log(event, attendees, "STATE")
+    return {
+        attendees: attendees.data,
+        event: event.data
+    }
+}
+
+function mapDespatchToProps(dispatch) {
+    return {
+        getAttendees: (eventID) => dispatch(fetchAttendeesInitiated(eventID))
+    }
+}
+
+export default connect(mapStateToProps, mapDespatchToProps)(Attendees);

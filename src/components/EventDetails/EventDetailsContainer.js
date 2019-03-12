@@ -79,8 +79,8 @@ class EventDetailsContainer extends Component {
     }
 
     getEventLocation = ({
-        startDateTime,
-        endDateTime,
+        start_date_time,
+        end_date_time,
         venue
     }) => (
         <>
@@ -90,11 +90,11 @@ class EventDetailsContainer extends Component {
             </Col>
             <Col span={21}>
                 <span>
-                    {moment(startDateTime).format("DD, MMM YY hh:mm a")}
+                    {moment(start_date_time).format("DD, MMM YY hh:mm a")}
                 </span>
                     <Divider type="vertical"/>
                 <span>
-                    {moment(endDateTime).format("DD, MMM YY hh:mm a")}
+                    {moment(end_date_time).format("DD, MMM YY hh:mm a")}
                 </span>
             </Col>
         </Row>
@@ -144,24 +144,24 @@ class EventDetailsContainer extends Component {
         </Row>
         <Row>
             <Col span={18}>
-                <Attendees {...props}/>
+                {this.props.event.id && <Attendees/> }
             </Col>
         </Row>
         </div>
     )
 
     render = () => {
-        const { loading, event } = this.props;
+        const { loading } = this.props;
         return (
             <>
-            {/* {loading && <Skeleton active />} */}
+            {loading && <Skeleton active paragraph={{ row: 3 }}/>}
             {!loading && this.getEvent(this.props)}
             </>
         )
 }
 }
 
-function mapStateToProp({event}) {
+function mapStateToProp({ event }) {
     return {
         event: event.data,
         loading: event.loading,
