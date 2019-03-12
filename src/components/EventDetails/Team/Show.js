@@ -15,11 +15,10 @@ export class ShowTeam extends PureComponent {
             }
         });
     }
-    handleNameChange = (event) => {
+    handleTeamChange = (event, field) => {
         event.preventDefault();
-        console.log('Value:', event.target.value);
         this.toggleEditing();
-        this.props.handleNameChange(event.target.value);
+        this.props.handleTeamChange(event.target.value.trim(), field);
     }
     handleShowcasableURLChange = (event) => {
         event.preventDefault();
@@ -36,8 +35,8 @@ export class ShowTeam extends PureComponent {
                     !isEditing ?
                     <>
                         <div className='flex-center'>
-                            <h4 className='team-name'>{/* <Icon type="usergroup-add" /> */}{team.name}</h4>
-                            <h4><Icon onClick={this.toggleEditing}  type="edit" /></h4>
+                            <h4 className='team-name'><Icon type="team" style={{ marginRight: '0.5rem' }} />{team.name}</h4>
+                            <h4 style={{ marginLeft: 'auto' }} ><Icon theme='twoTone' onClick={this.toggleEditing}  type="edit" /></h4>
                         </div>
                         <div className='showcasable-url'>
                             <a target='_blank' rel="noopener noreferrer" href={`${team.showcasable_url}`}>{team.showcasable_url}</a>
@@ -45,16 +44,19 @@ export class ShowTeam extends PureComponent {
                         </>
                     :
                         <>
+                        <Icon className='close-circle' onClick={this.toggleEditing} theme='twoTone' type="close-circle" />
                         <Input
                             defaultValue={team.name}
-                            onBlur={this.handleNameChange}
+                            onBlur={event => this.handleTeamChange(event, 'name')}
                             placeholder='Enter team name'
+                            name='name'
                         />
                         <Input
                             className='showcasable-url'
                             placeholder="Enter showcaseable URL"
                             defaultValue={team.showcasable_url}
-                            onBlur={this.handleShowcasableURLChange}
+                            onBlur={event => this.handleTeamChange(event, 'showcasable_url')}
+                            name='showcasable_url'
                         />
                         </>
 

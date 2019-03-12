@@ -17,11 +17,13 @@
 .flex-center{
     display: flex;
     align-items: center;
-    :first-child{
-        margin-right: 0.5rem;
-        font-weight: 700;
-    }
 }
+
+.flex-center > :first-child{
+    margin-right: 0.5rem;
+    font-weight: 700;
+}
+
 .showcasable-url{
     margin-top: 0.5rem !important;
     a{
@@ -42,4 +44,8 @@
 
 .m-1 {
     margin: 1rem;
+}
+.close-circle{
+    float: right;
+    margin-bottom: 1rem;
 }

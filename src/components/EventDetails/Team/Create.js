@@ -72,21 +72,3 @@ const WrappedCreateTeamForm = Form.create({ name: "team_create_form" })(
   TeamCreateForm
 );
 export default WrappedCreateTeamForm;
-
-{/* <Form.Item label="Members">
-  {getFieldDecorator("members", {
-    rules: [
-      {
-        required: true,
-        message: "Please input email id of team members!"
-      },
-      {
-        validator: handleEmailChange,
-        message: "Please enter correct email id!"
-      }
-    ]
-  })(
-    <SelectWithTags mode="tags" placeholder="Enter email id and press enter" />
-  )}
-</Form.Item>;
- */}

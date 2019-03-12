@@ -10,13 +10,11 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import moment from "moment";
-import { fetchEventInitiated } from "../../actions/event";
+import { fetchEventInitiated } from "ACTION/event";
 import { createTeamInitiated } from 'ACTION/team'
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
-import CreateTeam from "./Team/Create";
 import { ShowTeam } from './Team/Show';
-import { validateEmail } from "../../utils/util";
 import ShowMembers from './Members/Show';
 
 const initialState = {
@@ -27,7 +25,7 @@ const initialState = {
   isRegistered: false,
   isCreateTeamModalOpen: false,
   team: {
-    name: 'OUR TEAM',
+    name: 'REACT DEVS',
     showcasable_url: 'https://www.facebook.com',
     members: [
       { email: 'pragati@gmail.com' },
@@ -165,26 +163,19 @@ class EventDetailsContainer extends Component {
     this.formRef = formRef;
   };
 
-  handleEmailChange = (rule, values, callback) => {
-    if (values) {
-      const isValidEmail = values.reduce((isEmail, email) => {
-        isEmail = validateEmail(email);
-        return isEmail;
-      }, true);
-      if (!isValidEmail) {
-        callback(true);
-        return;
-      }
-    }
-    callback();
-  };
-
   sendInvites = (emailIds) => {
     const team = { ...this.state.team };
     let members = [...team.members];
     const invitees = emailIds.map(email => ({ email }));
     members = members.concat(invitees);
     team.members = members;
+    this.setState({ team });
+  }
+
+  handleTeamChange = (value, field) => {
+    console.log('Field:', field,' value:', value);
+    const team = {...this.state.team};
+    team[field] = value;
     this.setState({ team });
   }
 
@@ -205,8 +196,7 @@ class EventDetailsContainer extends Component {
               <ShowTeam
                 team={this.state.team}
                 isShowcasable={this.props.event.is_showcasable}
-                handleNameChange={value => console.log('Updated Name:', value)}
-                handleShowcasableURLChange={value => console.log('Updated URL:',value)}
+                handleTeamChange={this.handleTeamChange}
               />
               <ShowMembers
                 members={this.state.team.members}

@@ -1,48 +1,42 @@
 import React, { PureComponent } from 'react';
-import { SelectWithTags } from '../../shared';
 import { Icon } from 'antd';
 import Member from './Member';
-import Invite from './Invite'; 
+import Invite from './Invite';
+import '../Team/Team.scss';
 
 class ShowMembers extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isAddingMember: false,
-            inviteList: []
-        }
-    }
+    state = {
+        isAddingMember: false,
+    };
+
     toggleAddingMembers = () => {
         this.setState(oldState => { return {isAddingMember: !oldState.isAddingMember} });
     }
-    handleSendInvites = () => {
-        console.log('Invitee mails:', this.state.inviteList.toString());
+
+    handleSendInvites = inviteList => {
         this.toggleAddingMembers();
-        this.props.sendInvites(this.state.inviteList);
+        this.props.sendInvites(inviteList);
     }
-    handleAddInvitees = (values) => {
-        console.log('In Handle Change:', values);
-        this.setState({ inviteList: values });
-    }
+
     renderMembers = (members) => members.map(member => <Member key={member.email} member={member}/>);
+
     render = () => {
         return (
             <>
                 <div className='flex-center mt-2'>
-                    <span>Members</span>
-                    <Icon onClick={this.toggleAddingMembers} type="plus-circle" />
+                    <div className='flex-center'>
+                        <span>Members</span>
+                        {!this.state.isAddingMember && <Icon theme='twoTone' onClick={this.toggleAddingMembers} type="plus-circle" />}
+                    </div>
+                    {this.state.isAddingMember && <Icon theme='twoTone' style={{ marginLeft: 'auto' }} onClick={this.toggleAddingMembers} type="close-circle" />}
                 </div>
                 {
                     this.state.isAddingMember &&
                     <Invite
-                        handleChangeMembers={this.handleAddInvitees}
-                        inviteList={this.state.inviteList}
                         handleSendInvites={this.handleSendInvites}
                     />                        
                 }
-                <div>
-                    {this.renderMembers(this.props.members)}
-                </div>
+                {this.renderMembers(this.props.members)}
             </>
         );
     }
