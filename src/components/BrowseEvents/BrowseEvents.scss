@@ -7,12 +7,17 @@
     }
     .events {
         padding-top: 1%;
-        .card-container {
-            padding: 0px;
-            margin: 10px 5px;
-        }
-        .card-container:hover {
-            box-shadow: 1px 13px 19px 4px #c1b9b9;
+        background: white;
+        .ant-card {
+            .ant-card-body {
+                padding: 13px 17px;
+                .ant-card-meta-avatar {
+                    width: 110px;
+                    padding-right: 5px;
+                    border-right: 1px solid #dad0d0;
+                    margin-right: 15px;
+                }
+            }
         }
     }
 }

@@ -12,3 +12,15 @@
 .ant-card-meta-title {
     white-space: normal;
 }
+
+.card-avatar {
+    span {
+        font-weight: 600;
+        text-align: center
+    }
+    .time {
+        font-size: 12px;
+        text-align: center;
+        color: #888581;
+    }
+}

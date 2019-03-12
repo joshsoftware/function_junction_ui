@@ -83,7 +83,6 @@ class EventDetailsContainer extends Component {
         let eventDate = moment(startTime);
         let todaysDate = moment();
         let diff = todaysDate.diff(eventDate, "days");
-        console.log(diff)
         if (diff <= 0) {
             let event = {
                 title,
@@ -123,7 +122,7 @@ class EventDetailsContainer extends Component {
                 </Col>
                 <Col span={21}>
                     <span style={{ color: 'red' }}>
-                       
+                       Past Event
                     </span>
                 </Col>
             </Row>
