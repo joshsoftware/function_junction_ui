@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import { fetchAttendeesInitiated } from 'ACTION/attendeesAction';
@@ -36,12 +37,14 @@ class Attendees extends Component {
     getUserDetails = () => {
         return Users.map(({name, email}) => {
             return (
-                <div className="user-container">
-                    <User
-                        name={name}
-                        email={email}
-                    />
-                </div>
+                <Col span={6} >
+                    <div className="user-container">
+                        <User
+                            name={name}
+                            email={email}
+                        />
+                    </div>
+                </Col>
             );
         })
     }
@@ -50,7 +53,11 @@ class Attendees extends Component {
         <div className="attendees-container">
             <ErrorBoundary name="Attendees">
                 <div className="title">Attendees </div>
-                {this.getUserDetails()}
+                <div className="Single">
+                    <Row>
+                        {this.getUserDetails()}
+                    </Row>
+                </div>
             </ErrorBoundary>
         </div>
     );

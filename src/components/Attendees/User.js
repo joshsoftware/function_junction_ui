@@ -23,7 +23,7 @@ const Email = styled.div`
 const User = ({ img, name, email }) => (
     <UserContainer>
         <UserIcon>
-            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{img || name[0]}</Avatar>
+            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}><span>{name[0]}</span></Avatar>
         </UserIcon>
         <UserName>
             <span>{name}</span>
