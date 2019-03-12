@@ -13,8 +13,8 @@ import { Row, Col, Icon } from 'antd';
 
 class CreateEvent extends PureComponent {
     render() {
-        const { isEdit, title, description, venue, startDateTime, endDateTime, RegisterBefore, isShowcasable,
-           isIndividualParticipation, minSize, maxSize, changeHandler, redirectToBrowse, submitHandler } = this.props;
+        const { isEdit, title, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
+           is_individual_participation, min_size, max_size, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
             <div className="container">
               <Row>
@@ -49,57 +49,57 @@ class CreateEvent extends PureComponent {
                       <DatePickerWithLabel
                         label="Registration End Date:"
                         placeholder="Registartion End date"
-                        name="RegisterBefore"
+                        name="register_before"
                         onChange={changeHandler}
-                        value={RegisterBefore}
+                        value={register_before}
                       />
                     </Row>
                     <Row className="margin20px">
                       <DateTimePickerWithLabel
                         label="Start Date Time:"
                         placeholder="Start date and time"
-                        name="startDateTime"
+                        name="start_date_time"
                         onChange={changeHandler}
-                        value={startDateTime}
+                        value={start_date_time}
                       />
                       <Col span={2} />
                       <DateTimePickerWithLabel
                         label="End Date Time:"
                         placeholder="End date and time"
-                        name="endDateTime"
+                        name="end_date_time"
                         onChange={changeHandler}
-                        value={endDateTime}
+                        value={end_date_time}
                       />
                     </Row>
                     <Row className="margin20px">
                       <SwitchWithLabel
                         label="Showcasable:"
-                        name="isShowcasable"
+                        name="is_showcasable"
                         onChange={changeHandler}
-                        value={isShowcasable}
+                        value={is_showcasable}
                       />
                       <Col span={2} />
                       <SwitchWithLabel
                         label="Individual:"
-                        name="isIndividualParticipation"
+                        name="is_individual_participation"
                         onChange={changeHandler}
-                        value={isIndividualParticipation}
+                        value={is_individual_participation}
                       />
                     </Row>
-                    { !isIndividualParticipation && (
+                    { !is_individual_participation && (
                       <Row className="margin20px">
                         <InputNumberWithLabel
                           label="Min size"
-                          name="minSize"
+                          name="min_size"
                           onChange={changeHandler}
-                          value={minSize}
+                          value={min_size}
                         />
                         <Col span={2} />
                         <InputNumberWithLabel
                           label="Max size"
-                          name="maxSize"
+                          name="max_size"
                           onChange={changeHandler}
-                          value={maxSize}
+                          value={max_size}
                         />
                       </Row>
                     )}

@@ -15,13 +15,13 @@ class CreateEventContainer extends PureComponent {
           title: '',
           description: '',
           venue: '',
-          startDateTime: null,
-          endDateTime: null,
-          RegisterBefore: null,
-          isShowcasable: false,
-          isIndividualParticipation: true,
-          minSize: 1,
-          maxSize: 1,
+          start_date_time: null,
+          end_date_time: null,
+          register_before: null,
+          is_showcasable: false,
+          is_individual_participation: true,
+          min_size: 1,
+          max_size: 1,
         }
     }
 
@@ -42,13 +42,13 @@ class CreateEventContainer extends PureComponent {
           title: data.title,
           description: data.description,
           venue: data.venue,
-          startDateTime: moment(data.startDateTime),
-          endDateTime: moment(data.endDateTime),
-          RegisterBefore: moment(data.RegisterBefore),
-          isShowcasable: data.isShowcasable,
-          isIndividualParticipation: data.isIndividualParticipation,
-          minSize: data.minSize,
-          maxSize: data.maxSize,
+          start_date_time: moment(data.start_date_time),
+          end_date_time: moment(data.end_date_time),
+          register_before: moment(data.register_before),
+          is_showcasable: data.is_showcasable,
+          is_individual_participation: data.is_individual_participation,
+          min_size: data.min_size,
+          max_size: data.max_size,
         })
       }
 
