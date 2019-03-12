@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Skeleton, Button, Icon, Divider, Affix, Input, Select } from 'antd';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import AddToCalendar from 'react-add-to-calendar';
 import { fetchEventInitiated } from 'ACTION/eventAction';
 import EventDetails from './EventDetails';
 import Attendees from '../Attendees/';
@@ -78,10 +79,63 @@ class EventDetailsContainer extends Component {
         }
     }
 
+    getAddToCalender = (startTime, endTime, title, description, location) => {
+        let eventDate = moment(startTime);
+        let todaysDate = moment();
+        let diff = todaysDate.diff(eventDate, "days");
+        console.log(diff)
+        if (diff <= 0) {
+            let event = {
+                title,
+                description,
+                location,
+                startTime,
+                endTime
+            }
+            let items = [
+                { google: 'Google Calender' },
+                { outlook: 'Outlook' },
+                { outlookcom: 'Outlook.com' },
+                { yahoo: 'Yahoo' },
+                { apple: 'Apple Calendar' },
+
+             ];
+             
+            return (
+                <Row>
+                    <Col span={3}>
+                        <Icon type="calendar" />
+                    </Col>
+                    <Col span={21} >
+                        <AddToCalendar
+                            event={event}
+                            buttonLabel="Add to calendar"
+                            listItems={items}
+                        />
+                    </Col>
+                </Row>
+            );
+        }
+        return (
+            <Row>
+                <Col span={3}>
+                    <Icon type="calendar" />
+                </Col>
+                <Col span={21}>
+                    <span style={{ color: 'red' }}>
+                       
+                    </span>
+                </Col>
+            </Row>
+        );
+    }
+
     getEventLocation = ({
         start_date_time,
         end_date_time,
-        venue
+        venue,
+        title,
+        description
     }) => (
         <>
         <Row>
@@ -98,6 +152,7 @@ class EventDetailsContainer extends Component {
                 </span>
             </Col>
         </Row>
+        {this.getAddToCalender(start_date_time, end_date_time, title, description, venue)}
         <Row>
             <Col span={3}>
                 <Icon type="home" />

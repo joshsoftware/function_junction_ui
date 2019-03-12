@@ -70,3 +70,12 @@
     color: #4ba757;
     font-weight: 600;
 }
+.react-add-to-calendar__wrapper, .react-add-to-calendar__dropdown {
+    a {
+        color: #03A9F4;
+    }
+    a:hover {
+        color: tomato;
+        text-decoration: underline;
+    }
+}
