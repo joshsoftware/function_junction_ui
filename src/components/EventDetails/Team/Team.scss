@@ -1,0 +1,51 @@
+.create-team-button-wrapper{
+    text-align: center;
+    .create-team-button{
+        border-color: #f32000;
+        background-color: #f32000;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .create-team-button:hover{
+        background-color: #db1f06;
+        border: 1px solid #db1f06;
+        color: #fff;
+    }
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+}
+
+.flex-center > :first-child{
+    margin-right: 0.5rem;
+    font-weight: 700;
+}
+
+.showcasable-url{
+    margin-top: 0.5rem !important;
+    a{
+        text-decoration: none;
+    }
+}
+
+.mt-2{
+    margin-top: 2rem;
+}
+
+.invite-members{
+    text-align: center;
+    .email-input {
+        margin: 10px 0;
+    }
+}
+
+.m-1 {
+    margin: 1rem;
+}
+.close-circle{
+    float: right;
+    margin-bottom: 1rem;
+}
