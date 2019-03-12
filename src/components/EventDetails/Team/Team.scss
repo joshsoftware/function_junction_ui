@@ -14,16 +14,32 @@
     }
 }
 
-.show-team{
+.flex-center{
     display: flex;
     align-items: center;
-    .team-name{
-        margin-right: 10px;
+    :first-child{
+        margin-right: 0.5rem;
+        font-weight: 700;
     }
 }
 .showcasable-url{
-    margin-top: 10px !important;
+    margin-top: 0.5rem !important;
     a{
         text-decoration: none;
     }
+}
+
+.mt-2{
+    margin-top: 2rem;
+}
+
+.invite-members{
+    text-align: center;
+    .email-input {
+        margin: 10px 0;
+    }
+}
+
+.m-1 {
+    margin: 1rem;
 }

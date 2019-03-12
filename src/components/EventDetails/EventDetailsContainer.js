@@ -17,6 +17,7 @@ import "./EventDetails.scss";
 import CreateTeam from "./Team/Create";
 import { ShowTeam } from './Team/Show';
 import { validateEmail } from "../../utils/util";
+import ShowMembers from './Members/Show';
 
 const initialState = {
   loading: false,
@@ -24,7 +25,16 @@ const initialState = {
   eventDetailsLoading: false,
   sidePanelLoading: false,
   isRegistered: false,
-  isCreateTeamModalOpen: false
+  isCreateTeamModalOpen: false,
+  team: {
+    name: 'OUR TEAM',
+    showcasable_url: 'https://www.facebook.com',
+    members: [
+      { email: 'pragati@gmail.com' },
+      { email: 'ajit@gmail.com' },
+      { email: 'suhas@gmail.com' }
+    ]
+  }
 };
 
 class EventDetailsContainer extends Component {
@@ -68,7 +78,6 @@ class EventDetailsContainer extends Component {
 
   getRegisterButton = () => {
     const { match } = this.props;
-    console.log(this.props);
     if (match.params.userID) {
       return (
         <>
@@ -129,7 +138,6 @@ class EventDetailsContainer extends Component {
   getPanel = () => {
     const { isRegistered } = this.state;
     const { event } = this.props;
-    console.log(event, "%%%%%%%%%");
     return (
       <>
         <div className="location">{this.getEventLocation(event)}</div>
@@ -171,6 +179,15 @@ class EventDetailsContainer extends Component {
     callback();
   };
 
+  sendInvites = (emailIds) => {
+    const team = { ...this.state.team };
+    let members = [...team.members];
+    const invitees = emailIds.map(email => ({ email }));
+    members = members.concat(invitees);
+    team.members = members;
+    this.setState({ team });
+  }
+
   getEvent = props => (
     <div className="event-details-container">
       <Row>
@@ -186,10 +203,14 @@ class EventDetailsContainer extends Component {
                 isShowcasable={this.props.event.is_showcasable}
               /> */}
               <ShowTeam
-                team={{name: 'MY TEAM', showcasable_url: 'https://www.google.com'}}
+                team={this.state.team}
                 isShowcasable={this.props.event.is_showcasable}
                 handleNameChange={value => console.log('Updated Name:', value)}
                 handleShowcasableURLChange={value => console.log('Updated URL:',value)}
+              />
+              <ShowMembers
+                members={this.state.team.members}
+                sendInvites={this.sendInvites}
               />
             </div>
           </Affix>

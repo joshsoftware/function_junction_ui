@@ -35,9 +35,9 @@ export class ShowTeam extends PureComponent {
                 {
                     !isEditing ?
                     <>
-                        <div className='show-team'>
-                            <span className='team-name'>{/* <Icon type="usergroup-add" /> */}{team.name}</span>
-                            <Icon onClick={this.toggleEditing}  type="edit" />
+                        <div className='flex-center'>
+                            <h4 className='team-name'>{/* <Icon type="usergroup-add" /> */}{team.name}</h4>
+                            <h4><Icon onClick={this.toggleEditing}  type="edit" /></h4>
                         </div>
                         <div className='showcasable-url'>
                             <a target='_blank' rel="noopener noreferrer" href={`${team.showcasable_url}`}>{team.showcasable_url}</a>
