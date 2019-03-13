@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Input, DatePicker, Switch, InputNumber, Button, Card, Col, Spin } from 'antd';
+import { Input, DatePicker, Switch, InputNumber, Button, Card, Col, Spin, Select } from 'antd';
 import './index.scss';
 
 export const InputWithLabel = (props) => {
@@ -112,8 +112,14 @@ export const CustomCard = (props) => {
 }
 
 export const Spinner = (props) => {
-  const { margin } = props;
   return (
       <Spin />
   )
 }
+
+export const SelectWithTags = (props) => {
+  return <Select
+    mode='tags'
+    {...props}
+  />
+};
