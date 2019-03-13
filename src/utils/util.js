@@ -19,3 +19,7 @@ export function generateRandomColor() {
   }
   return color;
 }
+
+export function isObjectEmpty(obj) {
+  return obj && obj.constructor === Object && Object.entries(obj).length === 0;
+}

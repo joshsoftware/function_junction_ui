@@ -16,6 +16,7 @@ import { createTeamInitiated } from 'ACTION/team'
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import { ShowTeam } from './Team/Show';
+import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
 
@@ -240,13 +241,13 @@ class EventDetailsContainer extends Component {
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
             <div className="background">
-              {/* !props.event.isIndividualParticipation &&
+              {!props.event.isIndividualParticipation &&
               <CreateTeam
                 action='Create'
                 handleSubmit={this.handleCreateTeam}
                 isShowcasable={this.props.event.is_showcasable}
-              /> */}
-              <ShowTeam
+              />}
+              {/* <ShowTeam
                 team={this.state.team}
                 isShowcasable={this.props.event.is_showcasable}
                 handleTeamChange={this.handleTeamChange}
@@ -254,12 +255,12 @@ class EventDetailsContainer extends Component {
               <ShowMembers
                 members={this.state.team.members}
                 sendInvites={this.sendInvites}
-              />
+              /> */}
             </div>
           </Affix>
         </Col>
       </Row>
-      <Row>Test</Row>
+      <Row><Attendees event={props.event} /></Row>
     </div>
   );
 

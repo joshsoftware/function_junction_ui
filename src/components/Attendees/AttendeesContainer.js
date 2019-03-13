@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import { fetchAttendeesInitiated } from 'ACTION/attendeesAction';
 import User from './User';
 import './Attendees.scss';
+import { isObjectEmpty } from '../../utils/util';
 
 const Users = [
     {name: 'Suhas More', email: 'suhas@gmail.com'},
@@ -24,13 +25,20 @@ const Users = [
     {name: 'Priyanak More', email: 'priyanka@gmail.com'},
 ]
 
-class Attendees extends Component {
+class Attendees extends PureComponent {
 
-    componentDidMount() {
+    /* componentDidMount() {
+        console.log('Props:', this.props.event);
         if (this.props.event.id ) {
             const { event } = this.props;
             console.log(event, "EEEEEEEE")
             this.props.getAttendees(event.id);
+        }
+    } */
+
+    componentDidUpdate(prevProps) {
+        if(isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
+            this.props.getAttendees(this.props.event.id);
         }
     }
 
@@ -64,11 +72,11 @@ class Attendees extends Component {
     
 }
 
-function mapStateToProps({ attendees, event }) {
-    console.log(event, attendees, "STATE")
+function mapStateToProps({ attendees, event }, ownProps) {
+    // console.log(ownProps.event, attendees, "STATE")
     return {
         attendees: attendees.data,
-        event: event.data
+        event: ownProps.event
     }
 }
 
