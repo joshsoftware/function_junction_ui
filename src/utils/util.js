@@ -23,3 +23,9 @@ export function generateRandomColor() {
 export function isObjectEmpty(obj) {
   return obj && obj.constructor === Object && Object.entries(obj).length === 0;
 }
+
+export function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

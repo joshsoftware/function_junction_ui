@@ -14,13 +14,23 @@
 }
 
 .card-avatar {
-    span {
-        font-weight: 600;
-        text-align: center
-    }
     .time {
         font-size: 12px;
         text-align: center;
         color: #888581;
     }
+}
+
+.ant-card-actions {
+    li {
+        // margin: 10px 0px !important;
+    }
+}
+.ant-card-meta-title {
+    font-weight: 800 !important;
+    margin-bottom: 0% !important;
+    font-size: 18px !important;
+}
+.ant-card-meta-description {
+
 }

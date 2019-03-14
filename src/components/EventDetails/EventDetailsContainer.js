@@ -260,7 +260,13 @@ class EventDetailsContainer extends Component {
           </Affix>
         </Col>
       </Row>
-      <Row><Attendees event={props.event} /></Row>
+      <Row>
+        <Col span={18} >
+          <Attendees
+            event={props.event}
+          />
+        </Col>
+      </Row>
     </div>
   );
 
