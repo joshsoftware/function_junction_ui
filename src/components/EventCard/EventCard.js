@@ -2,9 +2,38 @@ import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
+import Quotes from './Quotes';
+
 import './EventCard.scss';
+import { generateRandomColor, getRandomInt } from '../../utils/util';
 
 const { Meta } = Card;
+
+const Happen = styled.div`
+  font-size: 10px;
+  font-weight: 100;
+  letter-spacing: 2px;
+  text-align: center;
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const Label = styled.span`
+  color: grey;
+  font-size: 12px;
+  letter-spacing: 1px;
+`;
+const Data = styled.div`
+  color: #848181;
+  width: 133px;
+  height: 20px;
+  font-weight: 600;
+  overflow: hidden;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+`;
+
 
 function getAvatar(startDateTime) {
   let eventDate = moment(startDateTime);
@@ -18,23 +47,14 @@ function getAvatar(startDateTime) {
     letter-spacing: 2px;
   `;
 
-  const Happen = styled.div`
-    font-size: 10px;
-    font-weight: 100;
-    letter-spacing: 2px;
-    text-align: center;
-  `;
-
   return (
     <div className="card-avatar">
         {diff <= 0 ?
-          <Happen>Happening on</Happen>
+          <Label>Happening on</Label>
         :
-          <Happen>Happened on</Happen>
+          <Label>Happened on</Label>
         }
       <DateContainer>
-        {/* <span className="month">{moment(startDateTime).format('MMM')}</span>
-        <span className="month">{moment(startDateTime).format('DD - YYYY')}</span> */}
         {moment(startDateTime).format('DD MMM YYYY')}
       </DateContainer>
       <div className="time">
@@ -44,17 +64,74 @@ function getAvatar(startDateTime) {
   )
 }
 
-const eventCard = ({id, title, desc, start_date_time, history, ...rest}) => {
+function getActionItems({ start_date_time, is_individual_participation, venue }) {
+  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 20 }} type="usergroup-add" /> </Tooltip>;
+  if (is_individual_participation) {
+    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 20 }} type="user" title="Individual Event"/> </Tooltip>;
+  }
+  
+  const Venue = (
+    <Container>
+      <Label>Venue</Label>
+      <Data>{venue}</Data>
+    </Container>
+  );
+  const Team = (
+    <Container>
+      <Label>Event Participation</Label>
+      <Data>{EventType}</Data>
+    </Container>
+  );
+  return [getAvatar(start_date_time), Venue, Team]
+}
+
+function getCover() {
+  const colors = ['#dc97a9','#f2cb7c', '#edaf88','#d3bfb6','#addad7','#2d0c03','#98514b','#f8b786','#ff1a4a','#4a707a','#7697a0','#94b0b7','#c2c8c5'];
+  const QuoteContainer = styled.div`
+    background: ${colors[getRandomInt(0, colors.length-1)]};
+    padding: 4%;
+    height: 200px;
+  `;
+  const Quote = styled.div`
+    color: white;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 600;
+  `;
+  const By = styled.div`
+    text-align: end;
+    color: white;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 1px;
+    margin-top: 11px;
+  `;
+  console.log(Quotes[getRandomInt(0, Quotes.length)])
+  const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
+
+  return (
+    <QuoteContainer>
+      <Quote>
+        {saying}
+      </Quote>
+      <By>
+        {`- ${by}`}
+      </By>
+    </QuoteContainer>
+  )
+}
+
+const eventCard = ({id, title, desc, history, ...rest}) => {
   return (
   <Card
     hoverable
     style={{ margin: 20 }}
-    cover={<img alt="example" src="https://image.shutterstock.com/image-vector/vector-hand-drawn-acrylic-stroke-450w-450333322.jpg" height="265px"/>}
-    // actions={[<Tooltip placement='top' title='Invite' ><Icon type="user" /></Tooltip>, <Tooltip placement='top' title='Edit'><Icon type="edit" /></Tooltip>]}
+    cover={getCover()}
+    actions={getActionItems(rest)}
     onClick={() => history.push(`/event-details/${id}`)}
   >
     <Meta
-      avatar={getAvatar(start_date_time)}
+      // avatar={getAvatar(start_date_time)}
       title={title}
       description={desc}
     />

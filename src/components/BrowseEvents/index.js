@@ -31,7 +31,7 @@ class BrowseEvents extends PureComponent {
         if (data.length === 0) {
             return <Empty description="No events found."/>;
         }
-        return data.map(({id, title, description, ...rest}) => (
+        return data.map(({id, title, description, ...rest}, index) => (
             <Col md={8} key={id}>
                 <EventCard
                     title={title}
