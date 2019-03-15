@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Alert } from 'antd';
 import AppLayout from '../layout/Layout';
 import routes from 'UTILS/routes';
@@ -28,7 +28,10 @@ const App = () => {
       {!online && <Alert message="Seems like you lost internet connection." type="error" showIcon closable />}
     </div>
       <Router>
-        <Route path={routes.root} component={AppLayout} />
+        <Switch>
+          <Route path="/" exact component={() => window.location.replace(routes.root)} />
+          <Route path={routes.root} component={AppLayout} />
+        </Switch>
       </Router>
     </div>
   );
