@@ -14,7 +14,7 @@ class CreateEventContainer extends PureComponent {
         this.state = {
           title: '',
           description: '',
-          venue: '',
+          venue: 'Josh Software',
           start_date_time: null,
           end_date_time: null,
           register_before: null,

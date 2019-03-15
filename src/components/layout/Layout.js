@@ -56,7 +56,7 @@ class AppLayout extends Component {
 
   getCreateEventButton = () => {
     const { location } = this.props;
-    if (location.pathname !== routes.createEvent && !location.pathname.includes('event-details')) {
+    if (location.pathname !== routes.createEvent && !location.pathname.includes('event-details') && !location.pathname.includes('update')) {
         return (
           <>
             <NavLink
@@ -75,7 +75,7 @@ class AppLayout extends Component {
     <NavLink className='logoWrapper' to={routes.allEvents}>
       <img className='logo' src={Logo} alt='Logo'/>
     </NavLink>
-    {this.getFilters()}
+    {/* {this.getFilters()} */}
     {this.getCreateEventButton()}
   </div>
 
