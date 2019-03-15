@@ -22,7 +22,7 @@ class CreateEvent extends PureComponent {
                   <CustomCard title={isEdit? "Update Event" : "Create Event"} extra={<Icon type="close" onClick={() => redirectToBrowse()} />}>
                     <Row>
                       <InputWithLabel
-                        label="Title of Event:"
+                        label="Title"
                         placeholder="Title"
                         name="title"
                         onChange={changeHandler}
@@ -46,9 +46,9 @@ class CreateEvent extends PureComponent {
                         value={venue}
                       />
                       <Col span={2} />
-                      <DatePickerWithLabel
-                        label="Registration End Date:"
-                        placeholder="Registartion End date"
+                      <DateTimePickerWithLabel
+                        label="Registration Before"
+                        placeholder="Registartion End Time"
                         name="register_before"
                         onChange={changeHandler}
                         value={register_before}
@@ -57,7 +57,7 @@ class CreateEvent extends PureComponent {
                     <Row className="margin20px">
                       <DateTimePickerWithLabel
                         label="Start Date Time:"
-                        placeholder="Start date and time"
+                        placeholder="Start Time"
                         name="start_date_time"
                         onChange={changeHandler}
                         value={start_date_time}
@@ -65,7 +65,7 @@ class CreateEvent extends PureComponent {
                       <Col span={2} />
                       <DateTimePickerWithLabel
                         label="End Date Time:"
-                        placeholder="End date and time"
+                        placeholder="End Time"
                         name="end_date_time"
                         onChange={changeHandler}
                         value={end_date_time}
@@ -104,14 +104,14 @@ class CreateEvent extends PureComponent {
                       </Row>
                     )}
                     <Row className="margin20px">
-                      <Col span={5} offset={9}>
+                      {/* <Col span={5} offset={9}>
                         <CustomButton
                           type="default"
                           onClick={() => submitHandler(false)}
                           label="Save as draft"
                         />
-                      </Col>
-                      <Col span={3}>
+                      </Col> */}
+                      <Col span={3} offset={11}>
                         <CustomButton
                           type="primary"
                           onClick={() => submitHandler(true)}

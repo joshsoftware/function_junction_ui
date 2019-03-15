@@ -18,6 +18,7 @@ const Happen = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 66px;
 `;
 const Label = styled.span`
   color: grey;
@@ -133,7 +134,7 @@ const eventCard = ({id, title, desc, history, ...rest}) => {
     <Meta
       // avatar={getAvatar(start_date_time)}
       title={title}
-      description={desc}
+      description={desc || 'Description not available.'}
     />
   </Card>
 );}
