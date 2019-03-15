@@ -44,7 +44,7 @@ class CreateEvent extends PureComponent {
                         name="venue"
                         onChange={changeHandler}
                         value={venue}
-                        disabled
+                        // disabled
                       />
                       <Col span={2} />
                       <DateTimePickerWithLabel
