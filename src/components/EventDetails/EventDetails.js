@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, Tooltip } from 'antd';
+import { Divider, Tooltip, Icon } from 'antd';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 import { getFormatedDate } from './Constant';
 
@@ -37,7 +38,9 @@ const EventDetails = ({
 
 const EventHeader = ({
     title,
-    startDateTime
+    startDateTime,
+    id,
+    history
 }) => (
     <>
         <div className="date">
@@ -46,6 +49,9 @@ const EventHeader = ({
         </div>
         <div className="title">
             <Tooltip title={title} placement="top">{title}</Tooltip>
+        </div>
+        <div>
+            <Icon type="edit" theme="twoTone" onClick={() => history.push(`/update/${id}`)}/>
         </div>
         
     </>
@@ -73,9 +79,8 @@ const EventDescription = ({
     description
 }) => (
     <div>
-        {/* <iframe src={description}></iframe> */}
         {description}
     </div>
 )
 
-export default EventDetails;
+export default withRouter(EventDetails);

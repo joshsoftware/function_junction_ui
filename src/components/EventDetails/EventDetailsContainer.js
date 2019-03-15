@@ -53,7 +53,7 @@ class EventDetailsContainer extends Component {
     }
   }
 
-  getEventDetails = event => <EventDetails {...event} />;
+  getEventDetails = (event, history) => <EventDetails {...event} {...history} />;
 
   getAddToCalender = (startTime, endTime, title, description, location) => {
         let eventDate = moment(startTime);
@@ -105,9 +105,9 @@ class EventDetailsContainer extends Component {
         );
     }
 
-  getEventDetailsContainers = ({ loading, event }) => (
+  getEventDetailsContainers = ({ loading, event, history }) => (
     <div className="event-details-wrapper background">
-      {!loading && this.getEventDetails(event)}
+      {!loading && this.getEventDetails(event, history)}
       {loading && <Skeleton active avatar paragraph={{ rows: 5 }} />}
     </div>
   );
