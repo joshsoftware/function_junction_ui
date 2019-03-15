@@ -5,7 +5,7 @@ import { Input, DatePicker, Switch, InputNumber, Button, Card, Col, Spin, Select
 import './index.scss';
 
 export const InputWithLabel = (props) => {
-  const { placeholder, onChange, label, value, name } = props;
+  const { placeholder, onChange, label, value, name , ...rest} = props;
   return (
     <>
       <Col span={3}>
@@ -13,7 +13,7 @@ export const InputWithLabel = (props) => {
       </Col>
       <Col span={8}>
         <Input name={name} placeholder={placeholder} value={value}
-          onChange={(event) => onChange(name, event.target.value)}  />
+          onChange={(event) => onChange(name, event.target.value)} {...rest}/>
       </Col>
     </>
   )

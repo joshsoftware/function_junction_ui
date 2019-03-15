@@ -38,12 +38,13 @@ class CreateEvent extends PureComponent {
                       />
                     </Row>
                     <Row className="margin20px">
-                      <TextAreaWithLabel
+                      <InputWithLabel
                         label="Venue:"
                         placeholder="Venue"
                         name="venue"
                         onChange={changeHandler}
                         value={venue}
+                        disabled
                       />
                       <Col span={2} />
                       <DateTimePickerWithLabel
