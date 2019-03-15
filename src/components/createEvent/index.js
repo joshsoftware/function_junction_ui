@@ -116,7 +116,7 @@ class CreateEvent extends PureComponent {
                         <CustomButton
                           type="primary"
                           onClick={() => submitHandler(true)}
-                          label="Save and publish"
+                          label={isEdit? "Update Event" :"Save and publish"}
                         />
                       </Col>
                     </Row>
