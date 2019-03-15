@@ -14,6 +14,28 @@
     }
 }
 
+.members-wrapper{
+    max-height: 10rem;
+    overflow-y: auto;
+    max-width: 20rem;
+}
+
+.members-wrapper::-webkit-scrollbar{
+    width: 0.2rem;
+    // background-color: #db1f06;
+}
+.members-wrapper::-webkit-scrollbar-track{
+    border-radius: 0.2rem;
+    box-shadow: 0 0 1px #aeaeae;
+    border: 0.2rem solid #f1efef;
+
+}
+.members-wrapper::-webkit-scrollbar-thumb{
+    border-radius: 0.2rem;
+    box-shadow: 0 0 1px #aaaaaa;
+    background-color: #db1f06;
+}
+
 .flex-center{
     display: flex;
     align-items: center;
@@ -48,4 +70,8 @@
 .close-circle{
     float: right;
     margin-bottom: 1rem;
+}
+
+.member-status{
+    margin-left: auto;
 }

@@ -36,7 +36,7 @@ class ShowMembers extends PureComponent {
                         handleSendInvites={this.handleSendInvites}
                     />                        
                 }
-                {this.renderMembers(this.props.members)}
+                <div className='members-wrapper'>{this.renderMembers(this.props.members)}</div>
             </>
         );
     }

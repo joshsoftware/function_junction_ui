@@ -13,6 +13,7 @@ import moment from "moment";
 import AddToCalendar from 'react-add-to-calendar';
 import { fetchEventInitiated } from "ACTION/eventAction";
 import { createTeamInitiated } from 'ACTION/team'
+import { fetchAttendeesInitiated } from 'ACTION/attendeesAction';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import { ShowTeam } from './Team/Show';
@@ -31,8 +32,8 @@ const initialState = {
     name: 'REACT DEVS',
     showcasable_url: 'https://www.facebook.com',
     members: [
-      { email: 'pragati@gmail.com' },
-      { email: 'ajit@gmail.com' },
+      { email: 'pragati@gmail.com', accepted: true },
+      { email: 'ajit@gmail.com', accepted: false },
       { email: 'suhas@gmail.com' }
     ]
   }
@@ -227,7 +228,6 @@ class EventDetailsContainer extends Component {
   }
 
   handleTeamChange = (value, field) => {
-    console.log('Field:', field,' value:', value);
     const team = {...this.state.team};
     team[field] = value;
     this.setState({ team });
@@ -236,18 +236,28 @@ class EventDetailsContainer extends Component {
   getEvent = props => (
     <div className="event-details-container">
       <Row>
-        <Col span={18}>{this.getEventDetailsContainers(props)}</Col>
+        <Col span={18}>
+          {this.getEventDetailsContainers(props)}
+          <Row>
+        <Col span={24} >
+          <Attendees
+            event={props.event}
+            getAttendees={props.getAttendees}
+          />
+        </Col>
+      </Row>
+        </Col>
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
             <div className="background">
-              {!props.event.isIndividualParticipation &&
+              {/* {!props.event.isIndividualParticipation &&
               <CreateTeam
                 action='Create'
                 handleSubmit={this.handleCreateTeam}
                 isShowcasable={this.props.event.is_showcasable}
-              />}
-              {/* <ShowTeam
+              />} */}
+              <ShowTeam
                 team={this.state.team}
                 isShowcasable={this.props.event.is_showcasable}
                 handleTeamChange={this.handleTeamChange}
@@ -255,16 +265,9 @@ class EventDetailsContainer extends Component {
               <ShowMembers
                 members={this.state.team.members}
                 sendInvites={this.sendInvites}
-              /> */}
+              />
             </div>
           </Affix>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={18} >
-          <Attendees
-            event={props.event}
-          />
         </Col>
       </Row>
     </div>
@@ -281,9 +284,10 @@ class EventDetailsContainer extends Component {
   };
 }
 
-function mapStateToProp({ event }) {
+function mapStateToProp({ event, attendees }, ownProps) {
   return {
     event: event.data,
+    attendees: attendees.data,
     loading: event.loading,
     error: event.error
   };
@@ -292,7 +296,8 @@ function mapStateToProp({ event }) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
-    createTeamInitiated: data => dispatch(createTeamInitiated(data))
+    createTeamInitiated: data => dispatch(createTeamInitiated(data)),
+    getAttendees: (eventID) => dispatch(fetchAttendeesInitiated(eventID)),
   };
 }
 
