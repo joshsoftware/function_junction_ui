@@ -75,7 +75,7 @@ class AppLayout extends Component {
     <NavLink className='logoWrapper' to={routes.allEvents}>
       <img className='logo' src={Logo} alt='Logo'/>
     </NavLink>
-    {this.getFilters()}
+    {/* {this.getFilters()} */}
     {this.getCreateEventButton()}
   </div>
 
