@@ -1,0 +1,28 @@
+.jcontainer {
+    span {
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 13px;
+        padding-left: 2px;
+    }
+    em {
+        color: red;
+    }
+    button {
+        margin-left: 10px;
+    }
+}
+
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    .label {
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 13px;
+        padding-left: 2px;
+    }
+    em {
+        color: red;
+    }
+}

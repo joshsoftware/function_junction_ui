@@ -1,18 +1,25 @@
 .event-container {
-    margin: 10% 20%;
+    margin: 10% 15%;
     border: 1px solid #bbabab;
     background: white;
     border-radius: 20px;
     padding: 1%;
 
+    .ant-row {
+        padding-bottom: 3%;
+    }
+    .ant-divider-horizontal {
+        margin: 15px 0px;
+    }
     .header {
         text-align: center;
-        font-size: 18px;
+        padding: 0px !important;
+        font-size: 20px;
+        letter-spacing: 3px;
         font-weight: 700;
-        text-decoration: underline;
     }
 
     .form {
-        
+        padding: 2%
     }
 }

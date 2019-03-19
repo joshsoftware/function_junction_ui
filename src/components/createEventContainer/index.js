@@ -13,6 +13,7 @@ class CreateEventContainer extends PureComponent {
 
         this.state = {
           title: '',
+          summary: '',
           description: '',
           venue: 'Josh Software',
           start_date_time: null,
@@ -40,6 +41,7 @@ class CreateEventContainer extends PureComponent {
         const { data } = nextProps.event;
         this.setState({
           title: data.title,
+          summary: data.summary,
           description: data.description,
           venue: data.venue,
           start_date_time: moment(data.start_date_time),
