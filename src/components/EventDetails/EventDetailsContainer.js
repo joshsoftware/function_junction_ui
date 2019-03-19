@@ -12,8 +12,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import AddToCalendar from 'react-add-to-calendar';
 import { fetchEventInitiated } from "ACTION/eventAction";
-import { createTeamInitiated } from 'ACTION/team'
-import { fetchAttendeesInitiated } from 'ACTION/attendeesAction';
+import { fetchAttendeesInitiated, addTeamMemberInitiated, createTeamInitiated } from 'ACTION/attendeesAction';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import { ShowTeam } from './Team/Show';
@@ -28,7 +27,7 @@ const initialState = {
   sidePanelLoading: false,
   isRegistered: false,
   isCreateTeamModalOpen: false,
-  team: {
+  /* team: {
     name: 'REACT DEVS',
     showcasable_url: 'https://www.facebook.com',
     members: [
@@ -36,7 +35,7 @@ const initialState = {
       { email: 'ajit@gmail.com', accepted: false },
       { email: 'suhas@gmail.com' }
     ]
-  }
+  } */
 };
 
 class EventDetailsContainer extends Component {
@@ -219,16 +218,12 @@ class EventDetailsContainer extends Component {
   };
 
   sendInvites = (emailIds) => {
-    const team = { ...this.state.team };
-    let members = [...team.members];
-    const invitees = emailIds.map(email => ({ email }));
-    members = members.concat(invitees);
-    team.members = members;
-    this.setState({ team });
+    const team = {...this.props.attendees.teams[0]}
+    this.props.addTeamMemberInitiated({emailIds, eventId: this.props.event.id, teamId: team.id});
   }
 
   handleTeamChange = (value, field) => {
-    const team = {...this.state.team};
+    const team = {...this.props.attendees.teams[0]};
     team[field] = value;
     this.setState({ team });
   }
@@ -251,21 +246,27 @@ class EventDetailsContainer extends Component {
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
             <div className="background">
-              {/* {!props.event.isIndividualParticipation &&
-              <CreateTeam
-                action='Create'
-                handleSubmit={this.handleCreateTeam}
-                isShowcasable={this.props.event.is_showcasable}
-              />} */}
-              <ShowTeam
-                team={this.state.team}
-                isShowcasable={this.props.event.is_showcasable}
-                handleTeamChange={this.handleTeamChange}
-              />
-              <ShowMembers
-                members={this.state.team.members}
-                sendInvites={this.sendInvites}
-              />
+              {
+                this.props.attendees && this.props.attendees.teams ?
+                <>
+                  <ShowTeam
+                    team={this.props.attendees.teams[0]}
+                    isShowcasable={this.props.event.is_showcasable}
+                    handleTeamChange={this.handleTeamChange}
+                  />
+                  <ShowMembers
+                    members={this.props.attendees.teams[0].members || []}
+                    sendInvites={this.sendInvites}
+                  />
+                </>
+                :
+                !props.event.isIndividualParticipation &&
+                  <CreateTeam
+                    action='Create'
+                    handleSubmit={this.handleCreateTeam}
+                    isShowcasable={this.props.event.is_showcasable}
+                  />
+              }
             </div>
           </Affix>
         </Col>
@@ -297,7 +298,8 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
-    getAttendees: (eventID) => dispatch(fetchAttendeesInitiated(eventID)),
+    getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
+    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload))
   };
 }
 

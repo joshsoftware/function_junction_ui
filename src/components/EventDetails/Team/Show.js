@@ -39,7 +39,7 @@ export class ShowTeam extends PureComponent {
                             <h4 style={{ marginLeft: 'auto' }} ><Icon theme='twoTone' onClick={this.toggleEditing}  type="edit" /></h4>
                         </div>
                         <div className='showcasable-url'>
-                            <a target='_blank' rel="noopener noreferrer" href={`${team.showcasable_url}`}>{team.showcasable_url}</a>
+                            <a target='_blank' rel="noopener noreferrer" href={`${team.showcase_url}`}>{team.showcase_url}</a>
                         </div>
                         </>
                     :
@@ -54,9 +54,9 @@ export class ShowTeam extends PureComponent {
                         <Input
                             className='showcasable-url'
                             placeholder="Enter showcaseable URL"
-                            defaultValue={team.showcasable_url}
-                            onBlur={event => this.handleTeamChange(event, 'showcasable_url')}
-                            name='showcasable_url'
+                            defaultValue={team.showcase_url}
+                            onBlur={event => this.handleTeamChange(event, 'showcase_url')}
+                            name='showcase_url'
                         />
                         </>
 

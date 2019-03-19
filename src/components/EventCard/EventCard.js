@@ -107,7 +107,6 @@ function getCover() {
     letter-spacing: 1px;
     margin-top: 11px;
   `;
-  console.log(Quotes[getRandomInt(0, Quotes.length)])
   const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
 
   return (
