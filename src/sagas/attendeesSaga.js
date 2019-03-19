@@ -29,7 +29,7 @@ function* addTeamMember(action) {
   try {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/teams/${action.payload.teamId}/team_members`,
-      action.payload.emailIds
+      {emails: action.payload.emailIds} 
     ));
     const data = yield call(() => response.json.bind(response)());
     yield put(updateTeamSuccess(data))
