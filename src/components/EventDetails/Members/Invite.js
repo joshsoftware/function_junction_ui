@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { Button, Icon, Form } from "antd";
+import { Button, Icon, Form, Select } from "antd";
 import { validateEmail } from "../../../utils/util";
-import { SelectWithTags } from "../../shared";
 
 class InviteMemberForm extends PureComponent {
   handleEmailChange = (rule, values, callback) => {
@@ -50,7 +49,7 @@ class InviteMemberForm extends PureComponent {
               }
             ]
           })(
-            <SelectWithTags
+            <Select
               className="email-input"
               mode="tags"
               placeholder="Enter email id and press enter"

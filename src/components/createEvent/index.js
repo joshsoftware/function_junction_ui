@@ -1,24 +1,19 @@
 import React, { PureComponent } from 'react';
-import {
-  InputWithLabel,
-  InputNumberWithLabel,
-  TextAreaWithLabel,
-  DatePickerWithLabel,
-  DateTimePickerWithLabel,
-  SwitchWithLabel,
-  CustomButton,
-  CustomCard,
-} from '../shared';
 import { Row, Col, Icon } from 'antd';
+import './index.scss';
 
 class CreateEvent extends PureComponent {
     render() {
         const { isEdit, title, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
            is_individual_participation, min_size, max_size, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
-            <div className="container">
-              <Row>
-                <Col span={18} offset={3}>
+            <div className="event-container">
+              <Row className="header">{isEdit? 'Update Event' : 'Create Event'}</Row>
+              <div className="form">
+
+              </div>
+              {/* <Row>
+                <Col span={24}>
                   <CustomCard title={isEdit? "Update Event" : "Create Event"} extra={<Icon type="close" onClick={() => redirectToBrowse()} />}>
                     <Row>
                       <InputWithLabel
@@ -105,13 +100,6 @@ class CreateEvent extends PureComponent {
                       </Row>
                     )}
                     <Row className="margin20px">
-                      {/* <Col span={5} offset={9}>
-                        <CustomButton
-                          type="default"
-                          onClick={() => submitHandler(false)}
-                          label="Save as draft"
-                        />
-                      </Col> */}
                       <Col span={3} offset={11}>
                         <CustomButton
                           type="primary"
@@ -122,7 +110,7 @@ class CreateEvent extends PureComponent {
                     </Row>
                   </CustomCard>
                 </Col>
-            </Row>
+            </Row> */}
           </div>
         );
     }
