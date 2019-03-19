@@ -63,7 +63,7 @@ class AppLayout extends Component {
               to={routes.createEvent}
               style={{ textDecoration: 'none' }}
             >
-              <span className='create-link'>Create</span>
+              <span className='create-link'>Create Event</span>
             </NavLink>
           </>
         )
