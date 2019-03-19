@@ -27,15 +27,6 @@ const initialState = {
   sidePanelLoading: false,
   isRegistered: false,
   isCreateTeamModalOpen: false,
-  /* team: {
-    name: 'REACT DEVS',
-    showcasable_url: 'https://www.facebook.com',
-    members: [
-      { email: 'pragati@gmail.com', accepted: true },
-      { email: 'ajit@gmail.com', accepted: false },
-      { email: 'suhas@gmail.com' }
-    ]
-  } */
 };
 
 class EventDetailsContainer extends Component {
