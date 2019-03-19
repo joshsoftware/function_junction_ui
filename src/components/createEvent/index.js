@@ -49,7 +49,7 @@ class CreateEvent extends PureComponent {
                       <Col span={2} />
                       <DateTimePickerWithLabel
                         label="Registration Before"
-                        placeholder="Registartion End Time"
+                        placeholder="Registration End Time"
                         name="register_before"
                         onChange={changeHandler}
                         value={register_before}
