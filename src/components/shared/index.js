@@ -1,7 +1,10 @@
 import React from 'react';
 import { Input, DatePicker, Switch, Button, Icon } from 'antd';
 import './index.scss';
-
+const buttonStyle = {
+    backgroundColor: '#ee4239',
+    borderColor: '#ed4239',
+}
 const Container = ({ label, required, children }) => (
     <div className="jcontainer">
         <span>{label ? label : ''}</span>
@@ -45,6 +48,6 @@ export const JSwitch = (props) => (
     </Container>
 );
 
-export const JButton = ({ name, ...rest }) => (
-    <Button {...rest} >{name}</Button>
+export const JButton = ({ name, type, ...rest }) => (
+    <Button type={type} {...rest} style={type === 'primary' ? buttonStyle : {}}>{name}</Button>
 );
