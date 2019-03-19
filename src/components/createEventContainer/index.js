@@ -58,7 +58,7 @@ class CreateEventContainer extends PureComponent {
     }
 
     redirectToBrowse = () => {
-      this.props.history.push('/');
+      this.props.history.push('/functions/');
     }
 
     changeHandler = (key, value) => {

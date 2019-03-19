@@ -7,7 +7,6 @@ const Quotes = [
     { saying: 'Knowledge is power.', by: 'Francis Bacon'},
     { saying: 'Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday’s code.', by: 'Dan Salomon'},
     { saying: 'Perfection is achieved not when there is nothing more to add, but rather when there is nothing more to take away.', by: ' Antoine de Saint-Exupery'},
-    { saying: 'Ruby is rubbish! PHP is phpantastic!', by: 'Nikita Popov'},
     { saying: ' Code is like humor. When you have to explain it, it’s bad.', by: 'Cory House'},
     { saying: 'Fix the cause, not the symptom.', by: 'Steve Maguire'},
     { saying: 'Optimism is an occupational hazard of programming: feedback is the treatment', by: 'Kent Beck'},

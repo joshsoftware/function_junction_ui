@@ -44,12 +44,12 @@ class CreateEvent extends PureComponent {
                         name="venue"
                         onChange={changeHandler}
                         value={venue}
-                        disabled
+                        // disabled
                       />
                       <Col span={2} />
                       <DateTimePickerWithLabel
                         label="Registration Before"
-                        placeholder="Registartion End Time"
+                        placeholder="Registration End Time"
                         name="register_before"
                         onChange={changeHandler}
                         value={register_before}
@@ -116,7 +116,7 @@ class CreateEvent extends PureComponent {
                         <CustomButton
                           type="primary"
                           onClick={() => submitHandler(true)}
-                          label="Save and publish"
+                          label={isEdit? "Update Event" :"Save and publish"}
                         />
                       </Col>
                     </Row>

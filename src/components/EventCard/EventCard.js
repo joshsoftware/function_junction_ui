@@ -128,7 +128,7 @@ const eventCard = ({id, title, desc, history, ...rest}) => {
     style={{ margin: 20 }}
     cover={getCover()}
     actions={getActionItems(rest)}
-    onClick={() => history.push(`/event-details/${id}`)}
+    onClick={() => history.push(`/functions/event-details/${id}`)}
   >
     <Meta
       // avatar={getAvatar(start_date_time)}

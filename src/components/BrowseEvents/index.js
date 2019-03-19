@@ -9,10 +9,10 @@ import Slider from '../../components/Carousel';
 import './BrowseEvents.scss';
 
 const items=[
-    <img src="/assets/img/1.jpg" alt="1" width="100%"/>,
-    <img src="/assets/img/2.jpg" alt="2" width="100%"/>,
-    <img src="/assets/img/3.jpg" alt="3" width="100%"/>,
-    <img src="/assets/img/4.jpg" alt="4" width="100%"/>,
+    <img src="https://cdn.evbstatic.com/s3-build/perm_001//8d8a56/django/images/homepage/bg-desktop-snowglobe.jpg" alt="1" width="100%"/>,
+    <img src="https://cdn.evbstatic.com/s3-build/perm_001//8b6c63/django/images/homepage/bg-desktop-generationdiy.jpg" alt="2" width="100%"/>,
+    <img src="https://cdn.evbstatic.com/s3-build/perm_001//054546/django/images/homepage/bg-desktop-wanderlust.jpg" alt="3" width="100%"/>,
+    <img src="https://cdn.evbstatic.com/s3-build/perm_001//b41172/django/images/homepage/bg-desktop-rapoport.jpg" alt="4" width="100%"/>,
  ]
 
 class BrowseEvents extends PureComponent {
@@ -28,7 +28,7 @@ class BrowseEvents extends PureComponent {
 
     getEventsCards = () => {
         const { events: { data } } = this.props;
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
             return <Empty description="No events found."/>;
         }
         return data.map(({id, title, description, ...rest}, index) => (

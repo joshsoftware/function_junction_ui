@@ -51,7 +51,7 @@ const EventHeader = ({
             <Tooltip title={title} placement="top">{title}</Tooltip>
         </div>
         <div>
-            <Icon type="edit" theme="twoTone" onClick={() => history.push(`/update/${id}`)}/>
+            <Icon type="edit" theme="twoTone" onClick={() => history.push(`/functions/update/${id}`)}/>
         </div>
         
     </>
@@ -79,7 +79,7 @@ const EventDescription = ({
     description
 }) => (
     <div>
-        {description}
+        {description || 'Description Not Available.'}
     </div>
 )
 
