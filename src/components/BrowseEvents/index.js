@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Empty } from 'antd';
+import { Row, Col, Empty, Skeleton } from 'antd';
 import { connect } from 'react-redux';
 
 import { fetchEventListInitiated } from 'ACTION/eventsAction';
@@ -27,7 +27,22 @@ class BrowseEvents extends PureComponent {
     }
 
     getEventsCards = () => {
-        const { events: { data } } = this.props;
+        const { events: { data, isLoading } } = this.props;
+        if (isLoading) {
+            return (
+                <Row>
+                    <Col md={7} className="loader">
+                        <Skeleton active paragraph avatar />
+                    </Col>
+                    <Col md={7} className="loader">
+                        <Skeleton active paragraph avatar />
+                    </Col>
+                    <Col md={7} className="loader">
+                        <Skeleton active paragraph avatar />
+                    </Col>
+                </Row>
+            )
+        }
         if (!data || data.length === 0) {
             return <Empty description="No events found."/>;
         }

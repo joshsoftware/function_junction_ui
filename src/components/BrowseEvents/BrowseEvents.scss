@@ -8,6 +8,15 @@
     .events {
         padding-top: 1%;
         background: #fafafa;
+        height: 500px;
+        .loader {
+            padding: 22px;
+            margin: 9px;
+            height: 206px;
+            border: 1px solid #b1a8a866;
+            box-shadow: 5px 6px 15px 5px #eee;
+            background-color: white;
+        }
         .ant-card {
             .ant-card-body {
                 padding: 13px 17px;

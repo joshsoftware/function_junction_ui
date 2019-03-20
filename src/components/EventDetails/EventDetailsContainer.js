@@ -8,6 +8,7 @@ import {
   Divider,
   Affix,
 } from "antd";
+import styled from 'styled-components';
 import { connect } from "react-redux";
 import moment from "moment";
 import AddToCalendar from 'react-add-to-calendar';
@@ -267,9 +268,15 @@ class EventDetailsContainer extends Component {
 
   render = () => {
     const { loading, event } = this.props;
+    console.log(loading, this.props, "4$")
+    const LoaderContainer = styled.div`
+      margin: 9% 0%;
+      padding: 1% 1%;
+      background: white;
+    `;
     return (
       <>
-        {/* {loading && <Skeleton active />} */}
+        {loading && <LoaderContainer><Skeleton active avatar/></LoaderContainer>}
         {!loading && this.getEvent(this.props)}
       </>
     );
@@ -280,7 +287,7 @@ function mapStateToProp({ event, attendees }, ownProps) {
   return {
     event: event.data,
     attendees: attendees.data,
-    loading: event.loading,
+    loading: event.isLoading,
     error: event.error
   };
 }
