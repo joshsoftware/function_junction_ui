@@ -12,7 +12,12 @@ import { connect } from "react-redux";
 import moment from "moment";
 import AddToCalendar from 'react-add-to-calendar';
 import { fetchEventInitiated } from "ACTION/eventAction";
-import { fetchAttendeesInitiated, addTeamMemberInitiated, createTeamInitiated } from 'ACTION/attendeesAction';
+import {
+  fetchAttendeesInitiated,
+  addTeamMemberInitiated,
+  createTeamInitiated,
+  deleteTeamInitiated,
+} from 'ACTION/attendeesAction';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import { ShowTeam } from './Team/Show';
@@ -228,6 +233,10 @@ class EventDetailsContainer extends Component {
     this.setState({ team });
   }
 
+  handleDeleteTeam = teamId => {
+    this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id});
+  }
+
   getEvent = props => (
     <div className="event-details-container">
       <Row>
@@ -253,6 +262,7 @@ class EventDetailsContainer extends Component {
                     team={this.props.attendees.teams[0]}
                     isShowcasable={this.props.event.is_showcasable}
                     handleTeamChange={this.handleTeamChange}
+                    handleDeleteTeam={this.handleDeleteTeam}
                   />
                   <ShowMembers
                     members={this.props.attendees.teams[0].members || []}
@@ -299,7 +309,8 @@ function mapDispatchToProps(dispatch) {
     fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
     getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
-    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload))
+    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload)),
+    deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId))
   };
 }
 

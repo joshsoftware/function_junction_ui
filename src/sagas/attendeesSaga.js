@@ -4,12 +4,15 @@ import {
   fetchAttendeesFailed,
   updateTeamSuccess,
   updateTeamFail,
+  deleteTeamSuccess,
+  deleteTeamFail,
 } from 'ACTION/attendeesAction';
 import {
   FETCH_ATTENDEES_INITIATED,
   ADD_TEAM_MEMBER_INITIATED,
   CREATE_TEAM_INITIATED,
   UPDATE_TEAM_INITIATED,
+  DELETE_TEAM_INITIATED,
 } from 'UTILS/constants';
 import RequestHandler from '../HTTP';
 
@@ -25,7 +28,6 @@ function* fetchAttendees(action) {
   }
   
 function* addTeamMember(action) {
-  console.log('Executing Add Team Member Saga');
   try {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/teams/${action.payload.teamId}/team_members`,
@@ -66,10 +68,23 @@ function* updateTeam(action) {
   }
 }
 
+function* deleteTeam(action) {
+  try {
+    const response = yield call(() => RequestHandler.delete(
+      `events/${action.payload.eventId}/teams/${action.payload.teamId}`
+    ));
+    const data = yield call(() => response.json.bind(response)());
+    yield put(deleteTeamSuccess(data))
+  } catch(error) {
+    yield put(deleteTeamFail(error))
+  }
+}
+
 export default function* attendeesSaga() {
     yield takeEvery(FETCH_ATTENDEES_INITIATED, fetchAttendees)
     yield takeEvery(ADD_TEAM_MEMBER_INITIATED, addTeamMember)
     yield takeEvery(CREATE_TEAM_INITIATED, createTeam)
     yield takeEvery(UPDATE_TEAM_INITIATED, updateTeam)
+    yield takeEvery(DELETE_TEAM_INITIATED, deleteTeam)
 }  
   
