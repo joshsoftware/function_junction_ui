@@ -13,6 +13,11 @@ class Attendees extends PureComponent {
         }
     }
 
+    shouldComponentUpdate() {
+        //TODO return true only if members changed
+        return true;
+    }
+
     getTeams = () => {
         const { attendees } = this.props;
         if (!attendees || attendees.length <= 0) {
@@ -38,16 +43,16 @@ class Attendees extends PureComponent {
     }
 
     getUsers = () => {
-        const { attendees } = this.props;
-        if (!attendees || attendees.length <= 0) {
+        const { members } = this.props;
+        if (!members || members.length <= 0) {
             return (
                 <Empty description="No user yet registered for event."/>
             );
         }
-        const usersGoing = attendees[0].members.filter(member => member.status.toLowerCase() === 'accepted');
+        const usersGoing = members.filter(member => member.status.toLowerCase() === 'accepted');
         return usersGoing.map(({invitee}) => {
             return (
-                <ErrorBoundary name={`User ${invitee.name}`}>
+                <ErrorBoundary name={`User ${invitee.name}`} key={invitee.user_id}>
                     <Col span={4} >
                         <div className="user-container">
                             <User

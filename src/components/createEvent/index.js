@@ -8,37 +8,32 @@ import moment from 'moment';
 const Summery = styled.span`
   color: #9c9790;
   padding-left: 1%;
+  font-size: 11px;
 `;
 
 const timePickerConfig = { 
   use12Hours: true,
   format: 'hh:mm',
   minuteStep: 15,
-  defaultValue: moment().hour(0).minute(0)
+  defaultValue: moment().hour(10).minute(0)
 };
 
 class CreateEvent extends PureComponent {
 
   disabledStartDate = (current) => {
     const { end_date_time } = this.props;
-    if (end_date_time) {
-      if (current >= moment(end_date_time).subtract(1, 'h').endOf('m')) {
+    if (end_date_time && current > moment(end_date_time)) {
         return true;
-      }
-      return current && current <= moment().subtract(1, 'day').endOf('m');
     }
     return current && current <= moment().subtract(1, 'day').endOf('m');
   }
 
   disableEndDate = (current) => {
     const { start_date_time } = this.props;
-    if (start_date_time) {
-      if (current <= moment(start_date_time).subtract(1, 'h').endOf('m')) {
-        return true;
-      }
-      return current && current <= moment().subtract(1, 'day').endOf('m');
+    if (start_date_time && current < moment(start_date_time)) {
+      return true;
     }
-    return current && current <= moment().subtract(1, 'day').endOf('m');
+    return current && current <= moment();
   }
     render() {
         const { error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
@@ -97,6 +92,7 @@ class CreateEvent extends PureComponent {
                       placeholder="Start Date Time"
                       onChange={(date) => changeHandler('start_date_time', date)}
                       value={start_date_time}
+                      defaultPickerValue={end_date_time ? moment(end_date_time).subtract(3,'hours'): moment()}
                       disabledDate={this.disabledStartDate}
                       showTime={timePickerConfig}
                       required
@@ -109,6 +105,7 @@ class CreateEvent extends PureComponent {
                       placeholder="End Date Time"
                       onChange={(date) => changeHandler('end_date_time', date)}
                       value={end_date_time}
+                      defaultPickerValue={start_date_time ? moment(start_date_time).add(3,'hours'): moment()}
                       disabledDate={this.disableEndDate}
                       showTime={timePickerConfig}
                       required
@@ -121,7 +118,7 @@ class CreateEvent extends PureComponent {
                       placeholder="Register Before"
                       onChange={(date) => changeHandler('register_before', date)}
                       value={register_before}
-                      disabledDate={this.disabledDate}
+                      disabledDate={this.disabledStartDate}
                       showTime={timePickerConfig}
                     />
                   </Col>
@@ -130,7 +127,7 @@ class CreateEvent extends PureComponent {
                 <Row>
                   <Col lg={{span: 6}}>
                     <JSwitch
-                      label="Show Casing"
+                      label="Is Show-casable"
                       onChange={(e) => changeHandler('is_showcasable', e)}
                       checked={is_showcasable}
                       disabled={isEdit}

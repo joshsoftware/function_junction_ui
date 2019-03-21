@@ -89,7 +89,7 @@ function handleInvite (event, value, handler, memberId) {
 }
 
 const getInviteButtons = (isInvite, handleAcceptReject, members) => {
-    const member = members.find(member => member.invitee.user_id === localStorage.getItem('user'));
+    const member = members.find(member => member.invitee.user_id === localStorage.getItem('id'));
   if (!isInvite) return null;
   return (
     <div>

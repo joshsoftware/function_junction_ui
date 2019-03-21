@@ -77,7 +77,7 @@ function getActionItems({ start_date_time, is_individual_participation, is_atten
     <ErrorBoundary name="Venue Details">
       <Container>
         <Data>
-          <Tooltip title="Venue">
+          <Tooltip title={`Venue | ${venue} `}>
           <Icon style={{ fontSize: 16 }} type="home" /> {venue}
           </Tooltip>
         </Data>
@@ -111,6 +111,8 @@ function getCover(summary = 'No event summery defined') {
     font-size: 20px;
     letter-spacing: 3px;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
   `;
   
   return (

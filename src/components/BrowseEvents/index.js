@@ -27,7 +27,9 @@ class BrowseEvents extends PureComponent {
     componentDidMount () {
         getUser()
         .then(data => {
-            localStorage.setItem('user', data.id);
+            localStorage.setItem('name', data.name);
+            localStorage.setItem('email', data.email);
+            localStorage.setItem('id', data.id);
         })
         .catch(error => {
             console.log(error)

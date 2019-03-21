@@ -2,6 +2,9 @@
     display: flex;
     width: 80px;
 }
+.ant-card:hover {
+    box-shadow: 13px 15px 14px 0px #cccc !important;
+}
 
 .ant-card-meta-description {
     white-space: nowrap;

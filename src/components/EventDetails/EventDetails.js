@@ -50,7 +50,7 @@ const EventHeader = ({
         <div className="title">
             <Tooltip title={title} placement="top">{title}</Tooltip>
         </div>
-        { created_by &&  localStorage.getItem('user') === created_by.user_id
+        { created_by &&  localStorage.getItem('id') === created_by.user_id
             && 
             (
                 <div>

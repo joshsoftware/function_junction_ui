@@ -52,9 +52,9 @@ export function getTeamMembers(payload, failedEmails) {
           name: getNameFromEmail(email),
         },
         inviter: {
-          email: "",
-          name: '',
-          user_id: localStorage.getItem('user')
+          email: localStorage.getItem('email'),
+          name: localStorage.getItem('name'),
+          user_id: localStorage.getItem('id')
         },
         status: MEMBER_INVITE_STATUS.PENDING
       })

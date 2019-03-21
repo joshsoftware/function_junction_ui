@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Skeleton, Button, Icon, Divider, Affix, Modal } from 'antd';
+import { Row, Col, Skeleton, Button, Icon, Affix, Tooltip } from 'antd';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -46,7 +46,9 @@ class EventDetailsContainer extends Component {
     const { match } = this.props;
     getUser()
       .then(data => {
-        localStorage.setItem('user', data.id);
+        localStorage.setItem('name', data.name);
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('id', data.id);
       })
       .catch(error => {
         console.log(error);
@@ -174,6 +176,33 @@ class EventDetailsContainer extends Component {
     }
   };
 
+  getEventTime = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
+    const Container = styled.div`
+      display: flex;
+      flex-direction: column;
+    `;
+    if (!start.diff(end, "days")) {
+      return (
+        <Container>
+          <span>{`${start.format('ddd Do, MMM YYYY')}`}</span>
+          <span>{`${start.format('hh:mm a')} To ${end.format('hh:mm a')}`}</span>
+        </Container>
+      );
+    }
+    return (
+      <Container>
+        <Tooltip title="Start Date">
+          <span>{`${start.format('Do, MMM YYYY hh:mm a')}`}</span>
+        </Tooltip>
+        <Tooltip title="End Date">
+          <span>{`${end.format('Do, MMM YYYY hh:mm a')}`}</span>
+        </Tooltip>
+      </Container>
+    );
+  }
+
   getEventLocation = ({
     start_date_time,
     end_date_time,
@@ -187,9 +216,7 @@ class EventDetailsContainer extends Component {
           <Icon type='clock-circle' />
         </Col>
         <Col span={21}>
-          <span>{moment(start_date_time).format('DD, MMM YY hh:mm a')}</span>
-          <Divider type='vertical' />
-          <span>{moment(end_date_time).format('DD, MMM YY hh:mm a')}</span>
+          {this.getEventTime(start_date_time, end_date_time)}
         </Col>
       </Row>
       {this.getAddToCalender(
@@ -407,6 +434,7 @@ class EventDetailsContainer extends Component {
                 <Attendees
                   type={props.event.is_individual_participation}
                   attendees={props.attendees.teams}
+                  members={props.members}
                 />
               </ErrorBoundary>
             </Col>
@@ -446,6 +474,7 @@ function mapStateToProp(state, ownProps) {
   return {
     event: state.event.data,
     attendees: state.attendees,
+    members: state.attendees.members,
     invitations: state.attendees.invitations,
     isInviteLoading: state.attendees.isInviteLoading,
     myTeam: state.attendees.myTeam,

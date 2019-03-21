@@ -28,10 +28,20 @@ const initialState = {
   isLoading: false,
   data: {},
   error: null,
-
+  rsvp: false,
   rsvpLoading: false,
   rsvpError: null
 };
+
+function addNewAttendees({members}) {
+  const user = {
+    email: localStorage.getItem('email') || '',
+    name: localStorage.getItem('name') || '',
+    user_id: localStorage.getItem('id') || '',
+  };
+  members && members.push({invitee: user, status: 'accepted'})
+  return members || [];
+}
 
 export default function eventReducer(state = initialState, action) {
   switch (action.type) {
@@ -46,14 +56,15 @@ export default function eventReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        rsvp: false,
         ...action.payload,
         myTeam: action.payload.teams
           ? action.payload.teams.find(currentTeam => {
               return (
-                currentTeam.creator_id === localStorage.getItem('user') ||
+                currentTeam.creator_id === localStorage.getItem('id') ||
                 currentTeam.members.find(
                   member =>
-                    member.invitee.user_id === localStorage.getItem('user') &&
+                    member.invitee.user_id === localStorage.getItem('id') &&
                     member.status === MEMBER_INVITE_STATUS.ACCEPTED
                 )
               );
@@ -63,12 +74,13 @@ export default function eventReducer(state = initialState, action) {
           ? action.payload.teams.filter(currentTeam => {
               return currentTeam.members.find(
                 member =>
-                  member.invitee.user_id === localStorage.getItem('user') &&
+                  member.invitee.user_id === localStorage.getItem('id') &&
                   member.status === MEMBER_INVITE_STATUS.PENDING
               );
             })
           : [],
-        error: null
+        error: null,
+        members: action.payload.teams ? action.payload.teams[0].members : [], 
       };
 
     case FETCH_ATTENDEES_FAILED:
@@ -169,8 +181,10 @@ export default function eventReducer(state = initialState, action) {
       rsvpLoading: true,
     }
     case REGISTER_PARTICIPANT_SUCCESS:
+    const newTeams = addNewAttendees(state);
     return {
       ...state,
+      members: newTeams,
       rsvpLoading: false,
       rsvp: true,
     }
@@ -190,7 +204,7 @@ export default function eventReducer(state = initialState, action) {
         )
       };
       const memberIndex = team.members.findIndex(
-        member => member.invitee.user_id === localStorage.getItem('user')
+        member => member.invitee.user_id === localStorage.getItem('id')
       );
       team.members[memberIndex].status = action.payload.status;
       return {
