@@ -3,7 +3,7 @@
 import handleError from './handleHTTPError';
 import { showFailureNotification } from '../components/shared/Notification';
 
-const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/' : `${window.origin}/`
+const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/' : `${window.origin}/`
 export default class RequestHandler {
   // returns header object
   static getHeader(type, data = {}, isFile = false) {
@@ -14,9 +14,10 @@ export default class RequestHandler {
       headers: {
         Accept: 'application/vnd.server.v1',
         'Content-Type': 'application/json',
+        Cookie: 'asdasd:asdasd',
         // 'Cache': 'no-cache',
       },
-      // credentials: 'same-origin',
+      credentials: 'same-origin',
     };
     if (!isFile) {
       header.headers['Content-Type'] = 'application/json';
