@@ -12,7 +12,6 @@ function getRegistrationLabel(date) {
 
 }
 
-
 const EventDetails = ({
     ...rest
 }) => (

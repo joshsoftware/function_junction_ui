@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Empty, Skeleton } from 'antd';
 import { connect } from 'react-redux';
-
+import { withCookies, Cookies  } from 'react-cookie';
 import { fetchEventListInitiated } from 'ACTION/eventsAction';
 import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
@@ -18,7 +18,9 @@ const items=[
 class BrowseEvents extends PureComponent {
     constructor(props) {
         super(props);
+        const { cookies } = props;
         this.state = {
+            name: cookies.get('_intranet_session')
         }
     }
 
@@ -61,6 +63,8 @@ class BrowseEvents extends PureComponent {
     };
 
     render() {
+        const { name } = this.state;
+        console.log(name, this.props);
         return (
             <div className="container">
                 <div className="slider">
@@ -84,4 +88,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchEventListInitiated: () => dispatch(fetchEventListInitiated()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps) (BrowseEvents);
+export default connect(mapStateToProps, mapDispatchToProps) (withCookies(BrowseEvents));

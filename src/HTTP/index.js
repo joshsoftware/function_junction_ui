@@ -13,9 +13,10 @@ export default class RequestHandler {
       // credentials: 'same-origin',
       headers: {
         Accept: 'application/vnd.server.v1',
-        // 'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
+        // 'Cache': 'no-cache',
       },
+      // credentials: 'same-origin',
     };
     if (!isFile) {
       header.headers['Content-Type'] = 'application/json';
