@@ -6,7 +6,7 @@
     padding: 1%;
 
     .ant-row {
-        padding-bottom: 3%;
+        padding-bottom: 0%;
     }
     .ant-divider-horizontal {
         margin: 15px 0px;
@@ -20,6 +20,9 @@
     }
 
     .form {
-        padding: 2%
+        padding: 2%;
+        .ant-form-item-control {
+            line-height: 22.9999px;
+        }
     }
 }
