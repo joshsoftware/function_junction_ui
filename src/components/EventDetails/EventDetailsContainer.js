@@ -228,8 +228,8 @@ class EventDetailsContainer extends Component {
           <Row>
         <Col span={24} >
           <Attendees
-            event={props.event}
-            getAttendees={props.getAttendees}
+            type='0'
+            attendees={[]}
           />
         </Col>
       </Row>
