@@ -57,10 +57,10 @@ function* createTeam(action) {
 
 function* updateTeam(action) {
   try {
-    const response = yield call(() => fetch(`http://intranet.joshsoftware.com/events/${action.payload.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(action.payload),
-    }));
+    const response = yield call(() => RequestHandler.put(
+      `events/${action.payload.eventId}/teams/${action.payload.teamId}`,
+      action.payload.team,
+    ))
     const data = yield call(() => response.json.bind(response)());
     yield put(updateTeamSuccess(data))
   } catch (error) {

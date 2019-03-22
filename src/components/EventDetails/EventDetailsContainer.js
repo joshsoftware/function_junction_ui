@@ -17,6 +17,7 @@ import {
   addTeamMemberInitiated,
   createTeamInitiated,
   deleteTeamInitiated,
+  updateTeamInitiated,
 } from 'ACTION/attendeesAction';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
@@ -230,7 +231,7 @@ class EventDetailsContainer extends Component {
   handleTeamChange = (value, field) => {
     const team = {...this.props.attendees.teams[0]};
     team[field] = value;
-    this.setState({ team });
+    this.props.updateTeamInitiated({ eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id, team });
   }
 
   handleDeleteTeam = teamId => {
@@ -310,7 +311,8 @@ function mapDispatchToProps(dispatch) {
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
     getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
     addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload)),
-    deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId))
+    deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId)),
+    updateTeamInitiated: payload => dispatch(updateTeamInitiated(payload))
   };
 }
 
