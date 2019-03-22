@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-
+import { showFailureNotification } from '../shared/Notification';
 import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/eventAction';
 import CreateEvent from 'COMPONENTS/createEvent';
 
@@ -70,7 +70,84 @@ class CreateEventContainer extends PureComponent {
       })
     }
 
+    showError = (msg) => {
+      showFailureNotification(msg);
+    }
+
+    dateDifference = (start, end) => {
+      console.log(moment(start).diff(moment(end), 'minute'))
+      if (moment(start).diff(moment(end), 'minute') >= 0) {
+        return true;
+      }
+      return false;
+    }
+
+    validateForm = () => {
+      const {
+        title,
+        summary,
+        venue,
+        description,
+        start_date_time,
+        end_date_time,
+        register_before,
+        is_showcasable,
+        is_individual_participation,
+        min_size,
+        max_size,
+      } = this.state;
+      if (!title.trim()) {
+        this.showError('Title is mandatory.');
+        return false;
+      }
+      if (!summary.trim()) {
+        this.showError('Summery is mandatory.');
+        return false;
+      }
+      console.log(is_individual_participation, is_showcasable);
+      if (!start_date_time) {
+        this.showError('Start date is mandatory.');
+        return false;
+      }
+      if (this.dateDifference(moment(), start_date_time)) {
+        this.showError('Start date should not be in past.');
+        return false;
+      }
+      if (!end_date_time) {
+        this.showError('End date is mandatory.');
+        return false;
+      }
+      if (!register_before) {
+        this.showError('Registration end date is mandatory.');
+        return false;
+      }
+      if (this.dateDifference(moment(), register_before)) {
+        this.showError('Registration end date should not be in past.');
+        return false;
+      }
+      if (this.dateDifference(start_date_time, register_before)) {
+        this.showError('Registration should end before event start date.');
+        return false;
+      }
+      if (this.dateDifference(start_date_time, end_date_time)) {
+        this.showError('Event should end after start time.');
+        return false;
+      }
+
+
+      if (is_showcasable && is_individual_participation) {
+        this.showError('Show casing event should not be individual event. ');
+        return false;
+      }
+
+
+    }
+
     submitHandler = (isPublished) => {
+      if (!this.validateForm()) {
+        return 0;
+      }
+
       if(this.id) {
         this.props.updateEventInitiated({
           ...this.state,
