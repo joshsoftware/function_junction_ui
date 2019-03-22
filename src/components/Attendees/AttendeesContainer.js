@@ -23,18 +23,20 @@ class Attendees extends PureComponent {
     }
 
     getUserDetails = () => {
-        return Users.map(({name, email}) => {
-            return (
-                <Col span={4} >
-                    <div className="user-container">
-                        <User
-                            name={name}
-                            email={email}
-                        />
-                    </div>
-                </Col>
-            );
-        })
+        if (this.props.type === 1) {
+            return Users.map(({name, email}) => {
+                return (
+                    <Col span={4} >
+                        <div className="user-container">
+                            <User
+                                name={name}
+                                email={email}
+                            />
+                        </div>
+                    </Col>
+                );
+            })
+        }
     }
 
     render = () => (
