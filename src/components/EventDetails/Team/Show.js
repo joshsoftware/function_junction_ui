@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Input, Icon, Tooltip } from 'antd'
-
+import { isOldEvent } from '../../../utils/util';
 export class ShowTeam extends PureComponent {
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ export class ShowTeam extends PureComponent {
     }
     render() { 
         const { isEditing } = this.state;
-        const { team, isShowcasable } = this.props;
+        const { team, isShowcasable, register_before } = this.props;
         return (
             <>
                 {
@@ -37,10 +37,13 @@ export class ShowTeam extends PureComponent {
                     <>
                         <div className='flex-center'>
                             <h4 className='team-name'><Icon type="team" style={{ marginRight: '0.5rem' }} />{team.name}</h4>
-                            <h4 style={{ marginLeft: 'auto' }} >
-                                <Tooltip title='Edit Team'><Icon theme='twoTone' onClick={this.toggleEditing}  type="edit" /></Tooltip>
-                                <Tooltip title='Delete Team'><Icon theme='twoTone' onClick={() => this.props.handleDeleteTeam()} type="delete" style={{ marginLeft: '0.5rem' }} /></Tooltip>
-                            </h4>
+                            {
+                                !isOldEvent(register_before) &&
+                                <h4 style={{ marginLeft: 'auto' }} >
+                                    <Tooltip title='Edit Team'><Icon theme='twoTone' onClick={this.toggleEditing}  type="edit" /></Tooltip>
+                                    <Tooltip title='Delete Team'><Icon theme='twoTone' onClick={() => this.props.handleDeleteTeam()} type="delete" style={{ marginLeft: '0.5rem' }} /></Tooltip>
+                                </h4>
+                            }
                         </div>
                         <div className='showcasable-url'>
                             <a target='_blank' rel="noopener noreferrer" href={`${team.showcase_url}`}>{team.showcase_url}</a>

@@ -10,6 +10,9 @@ import {
     DELETE_TEAM_INITIATED,
     DELETE_TEAM_SUCCESS,
     DELETE_TEAM_FAIL,
+    REGISTER_PARTICIPANT_INITIATED,
+    REGISTER_PARTICIPANT_SUCCESS,
+    REGISTER_PARTICIPANT_FAIL
 } from '../utils/constants';
 
 export function fetchAttendeesInitiated(eventID){
@@ -85,6 +88,27 @@ export function deleteTeamSuccess(payload) {
 export function deleteTeamFail(payload) {
     return {
         type: DELETE_TEAM_FAIL,
+        payload
+    }
+}
+
+export function registerParticipantInitiated(payload) {
+    return {
+        type: REGISTER_PARTICIPANT_INITIATED,
+        payload
+    }
+}
+
+export function registerParticipantSuccess(payload) {
+    return {
+        type: REGISTER_PARTICIPANT_SUCCESS,
+        payload
+    }
+}
+
+export function registerParticipantFail(payload) {
+    return {
+        type: REGISTER_PARTICIPANT_FAIL,
         payload
     }
 }

@@ -6,6 +6,8 @@ import {
   updateTeamFail,
   deleteTeamSuccess,
   deleteTeamFail,
+  registerParticipantSuccess,
+  registerParticipantFail,
 } from 'ACTION/attendeesAction';
 import {
   FETCH_ATTENDEES_INITIATED,
@@ -13,6 +15,7 @@ import {
   CREATE_TEAM_INITIATED,
   UPDATE_TEAM_INITIATED,
   DELETE_TEAM_INITIATED,
+  REGISTER_PARTICIPANT_INITIATED,
 } from 'UTILS/constants';
 import RequestHandler from '../HTTP';
 
@@ -80,11 +83,28 @@ function* deleteTeam(action) {
   }
 }
 
+// RSVP
+function* registerParticipant(action) {
+  try {
+    const response = yield call(() => RequestHandler.put(
+      `events/${action.payload.eventId}/teams/${action.payload.userID}`,
+      { 
+         isGoing: action.payload.isGoing,
+      }
+    ));
+    const data = yield call(() => response.json.bind(response)());
+    yield put(registerParticipantSuccess(data))
+  } catch (error) {
+    yield put(registerParticipantFail(error))
+  }
+}
+
 export default function* attendeesSaga() {
     yield takeEvery(FETCH_ATTENDEES_INITIATED, fetchAttendees)
     yield takeEvery(ADD_TEAM_MEMBER_INITIATED, addTeamMember)
     yield takeEvery(CREATE_TEAM_INITIATED, createTeam)
     yield takeEvery(UPDATE_TEAM_INITIATED, updateTeam)
     yield takeEvery(DELETE_TEAM_INITIATED, deleteTeam)
+    yield takeEvery(REGISTER_PARTICIPANT_INITIATED, registerParticipant)
 }  
   
