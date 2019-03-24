@@ -4,12 +4,18 @@ import {
   fetchAttendeesFailed,
   updateTeamSuccess,
   updateTeamFail,
+  deleteTeamSuccess,
+  deleteTeamFail,
+  registerParticipantSuccess,
+  registerParticipantFail,
 } from 'ACTION/attendeesAction';
 import {
   FETCH_ATTENDEES_INITIATED,
   ADD_TEAM_MEMBER_INITIATED,
   CREATE_TEAM_INITIATED,
   UPDATE_TEAM_INITIATED,
+  DELETE_TEAM_INITIATED,
+  REGISTER_PARTICIPANT_INITIATED,
 } from 'UTILS/constants';
 import RequestHandler from '../HTTP';
 
@@ -25,7 +31,6 @@ function* fetchAttendees(action) {
   }
   
 function* addTeamMember(action) {
-  console.log('Executing Add Team Member Saga');
   try {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/teams/${action.payload.teamId}/team_members`,
@@ -55,14 +60,42 @@ function* createTeam(action) {
 
 function* updateTeam(action) {
   try {
-    const response = yield call(() => fetch(`http://intranet.joshsoftware.com/events/${action.payload.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(action.payload),
-    }));
+    const response = yield call(() => RequestHandler.put(
+      `events/${action.payload.eventId}/teams/${action.payload.teamId}`,
+      action.payload.team,
+    ))
     const data = yield call(() => response.json.bind(response)());
     yield put(updateTeamSuccess(data))
   } catch (error) {
     yield put(updateTeamFail(error))
+  }
+}
+
+function* deleteTeam(action) {
+  try {
+    const response = yield call(() => RequestHandler.delete(
+      `events/${action.payload.eventId}/teams/${action.payload.teamId}`
+    ));
+    const data = yield call(() => response.json.bind(response)());
+    yield put(deleteTeamSuccess(data))
+  } catch(error) {
+    yield put(deleteTeamFail(error))
+  }
+}
+
+// RSVP
+function* registerParticipant(action) {
+  try {
+    const response = yield call(() => RequestHandler.put(
+      `events/${action.payload.eventId}/teams/${action.payload.userID}`,
+      { 
+         isGoing: action.payload.isGoing,
+      }
+    ));
+    const data = yield call(() => response.json.bind(response)());
+    yield put(registerParticipantSuccess(data))
+  } catch (error) {
+    yield put(registerParticipantFail(error))
   }
 }
 
@@ -71,5 +104,7 @@ export default function* attendeesSaga() {
     yield takeEvery(ADD_TEAM_MEMBER_INITIATED, addTeamMember)
     yield takeEvery(CREATE_TEAM_INITIATED, createTeam)
     yield takeEvery(UPDATE_TEAM_INITIATED, updateTeam)
+    yield takeEvery(DELETE_TEAM_INITIATED, deleteTeam)
+    yield takeEvery(REGISTER_PARTICIPANT_INITIATED, registerParticipant)
 }  
   

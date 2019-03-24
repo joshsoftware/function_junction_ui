@@ -13,13 +13,22 @@ import { connect } from "react-redux";
 import moment from "moment";
 import AddToCalendar from 'react-add-to-calendar';
 import { fetchEventInitiated } from "ACTION/eventAction";
-import { fetchAttendeesInitiated, addTeamMemberInitiated, createTeamInitiated } from 'ACTION/attendeesAction';
+import {
+  fetchAttendeesInitiated,
+  addTeamMemberInitiated,
+  createTeamInitiated,
+  deleteTeamInitiated,
+  updateTeamInitiated,
+  registerParticipantInitiated,
+} from 'ACTION/attendeesAction';
+import IndividualRegistration from './IndividualParticipation';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
 import { ShowTeam } from './Team/Show';
 import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
+import { isOldEvent } from '../../utils/util';
 
 const initialState = {
   loading: false,
@@ -217,7 +226,54 @@ class EventDetailsContainer extends Component {
   handleTeamChange = (value, field) => {
     const team = {...this.props.attendees.teams[0]};
     team[field] = value;
-    this.setState({ team });
+    this.props.updateTeamInitiated({ eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id, team });
+  }
+
+  handleDeleteTeam = teamId => {
+    this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id});
+  }
+
+  toggleYesNo = (value) => {
+    const payLoad = {
+      eventId: this.props.event.id,
+      userID: this.props.user.id,
+      isGoing: value,
+    };
+    this.props.registerIndividualParticipation(payLoad);
+  }
+
+  renderTeam = () => {
+    if (this.props.event.loading) {
+      return <Icon type="loading" />
+    } else if (this.props.attendees && this.props.attendees.teams) {
+      return <>
+        <ShowTeam
+          team={this.props.attendees.teams[0]}
+          isShowcasable={this.props.event.is_showcasable}
+          handleTeamChange={this.handleTeamChange}
+          handleDeleteTeam={this.handleDeleteTeam}
+          register_before={this.props.event.register_before}
+        />
+        <ShowMembers
+          members={this.props.attendees.teams[0].members || []}
+          sendInvites={this.sendInvites}
+          register_before={this.props.event.register_before}
+        />
+      </>
+    } else if (!this.props.event.is_individual_participation) {
+      return <CreateTeam
+        action='Create'
+        handleSubmit={this.handleCreateTeam}
+        register_before={this.props.event.register_before}
+        isShowcasable={this.props.event.is_showcasable}
+      />
+    } else {
+      return !isOldEvent(this.props.event.register_before) ? <IndividualRegistration
+          register_before={this.props.event.register_before}
+          toggleYesNo={this.toggleYesNo}
+          />
+        :null
+    }
   }
 
   getEvent = props => (
@@ -239,25 +295,7 @@ class EventDetailsContainer extends Component {
             {this.getRightSidePanel(props)}
             <div className="background">
               {
-                this.props.attendees && this.props.attendees.teams ?
-                <>
-                  <ShowTeam
-                    team={this.props.attendees.teams[0]}
-                    isShowcasable={this.props.event.is_showcasable}
-                    handleTeamChange={this.handleTeamChange}
-                  />
-                  <ShowMembers
-                    members={this.props.attendees.teams[0].members || []}
-                    sendInvites={this.sendInvites}
-                  />
-                </>
-                :
-                !props.event.isIndividualParticipation &&
-                  <CreateTeam
-                    action='Create'
-                    handleSubmit={this.handleCreateTeam}
-                    isShowcasable={this.props.event.is_showcasable}
-                  />
+                this.renderTeam()
               }
             </div>
           </Affix>
@@ -297,7 +335,10 @@ function mapDispatchToProps(dispatch) {
     fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
     getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
-    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload))
+    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload)),
+    deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId)),
+    updateTeamInitiated: payload => dispatch(updateTeamInitiated(payload)),
+    registerIndividualParticipation: payload => dispatch(registerParticipantInitiated(payload))
   };
 }
 

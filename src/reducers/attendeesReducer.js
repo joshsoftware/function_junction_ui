@@ -6,6 +6,9 @@ import {
     UPDATE_TEAM_INITIATED,
     UPDATE_TEAM_SUCCESS,
     UPDATE_TEAM_FAIL,
+    DELETE_TEAM_INITIATED,
+    DELETE_TEAM_SUCCESS,
+    DELETE_TEAM_FAIL,
   } from 'UTILS/constants';
   
   const initialState = {
@@ -48,6 +51,21 @@ import {
           error: null
       }
       case UPDATE_TEAM_FAIL: return {
+        isLoading: false,
+        data: {},
+        error: action.payload
+      }
+      case DELETE_TEAM_INITIATED: return {
+        isLoading: true,
+        data: action.payload,
+        error: null
+      }
+      case DELETE_TEAM_SUCCESS: return {
+        isLoading: false,
+        data: action.payload,
+        error: null
+      }
+      case DELETE_TEAM_FAIL: return {
         isLoading: false,
         data: {},
         error: action.payload

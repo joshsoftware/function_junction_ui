@@ -79,3 +79,30 @@
         text-decoration: underline;
     }
 }
+
+.yes-no-buttons-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    .button {
+        // flex: 1 1 100px;
+        // text-align: center;
+        // cursor: pointer;
+        color: #fff;
+        // width: 40%;
+    }
+    .button.yesButton{
+        background-color: #41A746;
+    }
+    .button.noButton{
+        background-color: #DC3B45;
+    }
+    .yesButton:hover, .yesButton:focus, .yesButton:visited{
+        color: #fff;
+        border-color: #41A746;
+    }
+    .noButton:hover, .noButton:focus, .noButton:visited{
+        color: #fff;
+        border-color: #DC3B45;
+    }
+}
