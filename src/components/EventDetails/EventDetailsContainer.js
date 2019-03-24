@@ -284,7 +284,7 @@ class EventDetailsContainer extends Component {
           <Row>
         <Col span={24} >
           <Attendees
-            type='0'
+            type={2}
             attendees={[]}
           />
         </Col>

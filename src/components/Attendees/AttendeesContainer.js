@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Row, Col } from 'antd';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import User from './User';
+import Team from './Team';
 import './Attendees.scss';
 import { isObjectEmpty } from '../../utils/util';
 
@@ -14,6 +15,7 @@ const Users = [
     {name: 'Priyanka Yadav', email: 'priyanka@gmail.com'},
     {name: 'Anusha Bhatt', email: 'suhas@gmail.com'},
 ]
+
 
 class Attendees extends PureComponent {
     componentDidUpdate(prevProps) {
@@ -36,7 +38,21 @@ class Attendees extends PureComponent {
                     </Col>
                 );
             })
-        }
+        } 
+        return (
+            <Col span={5}>
+                <div className="team-container">
+                    <Team
+                        name="React UI"
+                        description="www.react.org"
+                        members={[
+                            {name: 'Suhas More', email: 'suhas@gmail.com'},
+                            {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
+                            {name: 'Pragati Garud', email: 'pragati@gmail.com'}]}
+                    />
+                </div>
+            </Col>
+        );
     }
 
     render = () => (
