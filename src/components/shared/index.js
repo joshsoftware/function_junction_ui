@@ -15,8 +15,7 @@ const Container = ({ label, required, children }) => (
 
 const DatePickerContainer = ({ label, required, children }) => (
     <div className="date-picker-container">
-        <span className="label">{label ? label : ''}</span>
-        {required && <em>*</em>}
+        <span className="label">{label ? label : ''}{required && <em>*</em>}</span>
         {children}
     </div>
 )

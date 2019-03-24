@@ -29,6 +29,7 @@ class CreateEvent extends PureComponent {
                       name="summary"
                       onChange={({ target }) => changeHandler('summary', target.value)}
                       value={summary}
+                      required
                     />
                   </Col>
                 </Row>
@@ -39,6 +40,7 @@ class CreateEvent extends PureComponent {
                       placeholder="Location"
                       value={venue}
                       onChange={({ target }) => changeHandler('venue',target.value)}
+                      required
                     />
                   </Col>
                   <Col span={15} offset={1}>
@@ -54,29 +56,35 @@ class CreateEvent extends PureComponent {
                 <Row>
                   <Col span={5}>
                     <JDatePicker
+                      format="DD-MM-YYYY hh:mm a"
                       label="Star Date Time"
                       placeholder="Start Date Time"
                       onChange={(date) => changeHandler('start_date_time', date)}
                       value={start_date_time}
                       showTime
+                      required
                     />
                   </Col>
                   <Col span={5} offset={2}>
                     <JDatePicker
+                      format="DD-MM-YYYY hh:mm a"
                       label="End Date Time"
                       placeholder="End Date Time"
                       onChange={(date) => changeHandler('end_date_time', date)}
                       value={end_date_time}
                       showTime
+                      required
                     />
                   </Col>
                   <Col span={5} offset={3}>
                     <JDatePicker
+                      format="DD-MM-YYYY hh:mm a"
                       label="Registration End Date"
                       placeholder="Register Before"
                       onChange={(date) => changeHandler('register_before', date)}
                       value={register_before}
                       showTime
+                      required
                     />
                   </Col>
                 </Row>

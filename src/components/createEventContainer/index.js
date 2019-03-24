@@ -42,7 +42,7 @@ class CreateEventContainer extends PureComponent {
         const { data } = nextProps.event;
         this.setState({
           title: data.title,
-          summary: data.summary,
+          summary: data.summary || '',
           description: data.description,
           venue: data.venue,
           start_date_time: moment(data.start_date_time),
@@ -104,11 +104,10 @@ class CreateEventContainer extends PureComponent {
         this.showError('Title is mandatory.');
         return false;
       }
-      if (!summary.trim()) {
+      if (!summary && !summary.trim()) {
         this.showError('Summery is mandatory.');
         return false;
       }
-      console.log(is_individual_participation, is_showcasable);
       if (!start_date_time) {
         this.showError('Start date is mandatory.');
         return false;
@@ -129,7 +128,7 @@ class CreateEventContainer extends PureComponent {
         this.showError('Registration end date should not be in past.');
         return false;
       }
-      if (this.dateDifference(start_date_time, register_before)) {
+      if (this.dateDifference(register_before, start_date_time)) {
         this.showError('Registration should end before event start date.');
         return false;
       }
@@ -137,14 +136,12 @@ class CreateEventContainer extends PureComponent {
         this.showError('Event should end after start time.');
         return false;
       }
-
-
       if (is_showcasable && is_individual_participation) {
         this.showError('Show casing event should not be individual event. ');
         return false;
       }
-
-      this.setError('');
+      this.showError('');
+      return true;
 
     }
 
