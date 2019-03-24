@@ -12,6 +12,7 @@ class CreateEventContainer extends PureComponent {
         this.id = null;
 
         this.state = {
+          error: '',
           title: '',
           summary: '',
           description: '',
@@ -72,6 +73,9 @@ class CreateEventContainer extends PureComponent {
 
     showError = (msg) => {
       showFailureNotification(msg);
+      this.setState({
+        error: msg
+      });
     }
 
     dateDifference = (start, end) => {
@@ -140,6 +144,7 @@ class CreateEventContainer extends PureComponent {
         return false;
       }
 
+      this.setError('');
 
     }
 

@@ -9,7 +9,7 @@ export default class RequestHandler {
   static getHeader(type, data = {}, isFile = false) {
     const header = {
       method: type,
-      // mode: 'cors',
+      mode: 'cors',
       // credentials: 'same-origin',
       headers: {
         Accept: 'application/vnd.server.v1',
