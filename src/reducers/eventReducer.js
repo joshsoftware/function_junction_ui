@@ -35,18 +35,26 @@ export default function eventReducer (state = initialState, action) {
     case CREATE_EVENT_INITIATED: return {
       isUpdating: true,
       error: null,
+      isLoading: true,
+      data: {},
     }
     case UPDATE_EVENT_INITIATED: return {
       isUpdating: true,
       error: null,
+      isLoading: false,
+      data: {},
     }
     case UPDATE_EVENT_SUCCESS: return {
       isUpdating: false,
       error: null,
+      isLoading: false,
+      data: {},
     }
     case UPDATE_EVENT_FAIL: return {
       isUpdating: false,
       error: action.payload,
+      isLoading: false,
+      data: {},
     }
     default: return state;
   }
