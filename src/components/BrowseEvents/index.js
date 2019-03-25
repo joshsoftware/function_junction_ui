@@ -5,7 +5,7 @@ import { withCookies, Cookies  } from 'react-cookie';
 import { fetchEventListInitiated } from 'ACTION/eventsAction';
 import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
-
+import { getUser } from '../../actions/userDetailsAction';
 import './BrowseEvents.scss';
 
 const items=[
@@ -25,6 +25,13 @@ class BrowseEvents extends PureComponent {
     }
 
     componentDidMount () {
+        getUser()
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
       this.props.fetchEventListInitiated();
     }
 
