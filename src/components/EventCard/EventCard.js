@@ -18,7 +18,10 @@ const Happen = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 66px;
+  height: 47px;
+  text-align: -webkit-center;
+  vertical-align: middle;
+  display: table-cell;
 `;
 const Label = styled.span`
   color: grey;
@@ -50,11 +53,11 @@ function getAvatar(startDateTime) {
 
   return (
     <div className="card-avatar">
-        {diff <= 0 ?
+        {/* {diff <= 0 ?
           <Label>Happening on</Label>
         :
           <Label>Happened on</Label>
-        }
+        } */}
       <DateContainer>
         {moment(startDateTime).format('DD MMM YYYY')}
       </DateContainer>
@@ -73,13 +76,17 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
   
   const Venue = (
     <Container>
-      <Label>Venue</Label>
-      <Data>{venue}</Data>
+      {/* <Label>Venue</Label> */}
+      <Data>
+        <Tooltip title="Venue">
+          {venue}
+        </Tooltip>
+      </Data>
     </Container>
   );
   const Team = (
     <Container>
-      <Label>Event Participation</Label>
+      {/* <Label>Event Participation</Label> */}
       <Data>{EventType}</Data>
     </Container>
   );
@@ -87,7 +94,7 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
 }
 
 function getCover(summery = 'No event summery defined') {
-  const colors = ['#7697a0','#4a707a', '#edaf88', '#dc97a9','#f2cb7c'];
+  const colors = ['#4a707a', '#f17171','#05798c', '#7a1a18bf'];
   const QuoteContainer = styled.div`
     background: ${colors[getRandomInt(0, colors.length-1)]};
     padding: 4%;
@@ -133,7 +140,7 @@ const eventCard = ({id, title, desc, summery, history, ...rest}) => {
     <Meta
       // avatar={getAvatar(start_date_time)}
       title={title}
-      description={desc || 'Description not available.'}
+      // description={desc || 'Description not available.'}
     />
   </Card>
 );}

@@ -14,6 +14,7 @@
 }
 
 .card-avatar {
+    padding: 5px 1px;
     .time {
         font-size: 12px;
         text-align: center;
@@ -23,14 +24,11 @@
 
 .ant-card-actions {
     li {
-        // margin: 10px 0px !important;
+        margin: 0px 0px !important;
     }
 }
 .ant-card-meta-title {
     font-weight: 800 !important;
     margin-bottom: 0% !important;
     font-size: 18px !important;
-}
-.ant-card-meta-description {
-
 }
