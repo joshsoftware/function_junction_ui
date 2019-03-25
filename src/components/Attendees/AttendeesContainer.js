@@ -46,21 +46,31 @@ class Attendees extends PureComponent {
 
     }
 
-    getUserDetails = () => {
-        console.log(this.props, "&&&&")
+    getUsers = () => {
+        const { attendees } = this.props;
+        if (!attendees || attendees.length <= 0) {
+            return (
+                <Empty description="No user yet registered for event."/>
+            );
+        }
+
+        return Users.map(({name, email}) => {
+            return (
+                <Col span={4} >
+                    <div className="user-container">
+                        <User
+                            name={name}
+                            email={email}
+                        />
+                    </div>
+                </Col>
+            );
+        })
+    }
+
+    getAttendeesDetails = () => {
         if (this.props.type) {
-            return Users.map(({name, email}) => {
-                return (
-                    <Col span={4} >
-                        <div className="user-container">
-                            <User
-                                name={name}
-                                email={email}
-                            />
-                        </div>
-                    </Col>
-                );
-            })
+            return <> {this.getUsers()} </>;
         } 
         return (
            <>
@@ -75,7 +85,7 @@ class Attendees extends PureComponent {
                 <div className="title">Attendees </div>
                 <div className="Single">
                     <Row>
-                        {this.getUserDetails()}
+                        {this.getAttendeesDetails()}
                     </Row>
                 </div>
             </ErrorBoundary>
