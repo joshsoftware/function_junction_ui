@@ -21,8 +21,8 @@ function* createEvent(action) {
       'events',
       action.payload,
     ))
-    const data = yield call(() => response.json.bind(response)());
-    yield put(updateEventSuccess(data))
+    // const data = yield call(() => response.json.bind(response)());
+    yield put(updateEventSuccess(response.event))
   } catch (error) {
     yield put(updateEventFail(error))
   }
@@ -34,8 +34,8 @@ function* updateEvent(action) {
       `events/${action.payload.id}`,
       action.payload,
     ))
-    const data = yield call(() => response.json.bind(response)());
-    yield put(updateEventSuccess(data))
+    // const data = yield call(() => response.json.bind(response)());
+    yield put(updateEventSuccess(response.event))
   } catch (error) {
     yield put(updateEventFail(error))
   }

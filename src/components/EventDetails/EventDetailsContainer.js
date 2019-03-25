@@ -28,7 +28,7 @@ import { ShowTeam } from './Team/Show';
 import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
-import { isOldEvent } from '../../utils/util';
+import { isOldEvent, isObjectEmpty } from '../../utils/util';
 
 const initialState = {
   loading: false,
@@ -50,6 +50,12 @@ class EventDetailsContainer extends Component {
     this.props.fetchEventListInitiated(match.params.eventID);
     if (match.params.userID) {
       console.log("FETCH USER regiserd or not");
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if(isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
+      this.props.getAttendees(this.props.event.id);
     }
   }
 

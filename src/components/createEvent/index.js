@@ -3,6 +3,7 @@ import { Row, Col, Divider } from 'antd';
 import styled from 'styled-components';
 import './index.scss';
 import { JInput, JTextArea, JDatePicker, JSwitch, JButton } from '../shared';
+import moment from 'moment';
 
 const Summery = styled.span`
   color: #9c9790;
@@ -10,6 +11,11 @@ const Summery = styled.span`
 `;
 
 class CreateEvent extends PureComponent {
+
+  disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current <= moment().subtract(1, 'day').endOf('m');
+  }
     render() {
         const { error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
            is_individual_participation, min_size, max_size, changeHandler, redirectToBrowse, submitHandler } = this.props;
@@ -67,6 +73,7 @@ class CreateEvent extends PureComponent {
                       placeholder="Start Date Time"
                       onChange={(date) => changeHandler('start_date_time', date)}
                       value={start_date_time}
+                      disabledDate={this.disabledDate}
                       showTime
                       required
                     />
@@ -78,6 +85,7 @@ class CreateEvent extends PureComponent {
                       placeholder="End Date Time"
                       onChange={(date) => changeHandler('end_date_time', date)}
                       value={end_date_time}
+                      disabledDate={this.disabledDate}
                       showTime
                       required
                     />
@@ -89,6 +97,7 @@ class CreateEvent extends PureComponent {
                       placeholder="Register Before"
                       onChange={(date) => changeHandler('register_before', date)}
                       value={register_before}
+                      disabledDate={this.disabledDate}
                       showTime
                       required
                     />
