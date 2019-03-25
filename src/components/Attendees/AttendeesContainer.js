@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Empty } from 'antd';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import User from './User';
 import Team from './Team';
@@ -24,7 +24,30 @@ class Attendees extends PureComponent {
         }
     }
 
+    getTeams = () => {
+        const { attendees } = this.props;
+        if (!attendees || attendees.length <= 0) {
+            return (
+                <Empty description="No teams yet registered for event."/>
+            );
+        }
+
+        return attendees.map(team => {
+            return (
+                <Col span={8} key={team.id}>
+                    <Team
+                        name={team.name}
+                        description={team.showcase_url}
+                        members={team.members}
+                    />
+                </Col>
+            )
+        })
+
+    }
+
     getUserDetails = () => {
+        console.log(this.props, "&&&&")
         if (this.props.type) {
             return Users.map(({name, email}) => {
                 return (
@@ -40,18 +63,9 @@ class Attendees extends PureComponent {
             })
         } 
         return (
-            <Col span={5}>
-                <div className="team-container">
-                    <Team
-                        name="React UI"
-                        description="www.react.org"
-                        members={[
-                            {name: 'Suhas More', email: 'suhas@gmail.com'},
-                            {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
-                            {name: 'Pragati Garud', email: 'pragati@gmail.com'}]}
-                    />
-                </div>
-            </Col>
+           <>
+           {this.getTeams()}
+           </>
         );
     }
 

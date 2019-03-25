@@ -29,7 +29,7 @@
         padding: 8px 1px;
         background: white;
         border-radius: 8px;
-        box-shadow: 7px 4px 6px #ada8a800;
+        // box-shadow: 7px 4px 6px #ada8a800;
         margin: 10px;
         border: 1px solid #a79797;
         .ant-avatar-string {
@@ -42,7 +42,30 @@
         }
     }
     .team-container:hover {
-        box-shadow:  3px 5px 20px 5px #ada8a8;
+        // box-shadow:  3px 5px 20px 5px #ada8a8;
         cursor: pointer;
+    }
+}
+.ant-collapse-header::before {
+    content: 'Team';
+    display: list-item;
+    font-size: 11px;
+    line-height: 5px;
+    color: #8c9196b5;
+    letter-spacing: 2px;
+}
+
+.ant-collapse-content-box::before {
+    content: 'Team Members';
+    color: #99a0a7;
+    ol {
+        padding-inline-start: 14px;
+        padding-top: 7px;
+    }
+}
+.ant-collapse-content-box {
+    ol {
+        padding-inline-start: 14px;
+        padding-top: 7px;
     }
 }
