@@ -47,7 +47,7 @@ class EventDetailsContainer extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    this.props.fetchEventListInitiated(match.params.eventID);
+    this.props.fetchEventInitiated(match.params.eventID);
     if (match.params.userID) {
       console.log("FETCH USER regiserd or not");
     }
@@ -290,8 +290,8 @@ class EventDetailsContainer extends Component {
           <Row>
         <Col span={24} >
           <Attendees
-            type={props.is_individual_participation}
-            attendees={[]}
+            type={props.event.is_individual_participation}
+            attendees={props.attendees.teams}
           />
         </Col>
       </Row>
@@ -338,7 +338,7 @@ function mapStateToProp({ event, attendees }, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchEventListInitiated: id => dispatch(fetchEventInitiated(id)),
+    fetchEventInitiated: id => dispatch(fetchEventInitiated(id)),
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
     getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
     addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload)),
