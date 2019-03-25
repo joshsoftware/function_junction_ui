@@ -20,7 +20,7 @@ const member = ({member}) => {
     <Icon style={{ color: 'yellow' }} type="question-circle" />;
     return (
         <div className='flex-center m-1'>
-            <div style={avatarStyle}>{member.email.charAt(0).toUpperCase()}</div>
+            <div style={avatarStyle}>{member.Invitee.email.charAt(0).toUpperCase()}</div>
             <div>{member.email}</div>
             <div className='member-status'>{memberStatus}</div>
         </div>
