@@ -24,7 +24,6 @@ class InviteMemberForm extends PureComponent {
         return;
       }
       form.resetFields();
-      console.log("EMAIL IDS:", members);
       this.props.handleSendInvites(members);
     });
   };
