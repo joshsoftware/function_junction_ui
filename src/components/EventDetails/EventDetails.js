@@ -37,14 +37,14 @@ const EventDetails = ({
 
 const EventHeader = ({
     title,
-    startDateTime,
+    start_date_time,
     id,
     history
 }) => (
     <>
         <div className="date">
-            <span>{moment(startDateTime).format('D')}</span>
-            <span>{moment(startDateTime).format('MMM')}</span>
+            <span>{moment(start_date_time).format('D')}</span>
+            <span>{moment(start_date_time).format('MMM')}</span>
         </div>
         <div className="title">
             <Tooltip title={title} placement="top">{title}</Tooltip>

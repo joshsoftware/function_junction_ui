@@ -284,7 +284,7 @@ class EventDetailsContainer extends Component {
           <Row>
         <Col span={24} >
           <Attendees
-            type={2}
+            type={props.is_individual_participation}
             attendees={[]}
           />
         </Col>
@@ -305,8 +305,8 @@ class EventDetailsContainer extends Component {
   );
 
   render = () => {
-    const { loading, event } = this.props;
-    console.log(loading, this.props, "4$")
+    const { loading } = this.props;
+    console.log(this.props, "####")
     const LoaderContainer = styled.div`
       margin: 9% 0%;
       padding: 1% 1%;

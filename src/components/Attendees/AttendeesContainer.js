@@ -25,7 +25,7 @@ class Attendees extends PureComponent {
     }
 
     getUserDetails = () => {
-        if (this.props.type === 1) {
+        if (this.props.type) {
             return Users.map(({name, email}) => {
                 return (
                     <Col span={4} >
