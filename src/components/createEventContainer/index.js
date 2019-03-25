@@ -65,10 +65,21 @@ class CreateEventContainer extends PureComponent {
     }
 
     changeHandler = (key, value) => {
+      if(key === 'summary') {
+        if (value.length <= 150) {
+          this.setState({
+            ...this.state,
+            [key]: value,
+          })
+        }
+        return
+      }
+
       this.setState({
         ...this.state,
         [key]: value,
       })
+    
     }
 
     showError = (msg) => {

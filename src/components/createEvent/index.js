@@ -1,7 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Icon, Divider } from 'antd';
+import { Row, Col, Divider } from 'antd';
+import styled from 'styled-components';
 import './index.scss';
 import { JInput, JTextArea, JDatePicker, JSwitch, JButton } from '../shared';
+
+const Summery = styled.span`
+  color: #9c9790;
+  padding-left: 1%;
+`;
 
 class CreateEvent extends PureComponent {
     render() {
@@ -30,7 +36,7 @@ class CreateEvent extends PureComponent {
                       onChange={({ target }) => changeHandler('summary', target.value)}
                       value={summary}
                       required
-                    />
+                    /><Summery>{150-summary.length} words left</Summery>
                   </Col>
                 </Row>
                 <Row>
