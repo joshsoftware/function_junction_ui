@@ -54,7 +54,6 @@ function getMembers (members = []) {
 }
 
 const Team = ({ members, name, description }) => {
-    console.log(members);
     return (
         <TeamContainer>
             <TeamName>{name}</TeamName>

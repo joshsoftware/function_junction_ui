@@ -312,7 +312,6 @@ class EventDetailsContainer extends Component {
 
   render = () => {
     const { loading } = this.props;
-    console.log(this.props, "####")
     const LoaderContainer = styled.div`
       margin: 9% 0%;
       padding: 1% 1%;
