@@ -83,7 +83,9 @@ class CreateEventContainer extends PureComponent {
     }
 
     showError = (msg) => {
-      showFailureNotification(msg);
+      if (msg) {
+        showFailureNotification(msg);
+      }
       this.setState({
         error: msg
       });
@@ -101,22 +103,18 @@ class CreateEventContainer extends PureComponent {
       const {
         title,
         summary,
-        venue,
-        description,
         start_date_time,
         end_date_time,
         register_before,
         is_showcasable,
         is_individual_participation,
-        min_size,
-        max_size,
       } = this.state;
       if (!title.trim()) {
         this.showError('Title is mandatory.');
         return false;
       }
       if (!summary && !summary.trim()) {
-        this.showError('Summery is mandatory.');
+        this.showError('Summary is mandatory.');
         return false;
       }
       if (!start_date_time) {
