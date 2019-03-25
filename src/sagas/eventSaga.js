@@ -1,6 +1,18 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { fetchEventSuccess, fetchEventFail, updateEventSuccess, updateEventFail } from 'ACTION/eventAction';
-import { FETCH_EVENT_INITIATED, CREATE_EVENT_INITIATED, UPDATE_EVENT_INITIATED, } from 'UTILS/constants';
+import {
+  fetchEventSuccess,
+  fetchEventFail,
+  updateEventSuccess,
+  updateEventFail,
+  createEventSuccess,
+  createEventFail,
+} from 'ACTION/eventAction';
+
+import {
+  FETCH_EVENT_INITIATED,
+  CREATE_EVENT_INITIATED,
+  UPDATE_EVENT_INITIATED,
+} from 'UTILS/constants';
 import RequestHandler from '../HTTP'
 
 // Worker saga
@@ -24,7 +36,8 @@ function* createEvent(action) {
     // const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(response.event))
   } catch (error) {
-    yield put(updateEventFail(error))
+    console.log('In Create Team Fail', error);
+    yield put(createEventFail(error))
   }
 }
 

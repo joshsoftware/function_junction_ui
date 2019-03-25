@@ -2,6 +2,9 @@ import {
     FETCH_ATTENDEES_INITIATED,
     FETCH_ATTENDEES_SUCCESS,
     FETCH_ATTENDEES_FAILED,
+    CREATE_TEAM_INITIATED,
+    CREATE_TEAM_SUCCESS,
+    CREATE_TEAM_FAIL,
     ADD_TEAM_MEMBER_INITIATED,
     UPDATE_TEAM_INITIATED,
     UPDATE_TEAM_SUCCESS,
@@ -27,10 +30,32 @@ import {
       }
       case FETCH_ATTENDEES_SUCCESS: return {
           isLoading: false,
-          data: action.payload,
+          data: {
+            myTeam: action.payload.teams.find(team => team.created_by.user_id === '000000000000000000000000') || [],
+            ...action.payload,
+            ...state
+          },
           error: null
       }
       case FETCH_ATTENDEES_FAILED: return {
+        isLoading: false,
+        data: {},
+        error: action.payload
+      }
+      case CREATE_TEAM_INITIATED: return {
+          isLoading: true,
+          data: action.payload,
+          error: null,
+      }
+      case CREATE_TEAM_SUCCESS: return {
+        isLoading: false,
+        data: {
+          myTeam: {...action.payload},
+          ...state
+        },
+        error: null
+      }
+      case CREATE_TEAM_FAIL: return {
         isLoading: false,
         data: {},
         error: action.payload

@@ -225,18 +225,18 @@ class EventDetailsContainer extends Component {
   };
 
   sendInvites = (emailIds) => {
-    const team = {...this.props.attendees.teams[0]}
+    const team = this.props.myTeam || {...this.props.attendees.teams[0]}
     this.props.addTeamMemberInitiated({emailIds, eventId: this.props.event.id, teamId: team.id});
   }
 
   handleTeamChange = (value, field) => {
-    const team = {...this.props.attendees.teams[0]};
+    const team = this.props.myTeam || {...this.props.attendees.teams[0]};
     team[field] = value;
-    this.props.updateTeamInitiated({ eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id, team });
+    this.props.updateTeamInitiated({ eventId: this.props.event.id, teamId: this.props.myTeam.id || this.props.attendees.teams[0].id, team });
   }
 
   handleDeleteTeam = teamId => {
-    this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id});
+    this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.myTeam.id || this.props.attendees.teams[0].id});
   }
 
   toggleYesNo = (value) => {
@@ -254,14 +254,14 @@ class EventDetailsContainer extends Component {
     } else if (this.props.attendees && this.props.attendees.teams) {
       return <>
         <ShowTeam
-          team={this.props.attendees.teams[0]}
+          team={this.props.myTeam || this.props.attendees.teams[0]}
           isShowcasable={this.props.event.is_showcasable}
           handleTeamChange={this.handleTeamChange}
           handleDeleteTeam={this.handleDeleteTeam}
           register_before={this.props.event.register_before}
         />
         <ShowMembers
-          members={this.props.attendees.teams[0].members || []}
+          members={this.props.myTeam && this.props.myTeam.members || this.props.attendees.teams[0].members || []}
           sendInvites={this.sendInvites}
           register_before={this.props.event.register_before}
         />
@@ -326,12 +326,13 @@ class EventDetailsContainer extends Component {
   };
 }
 
-function mapStateToProp({ event, attendees }, ownProps) {
+function mapStateToProp({ event, attendees, myTeam }, ownProps) {
   return {
     event: event.data,
     attendees: attendees.data,
-    loading: event.isLoading,
-    error: event.error
+    loading: event.loading,
+    error: event.error,
+    myTeam,
   };
 }
 
