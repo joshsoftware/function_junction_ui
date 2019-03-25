@@ -39,7 +39,8 @@ const EventHeader = ({
     title,
     start_date_time,
     id,
-    history
+    history,
+    created_by
 }) => (
     <>
         <div className="date">
@@ -49,9 +50,14 @@ const EventHeader = ({
         <div className="title">
             <Tooltip title={title} placement="top">{title}</Tooltip>
         </div>
-        <div>
-            <Icon type="edit" theme="twoTone" onClick={() => history.push(`/functions/update/${id}`)}/>
-        </div>
+        { created_by &&  localStorage.getItem('user') === created_by.user_id
+            && 
+            (
+                <div>
+                    <Icon type="edit" theme="twoTone" onClick={() => history.push(`/functions/update/${id}`)}/>
+                </div>
+            )
+        }
         
     </>
 );

@@ -21,6 +21,7 @@ import {
   updateTeamInitiated,
   registerParticipantInitiated,
 } from 'ACTION/attendeesAction';
+import { getUser } from 'ACTION/userDetailsAction'
 import IndividualRegistration from './IndividualParticipation';
 import EventDetails from "./EventDetails";
 import "./EventDetails.scss";
@@ -47,6 +48,13 @@ class EventDetailsContainer extends Component {
 
   componentDidMount() {
     const { match } = this.props;
+    getUser()
+    .then(data => {
+        localStorage.setItem('user', data.id);
+    })
+    .catch(error => {
+        console.log(error)
+    })
     this.props.fetchEventInitiated(match.params.eventID);
     if (match.params.userID) {
       console.log("FETCH USER regiserd or not");
