@@ -75,6 +75,14 @@ class CreateEventContainer extends PureComponent {
         return
       }
 
+      if (key === 'min_size' || key === 'max_size') {
+        this.setState({
+          ...this.state,
+          [key]: parseInt(value),
+        });
+        return;
+      }
+
       this.setState({
         ...this.state,
         [key]: value,
