@@ -100,7 +100,6 @@ class CreateEventContainer extends PureComponent {
     }
 
     dateDifference = (start, end) => {
-      console.log(moment(start).diff(moment(end), 'minute'))
       if (moment(start).diff(moment(end), 'minute') >= 0) {
         return true;
       }

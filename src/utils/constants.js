@@ -41,7 +41,7 @@ export const REGISTER_PARTICIPANT_SUCCESS = 'REGISTER_PARTICIPANT_SUCCESS';
 export const REGISTER_PARTICIPANT_FAIL = 'REGISTER_PARTICIPANT_FAIL';
 
 export const MEMBER_INVITE_STATUS = {
-  ACCEPTED: 'Accepted',
+  ACCEPTED: 'accepted',
   REJECTED: 'rejected',
   PENDING: 'pending',
 };

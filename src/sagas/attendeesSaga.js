@@ -68,8 +68,8 @@ function* updateTeam(action) {
       `events/${action.payload.eventId}/teams/${action.payload.teamId}`,
       action.payload.team,
     ))
-    const data = yield call(() => response.json.bind(response)());
-    yield put(updateTeamSuccess(data))
+    // const data = yield call(() => response.json.bind(response)());
+    yield put(updateTeamSuccess(response.team))
   } catch (error) {
     yield put(updateTeamFail(error.message))
   }
