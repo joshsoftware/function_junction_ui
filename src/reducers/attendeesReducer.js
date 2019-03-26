@@ -12,83 +12,71 @@ import {
   DELETE_TEAM_INITIATED,
   DELETE_TEAM_SUCCESS,
   DELETE_TEAM_FAIL,
-  MEMBER_INVITE_STATUS
+  MEMBER_INVITE_STATUS,
+  REGISTER_PARTICIPANT_INITIATED,
+  REGISTER_PARTICIPANT_SUCCESS,
+  REGISTER_PARTICIPANT_FAIL
+
 } from 'UTILS/constants';
 
 const initialState = {
   isLoading: false,
   data: {},
-  error: null
+  error: null,
+
+  rsvpLoading: false,
+  rsvpError: null
 };
 
 export default function eventReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_ATTENDEES_INITIATED:
       return {
+        ...state,
         isLoading: true,
-        data: {
-          ...action.payload,
-          ...state
-        },
-        error: null
+        error: null,
       };
     case FETCH_ATTENDEES_SUCCESS:
-      /* const myTeam = action.payload.teams.reduce((team, currentTeam) => {
-        if (currentTeam.creator_id === localStorage.getItem('user')) {
-          console.log('Creator check:', currentTeam.name);
-          team = currentTeam;
-          return team;
-        }
-        team = currentTeam.members.find(member => member.invitee.user_id === localStorage.getItem('user') && member.status === MEMBER_INVITE_STATUS.ACCEPTED);
-        return team;
-      }, {}), */
       return {
+        ...state,
         isLoading: false,
-        data: {
-          myTeam: action.payload.teams.find(currentTeam => {
-            return (
-              currentTeam.creator_id === localStorage.getItem('user') ||
-              currentTeam.members.find(
-                member =>
-                  member.invitee.user_id === localStorage.getItem('user') &&
-                  member.status === MEMBER_INVITE_STATUS.ACCEPTED
-              )
-            );
-          }),
-          ...action.payload,
-          ...state
-        },
-        error: null
+        data: action.payload,
+        myTeam: action.payload.teams ? action.payload.teams.find(currentTeam => {
+          return (
+            currentTeam.creator_id === localStorage.getItem('user') ||
+            currentTeam.members.find(
+              member =>
+                member.invitee.user_id === localStorage.getItem('user') &&
+                member.status === MEMBER_INVITE_STATUS.ACCEPTED
+            )
+          );
+        }) : {},
+        error: null,
       };
     case FETCH_ATTENDEES_FAILED:
       return {
+        ...state,
         isLoading: false,
-        data: {
-          ...state
-        },
         error: action.payload
       };
     case CREATE_TEAM_INITIATED:
       return {
+        ...state,
         isLoading: true,
         data: action.payload,
         error: null
       };
     case CREATE_TEAM_SUCCESS:
       return {
+        ...state,
         isLoading: false,
-        data: {
-          myTeam: { ...action.payload },
-          ...state
-        },
-        error: null
+        error: null,
+        myTeam: action.payload,
       };
     case CREATE_TEAM_FAIL:
       return {
+        ...state,
         isLoading: false,
-        data: {
-          ...state
-        },
         error: action.payload
       };
     case ADD_TEAM_MEMBER_INITIATED:
@@ -119,12 +107,30 @@ export default function eventReducer(state = initialState, action) {
       };
     case DELETE_TEAM_FAIL:
       return {
+        ...state,
         isLoading: false,
-        data: {
-          ...state
-        },
         error: action.payload
       };
+
+    case REGISTER_PARTICIPANT_INITIATED:
+    return {
+      ...state,
+      rsvpLoading: true,
+      
+    }
+    case REGISTER_PARTICIPANT_SUCCESS:
+    return {
+      ...state,
+      rsvpLoading: false,
+      
+    }
+    case REGISTER_PARTICIPANT_FAIL:
+    return {
+      ...state,
+      rsvpLoading: false,
+      rsvpError: action.payload,
+      
+    }
     default:
       return state;
   }
