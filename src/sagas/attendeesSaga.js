@@ -8,6 +8,8 @@ import {
   updateTeamFail,
   deleteTeamSuccess,
   deleteTeamFail,
+  addTeamMemberSuccess,
+  addTeamMemberFail,
   registerParticipantSuccess,
   registerParticipantFail,
 } from 'ACTION/attendeesAction';
@@ -28,21 +30,20 @@ function* fetchAttendees(action) {
       ));
       yield put(fetchAttendeesSuccess(response));
     } catch (error) {
-      yield put(fetchAttendeesFailed(error))
+      yield put(fetchAttendeesFailed(error));
     }
   }
   
 function* addTeamMember(action) {
-  console.log('Add Team member action:', action);
   try {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/teams/${action.payload.teamId}/team_members`,
       {emails: action.payload.emailIds} 
     ));
-    const data = yield call(() => response.json.bind(response)());
-    yield put(updateTeamSuccess(data))
+    // const data = yield call(() => response.json.bind(response)());
+    yield put(addTeamMemberSuccess({ failedEmails: response.failed_emails, eventDetails: action.payload }));
   } catch(error) {
-    yield put(updateTeamFail(error))
+    yield put(addTeamMemberFail(error.message));
   }
 }
 
@@ -57,7 +58,6 @@ function* createTeam(action) {
     // const data = yield call(() => response.json.bind(response));
     yield put(createTeamSuccess(response.team))
   } catch (error) {
-    console.log('In Create Team Fail', error);
     yield put(createTeamFail(error))
   }
 }

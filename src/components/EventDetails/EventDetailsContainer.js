@@ -381,7 +381,7 @@ function mapStateToProp(state, ownProps) {
   // console.log(state, "$$$$$$#########")
   return {
     event: state.event.data,
-    attendees: state.attendees.data,
+    attendees: state.attendees,
     myTeam: state.attendees.myTeam,
     attendeesLoading: state.attendees.isLoading,
     loading: state.event.isLoading,

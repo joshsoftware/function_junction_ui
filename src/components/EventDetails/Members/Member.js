@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'antd'
-import { generateRandomColor } from '../../../utils/util';
+import { generateRandomColor, getNameFromEmail } from '../../../utils/util';
 import { MEMBER_INVITE_STATUS } from 'UTILS/constants';
 
 const memberStatus = {
@@ -20,10 +20,11 @@ const Member = ({member}) => {
         justifyContent: 'center',
         color: '#fff',
     };
+    const avatarLetter = member.invitee.name.trim() || member.invitee.email;
     return (
         <div className='flex-center m-1'>
-            <div style={avatarStyle}>{member.invitee.email.charAt(0).toUpperCase()}</div>
-            <div>{member.invitee.name}</div>
+            <div style={avatarStyle}>{avatarLetter.charAt(0).toUpperCase()}</div>
+            <div>{member.invitee.name.trim() || getNameFromEmail(member.invitee.email)}</div>
             <div className='member-status'>{memberStatus[member.status]}</div>
         </div>
     );

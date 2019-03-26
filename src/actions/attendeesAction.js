@@ -14,7 +14,9 @@ import {
   DELETE_TEAM_FAIL,
   REGISTER_PARTICIPANT_INITIATED,
   REGISTER_PARTICIPANT_SUCCESS,
-  REGISTER_PARTICIPANT_FAIL
+  REGISTER_PARTICIPANT_FAIL,
+  ADD_TEAM_MEMBER_SUCCESS,
+  ADD_TEAM_MEMBER_FAIL
 } from "../utils/constants";
 
 export function fetchAttendeesInitiated(eventID) {
@@ -45,31 +47,45 @@ export function addTeamMemberInitiated(payload) {
   };
 }
 
-export function createTeamInitiated(data) {
+export function addTeamMemberSuccess(payload) {
+  return {
+    type: ADD_TEAM_MEMBER_SUCCESS,
+    payload
+  };
+}
+
+export function addTeamMemberFail(payload) {
+  return {
+    type: ADD_TEAM_MEMBER_FAIL,
+    payload
+  };
+}
+
+export function createTeamInitiated(payload) {
   return {
     type: CREATE_TEAM_INITIATED,
-    payload: data
+    payload
   };
 }
 
-export function createTeamSuccess(data) {
+export function createTeamSuccess(payload) {
   return {
     type: CREATE_TEAM_SUCCESS,
-    payload: data
+    payload
   };
 }
 
-export function createTeamFail(data) {
+export function createTeamFail(payload) {
     return {
       type: CREATE_TEAM_FAIL,
-      payload: data
+      payload
     };
 }
 
-export function updateTeamInitiated(data) {
+export function updateTeamInitiated(payload) {
   return {
     type: UPDATE_TEAM_INITIATED,
-    payload: data
+    payload
   };
 }
 
