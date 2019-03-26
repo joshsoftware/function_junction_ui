@@ -1,11 +1,12 @@
 import React from 'react';
 import { Icon } from 'antd'
 import { generateRandomColor } from '../../../utils/util';
+import { MEMBER_INVITE_STATUS } from 'UTILS/constants';
 
 const memberStatus = {
-    'Accepted': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#41A746' }} type="check-circle" />,
-    'Rejected': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="close-circle" />,
-    'Pending': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="question-circle" />,
+    [MEMBER_INVITE_STATUS.ACCEPTED]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#41A746' }} type="check-circle" />,
+    [MEMBER_INVITE_STATUS.REJECTED]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="close-circle" />,
+    [MEMBER_INVITE_STATUS.PENDING]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="question-circle" />,
 };
 
 const Member = ({member}) => {
