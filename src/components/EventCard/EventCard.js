@@ -93,11 +93,13 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
   return [getAvatar(start_date_time), Venue, Team]
 }
 
-function getCover(summery = 'No event summery defined') {
-  const colors = ['#4a707a', '#f17171','#05798c', '#7a1a18bf'];
+function getCover(summary = 'No event summery defined') {
+  const colors = ['#07ADD7', '#884B98','#98C857', '#ED6738'];
   const QuoteContainer = styled.div`
     background: ${colors[getRandomInt(0, colors.length-1)]};
-    padding: 4%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     height: 200px;
   `;
   const Quote = styled.div`
@@ -119,7 +121,7 @@ function getCover(summery = 'No event summery defined') {
   return (
     <QuoteContainer>
       <Quote>
-        {summery}
+        {summary}
       </Quote>
       {/* <By>
         {`- ${by}`}
@@ -128,12 +130,12 @@ function getCover(summery = 'No event summery defined') {
   )
 }
 
-const eventCard = ({id, title, desc, summery, history, ...rest}) => {
+const eventCard = ({id, title, desc, summary, history, ...rest}) => {
   return (
   <Card
     hoverable
     style={{ margin: 20 }}
-    cover={getCover(summery)}
+    cover={getCover(summary)}
     actions={getActionItems(rest)}
     onClick={() => history.push(`/functions/event-details/${id}`)}
   >
