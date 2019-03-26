@@ -2,19 +2,19 @@ import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
-import Quotes from './Quotes';
+// import Quotes from './Quotes';
 
 import './EventCard.scss';
-import { generateRandomColor, getRandomInt } from '../../utils/util';
+import { /* generateRandomColor, */ getRandomInt } from '../../utils/util';
 
 const { Meta } = Card;
 
-const Happen = styled.div`
-  font-size: 10px;
-  font-weight: 100;
-  letter-spacing: 2px;
-  text-align: center;
-`;
+// const Happen = styled.div`
+//   font-size: 10px;
+//   font-weight: 100;
+//   letter-spacing: 2px;
+//   text-align: center;
+// `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,11 +23,11 @@ const Container = styled.div`
   vertical-align: middle;
   display: table-cell;
 `;
-const Label = styled.span`
-  color: grey;
-  font-size: 12px;
-  letter-spacing: 1px;
-`;
+// const Label = styled.span`
+//   color: grey;
+//   font-size: 12px;
+//   letter-spacing: 1px;
+// `;
 const Data = styled.div`
   color: #848181;
   width: 133px;
@@ -106,15 +106,15 @@ function getCover(summery = 'No event summery defined') {
     letter-spacing: 3px;
     font-weight: 600;
   `;
-  const By = styled.div`
-    text-align: end;
-    color: white;
-    font-weight: 800;
-    font-style: italic;
-    letter-spacing: 1px;
-    margin-top: 11px;
-  `;
-  const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
+  // const By = styled.div`
+  //   text-align: end;
+  //   color: white;
+  //   font-weight: 800;
+  //   font-style: italic;
+  //   letter-spacing: 1px;
+  //   margin-top: 11px;
+  // `;
+  // const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
 
   return (
     <QuoteContainer>

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Empty, Skeleton } from 'antd';
 import { connect } from 'react-redux';
-import { withCookies, Cookies  } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 import { fetchEventListInitiated } from 'ACTION/eventsAction';
 import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
@@ -70,8 +70,6 @@ class BrowseEvents extends PureComponent {
     };
 
     render() {
-        const { name } = this.state;
-        console.log(name, this.props);
         return (
             <div className="container">
                 <div className="slider">

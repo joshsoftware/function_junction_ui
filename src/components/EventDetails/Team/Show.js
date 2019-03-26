@@ -28,7 +28,7 @@ export class ShowTeam extends PureComponent {
   };
   render() {
     const { isEditing } = this.state;
-    const { team, isShowcasable, isOldEvent } = this.props;
+    const { team, /* isShowcasable, */ isOldEvent } = this.props;
     return (
       <>
         {!isEditing ? (

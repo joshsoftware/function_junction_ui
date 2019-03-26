@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { isOldEvent } from '../../utils/util';
+// import { isOldEvent } from '../../utils/util';
 const individualParticipation = ({ handleRSVPClick, attending }) => {
 
     if (attending) {

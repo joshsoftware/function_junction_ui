@@ -1,17 +1,17 @@
 import React from 'react'
 import { Empty, Avatar, Collapse, Icon } from 'antd';
 import styled from 'styled-components';
-import member from '../EventDetails/Members/Member';
+// import member from '../EventDetails/Members/Member';
 
 
-const TeamName = styled.div`
-    text-align: center;
-    font-weight: 800;
-`;
+// const TeamName = styled.div`
+//     text-align: center;
+//     font-weight: 800;
+// `;
 
-const TeamContainer = styled.div`
-    padding: 5px 10px;
-`;
+// const TeamContainer = styled.div`
+//     padding: 5px 10px;
+// `;
 
 const Desc = styled.div`
     text-align: center;
