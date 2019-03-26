@@ -33,7 +33,7 @@ const Data = styled.div`
 function getAvatar(startDateTime) {
   let eventDate = moment(startDateTime);
   let todaysDate = moment();
-  let diff = todaysDate.diff(eventDate, "days");
+  let diff = todaysDate.diff(eventDate, "minute");
 
   const DateContainer = styled.div`
     color: ${diff <= 0 ? '#299c3c' : '#ff3b00'};
