@@ -269,13 +269,12 @@ class EventDetailsContainer extends Component {
   };
 
   renderTeam = () => {
-    const { event, attendees } = this.props;
-    const { loading, is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
+    const { event, attendees, attendeesLoading, loading } = this.props;
+    const { is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
     const isPastEvent = isOldEvent(end_date_time);
-    console.log(isPastEvent);
     // If loading
-    if(loading) {
-      return <Icon type="loading" />
+    if(loading || attendeesLoading) {
+      return <Skeleton paragraph active/>
     }
 
     // If individual event
@@ -342,9 +341,9 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-              <div className={this.getBackgroundClass()}>
-                {this.renderTeam()}
-              </div>
+            <div className={this.getBackgroundClass()}>
+              {this.renderTeam()}
+            </div>
           </Affix>
         </Col>
       </Row>
@@ -375,7 +374,8 @@ function mapStateToProp({ event, attendees, myTeam }, ownProps) {
   return {
     event: event.data,
     attendees: attendees.data,
-    loading: event.loading,
+    attendeesLoading: attendees.isLoading,
+    loading: event.isLoading,
     error: event.error,
     myTeam
   };
