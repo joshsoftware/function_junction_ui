@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { isOldEvent } from '../../utils/util';
-const individualParticipation = ({ isGoing, handleRSVPClick, attending }) => {
+const individualParticipation = ({ handleRSVPClick, attending }) => {
 
     if (attending) {
         return  <div className="going-to-event"> You are going.</div>

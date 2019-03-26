@@ -2,6 +2,8 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   fetchAttendeesSuccess,
   fetchAttendeesFailed,
+  createTeamSuccess,
+  createTeamFail,
   updateTeamSuccess,
   updateTeamFail,
   deleteTeamSuccess,
@@ -51,10 +53,11 @@ function* createTeam(action) {
       `events/${eventId}/teams`,
       action.payload,
     ))
-    const data = yield call(() => response.json.bind(response)());
-    yield put(updateTeamSuccess(data))
+    // const data = yield call(() => response.json.bind(response));
+    yield put(createTeamSuccess(response.team))
   } catch (error) {
-    yield put(updateTeamFail(error))
+    console.log('In Create Team Fail', error);
+    yield put(createTeamFail(error))
   }
 }
 

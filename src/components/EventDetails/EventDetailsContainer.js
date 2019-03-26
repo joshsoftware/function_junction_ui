@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import {
-  Row,
-  Col,
-  Skeleton,
-  Button,
-  Icon,
-  Divider,
-  Affix,
-} from "antd";
-import styled from 'styled-components';
+import { Row, Col, Skeleton, Button, Icon, Divider, Affix } from "antd";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import moment from "moment";
-import AddToCalendar from 'react-add-to-calendar';
+import AddToCalendar from "react-add-to-calendar";
 import { fetchEventInitiated } from "ACTION/eventAction";
 import {
   fetchAttendeesInitiated,
@@ -29,8 +21,7 @@ import { ShowTeam } from './Team/Show';
 import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
-import { isOldEvent, isObjectEmpty } from '../../utils/util';
-import member from "./Members/Member";
+import { isObjectEmpty } from '../../utils/util';
 
 const initialState = {
   loading: false,
@@ -38,7 +29,7 @@ const initialState = {
   eventDetailsLoading: false,
   sidePanelLoading: false,
   isRegistered: false,
-  isCreateTeamModalOpen: false,
+  isCreateTeamModalOpen: false
 };
 
 class EventDetailsContainer extends Component {
@@ -63,62 +54,61 @@ class EventDetailsContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
+    if (isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
       this.props.getAttendees(this.props.event.id);
     }
   }
 
-  getEventDetails = (event, history) => <EventDetails {...event} {...history} />;
+  getEventDetails = (event, history) => (
+    <EventDetails {...event} {...history} />
+  );
 
   getAddToCalender = (startTime, endTime, title, description, location) => {
-        let eventDate = moment(startTime);
-        let todaysDate = moment();
-        let diff = todaysDate.diff(eventDate, "days");
-        if (diff <= 0) {
-            let event = {
-                title,
-                description,
-                location,
-                startTime,
-                endTime
-            }
-            let items = [
-                { google: 'Google Calender' },
-                { outlook: 'Outlook' },
-                { outlookcom: 'Outlook.com' },
-                { yahoo: 'Yahoo' },
-                { apple: 'Apple Calendar' },
+    let eventDate = moment(startTime);
+    let todaysDate = moment();
+    let diff = todaysDate.diff(eventDate, "days");
+    if (diff <= 0) {
+      let event = {
+        title,
+        description,
+        location,
+        startTime,
+        endTime
+      };
+      let items = [
+        { google: "Google Calender" },
+        { outlook: "Outlook" },
+        { outlookcom: "Outlook.com" },
+        { yahoo: "Yahoo" },
+        { apple: "Apple Calendar" }
+      ];
 
-             ];
-             
-            return (
-                <Row>
-                    <Col span={3}>
-                        <Icon type="calendar" />
-                    </Col>
-                    <Col span={21} >
-                        <AddToCalendar
-                            event={event}
-                            buttonLabel="Add to calendar"
-                            listItems={items}
-                        />
-                    </Col>
-                </Row>
-            );
-        }
-        return (
-            <Row>
-                <Col span={3}>
-                    <Icon type="calendar" />
-                </Col>
-                <Col span={21}>
-                    <span style={{ color: 'red' }}>
-                       Past Event
-                    </span>
-                </Col>
-            </Row>
-        );
+      return (
+        <Row>
+          <Col span={3}>
+            <Icon type="calendar" />
+          </Col>
+          <Col span={21}>
+            <AddToCalendar
+              event={event}
+              buttonLabel="Add to calendar"
+              listItems={items}
+            />
+          </Col>
+        </Row>
+      );
     }
+    return (
+      <Row>
+        <Col span={3}>
+          <Icon type="calendar" />
+        </Col>
+        <Col span={21}>
+          <span style={{ color: "red" }}>Past Event</span>
+        </Col>
+      </Row>
+    );
+  };
 
   getEventDetailsContainers = ({ loading, event, history }) => (
     <div className="event-details-wrapper background">
@@ -181,7 +171,13 @@ class EventDetailsContainer extends Component {
     }
   };
 
-  getEventLocation = ({ start_date_time, end_date_time, title, description, venue }) => (
+  getEventLocation = ({
+    start_date_time,
+    end_date_time,
+    title,
+    description,
+    venue
+  }) => (
     <>
       <Row>
         <Col span={3}>
@@ -193,7 +189,13 @@ class EventDetailsContainer extends Component {
           <span>{moment(end_date_time).format("DD, MMM YY hh:mm a")}</span>
         </Col>
       </Row>
-      {this.getAddToCalender(start_date_time, end_date_time, title, description, venue)}
+      {this.getAddToCalender(
+        start_date_time,
+        end_date_time,
+        title,
+        description,
+        venue
+      )}
       <Row>
         <Col span={3}>
           <Icon type="home" />
@@ -222,38 +224,49 @@ class EventDetailsContainer extends Component {
     </div>
   );
 
-  handleCreateTeam = (createFormValues) => {
+  handleCreateTeam = createFormValues => {
     this.props.createTeamInitiated({
       ...createFormValues,
-      eventId: this.props.event.id,
-    }); 
+      eventId: this.props.event.id
+    });
   };
 
   saveFormRef = formRef => {
     this.formRef = formRef;
   };
 
-  sendInvites = (emailIds) => {
-    const team = {...this.props.attendees.teams[0]}
-    this.props.addTeamMemberInitiated({emailIds, eventId: this.props.event.id, teamId: team.id});
-  }
+  sendInvites = emailIds => {
+    const team = this.props.myTeam || { ...this.props.attendees.teams[0] };
+    this.props.addTeamMemberInitiated({
+      emailIds,
+      eventId: this.props.event.id,
+      teamId: team.id
+    });
+  };
 
   handleTeamChange = (value, field) => {
-    const team = {...this.props.attendees.teams[0]};
+    const team = this.props.myTeam || { ...this.props.attendees.teams[0] };
     team[field] = value;
-    this.props.updateTeamInitiated({ eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id, team });
-  }
+    this.props.updateTeamInitiated({
+      eventId: this.props.event.id,
+      teamId: this.props.myTeam.id || this.props.attendees.teams[0].id,
+      team
+    });
+  };
 
   handleDeleteTeam = teamId => {
-    this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id});
-  }
+    this.props.deleteTeamInitiated({
+      eventId: this.props.event.id,
+      teamId: this.props.myTeam.id || this.props.attendees.teams[0].id
+    });
+  };
 
   handleRSVPClick = () => {
     const payLoad = {
       eventId: this.props.event.id
     };
     this.props.registerIndividualParticipation(payLoad);
-  }
+  };
 
   renderTeam = () => {
     const { event, attendees } = this.props;
@@ -306,22 +319,18 @@ class EventDetailsContainer extends Component {
         <Col span={18}>
           {this.getEventDetailsContainers(props)}
           <Row>
-        <Col span={24} >
-          <Attendees
-            type={props.event.is_individual_participation}
-            attendees={props.attendees.teams}
-          />
-        </Col>
-      </Row>
+            <Col span={24}>
+              <Attendees
+                type={props.event.is_individual_participation}
+                attendees={props.attendees.teams}
+              />
+            </Col>
+          </Row>
         </Col>
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className="background">
-              {
-                this.renderTeam()
-              }
-            </div>
+            <div className="background">{this.renderTeam()}</div>
           </Affix>
         </Col>
       </Row>
@@ -337,19 +346,24 @@ class EventDetailsContainer extends Component {
     `;
     return (
       <>
-        {loading && <LoaderContainer><Skeleton active avatar/></LoaderContainer>}
+        {loading && (
+          <LoaderContainer>
+            <Skeleton active avatar />
+          </LoaderContainer>
+        )}
         {!loading && this.getEvent(this.props)}
       </>
     );
   };
 }
 
-function mapStateToProp({ event, attendees }, ownProps) {
+function mapStateToProp({ event, attendees, myTeam }, ownProps) {
   return {
     event: event.data,
     attendees: attendees.data,
-    loading: event.isLoading,
-    error: event.error
+    loading: event.loading,
+    error: event.error,
+    myTeam
   };
 }
 
@@ -358,10 +372,12 @@ function mapDispatchToProps(dispatch) {
     fetchEventInitiated: id => dispatch(fetchEventInitiated(id)),
     createTeamInitiated: data => dispatch(createTeamInitiated(data)),
     getAttendees: eventID => dispatch(fetchAttendeesInitiated(eventID)),
-    addTeamMemberInitiated: payload => dispatch(addTeamMemberInitiated(payload)),
+    addTeamMemberInitiated: payload =>
+      dispatch(addTeamMemberInitiated(payload)),
     deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId)),
     updateTeamInitiated: payload => dispatch(updateTeamInitiated(payload)),
-    registerIndividualParticipation: payload => dispatch(registerParticipantInitiated(payload))
+    registerIndividualParticipation: payload =>
+      dispatch(registerParticipantInitiated(payload))
   };
 }
 

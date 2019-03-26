@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from 'antd'
 import { generateRandomColor } from '../../../utils/util';
 
-const member = ({member}) => {
+const Member = ({member}) => {
     const avatarStyle={
         backgroundColor: generateRandomColor(),
         borderRadius: '50%',
@@ -26,4 +26,4 @@ const member = ({member}) => {
         </div>
     );
 };
-export default member;
+export default Member;

@@ -3,6 +3,8 @@ import {
   FETCH_EVENT_SUCCESS,
   FETCH_EVENT_FAIL,
   CREATE_EVENT_INITIATED,
+  CREATE_EVENT_SUCCESS,
+  CREATE_EVENT_FAIL,
   UPDATE_EVENT_INITIATED,
   UPDATE_EVENT_SUCCESS,
   UPDATE_EVENT_FAIL,
@@ -33,6 +35,20 @@ export function createEventInitiated(data) {
   return {
     type: CREATE_EVENT_INITIATED,
     payload: data,
+  }
+}
+
+export function createEventSuccess(data) {
+  return {
+    type: CREATE_EVENT_SUCCESS,
+    payload: data,
+  }
+}
+
+export function createEventFail(error) {
+  return {
+    type: CREATE_EVENT_FAIL,
+    payload: error,
   }
 }
 
