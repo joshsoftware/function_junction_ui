@@ -33,6 +33,7 @@ function* fetchAttendees(action) {
   }
   
 function* addTeamMember(action) {
+  console.log('Add Team member action:', action);
   try {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/teams/${action.payload.teamId}/team_members`,
@@ -70,7 +71,7 @@ function* updateTeam(action) {
     const data = yield call(() => response.json.bind(response)());
     yield put(updateTeamSuccess(data))
   } catch (error) {
-    yield put(updateTeamFail(error))
+    yield put(updateTeamFail(error.message))
   }
 }
 

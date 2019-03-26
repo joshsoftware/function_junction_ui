@@ -92,40 +92,13 @@ export default function eventReducer(state = initialState, action) {
         error: action.payload
       };
     case ADD_TEAM_MEMBER_INITIATED:
-      return {
-        isLoading: true,
-        data: {
-          ...action.payload,
-          ...state
-        },
-        error: null
-      };
+      return {isLoading: true, ...state}
     case UPDATE_TEAM_INITIATED:
-      return {
-        isLoading: true,
-        data: {
-          ...action.payload,
-          ...state
-        },
-        error: null
-      };
+      return {isLoading: true , ...state}
     case UPDATE_TEAM_SUCCESS:
-      return {
-        isLoading: false,
-        data: {
-          ...action.payload,
-          ...state
-        },
-        error: null
-      };
+      return {isLoading: false, ...state};
     case UPDATE_TEAM_FAIL:
-      return {
-        isLoading: false,
-        data: {
-          ...state
-        },
-        error: action.payload
-      };
+      return {isLoading: false, error: action.payload, ...state}
     case DELETE_TEAM_INITIATED:
       return {
         isLoading: true,
