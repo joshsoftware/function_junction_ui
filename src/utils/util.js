@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export function validateEmail(email) {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 
@@ -16,10 +16,10 @@ export function validateURL(url) {
 export function generateRandomColor() {
   const letters = '0123456789'.split('');
   let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.round(Math.random() * 10)];
-    }
-    return color;
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.round(Math.random() * 9)];
+  }
+  return color;
 }
 
 export function isObjectEmpty(obj) {

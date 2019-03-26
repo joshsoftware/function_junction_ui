@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { Input, Icon, Tooltip } from "antd";
+import React, { PureComponent } from 'react';
+import { Input, Icon, Tooltip } from 'antd';
 export class ShowTeam extends PureComponent {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ export class ShowTeam extends PureComponent {
   };
   handleShowcasableURLChange = event => {
     event.preventDefault();
-    console.log("URL Value:", event.target.value);
+    console.log('URL Value:', event.target.value);
     this.toggleEditing();
     this.props.handleShowcasableURLChange(event.target.value);
   };
@@ -33,35 +33,35 @@ export class ShowTeam extends PureComponent {
       <>
         {!isEditing ? (
           <>
-            <div className="flex-center">
-              <h4 className="team-name">
-                <Icon type="team" style={{ marginRight: "0.5rem" }} />
+            <div className='flex-center'>
+              <h4 className='team-name'>
+                <Icon type='team' style={{ marginRight: '0.5rem' }} />
                 {team.name}
               </h4>
               {!isOldEvent && (
-                <h4 style={{ marginLeft: "auto" }}>
-                  <Tooltip title="Edit Team">
+                <h4 style={{ marginLeft: 'auto' }}>
+                  <Tooltip title='Edit Team'>
                     <Icon
-                      theme="twoTone"
+                      theme='twoTone'
                       onClick={this.toggleEditing}
-                      type="edit"
+                      type='edit'
                     />
                   </Tooltip>
-                  <Tooltip title="Delete Team">
+                  <Tooltip title='Delete Team'>
                     <Icon
-                      theme="twoTone"
-                      onClick={() => this.props.handleDeleteTeam()}
-                      type="delete"
-                      style={{ marginLeft: "0.5rem" }}
+                      theme='twoTone'
+                      onClick={this.props.handleDeleteTeam}
+                      type='delete'
+                      style={{ marginLeft: '0.5rem' }}
                     />
                   </Tooltip>
                 </h4>
               )}
             </div>
-            <div className="showcasable-url">
+            <div className='showcasable-url'>
               <a
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
                 href={`${team.showcase_url}`}
               >
                 {team.showcase_url}
@@ -71,23 +71,23 @@ export class ShowTeam extends PureComponent {
         ) : (
           <>
             <Icon
-              className="close-circle"
+              className='close-circle'
               onClick={this.toggleEditing}
-              theme="twoTone"
-              type="close-circle"
+              theme='twoTone'
+              type='close-circle'
             />
             <Input
               defaultValue={team.name}
-              onBlur={event => this.handleTeamChange(event, "name")}
-              placeholder="Enter team name"
-              name="name"
+              onBlur={event => this.handleTeamChange(event, 'name')}
+              placeholder='Enter team name'
+              name='name'
             />
             <Input
-              className="showcasable-url"
-              placeholder="Enter showcaseable URL"
+              className='showcasable-url'
+              placeholder='Enter showcaseable URL'
               defaultValue={team.showcase_url}
-              onBlur={event => this.handleTeamChange(event, "showcase_url")}
-              name="showcase_url"
+              onBlur={event => this.handleTeamChange(event, 'showcase_url')}
+              name='showcase_url'
             />
           </>
         )}

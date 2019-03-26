@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react";
-import { Icon } from "antd";
-import Member from "./Member";
-import Invite from "./Invite";
-import "../Team/Team.scss";
+import React, { PureComponent } from 'react';
+import { Icon } from 'antd';
+import Member from './Member';
+import Invite from './Invite';
+import '../Team/Team.scss';
 
 class ShowMembers extends PureComponent {
   state = {
@@ -21,36 +21,38 @@ class ShowMembers extends PureComponent {
   };
 
   renderMembers = members =>
-    members.map(member => <Member key={member.email} member={member} />);
+    members.map(member => (
+      <Member key={member.invitee.email} member={member} />
+    ));
 
   render = () => {
     const { isOldEvent } = this.props;
     return (
       <>
-        <div className="flex-center mt-2">
-          <div className="flex-center">
+        <div className='flex-center mt-2'>
+          <div className='flex-center'>
             <span>Members</span>
             {!this.state.isAddingMember && !isOldEvent && (
               <Icon
-                theme="twoTone"
+                theme='twoTone'
                 onClick={this.toggleAddingMembers}
-                type="plus-circle"
+                type='plus-circle'
               />
             )}
           </div>
           {this.state.isAddingMember && (
             <Icon
-              theme="twoTone"
-              style={{ marginLeft: "auto" }}
+              theme='twoTone'
+              style={{ marginLeft: 'auto' }}
               onClick={this.toggleAddingMembers}
-              type="close-circle"
+              type='close-circle'
             />
           )}
         </div>
         {this.state.isAddingMember && (
           <Invite handleSendInvites={this.handleSendInvites} />
         )}
-        <div className="members-wrapper">
+        <div className='members-wrapper'>
           {this.renderMembers(this.props.members)}
         </div>
       </>
