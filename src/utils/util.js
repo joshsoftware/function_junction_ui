@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { MEMBER_INVITE_STATUS } from 'UTILS/constants';
 
 export function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -34,4 +35,27 @@ export function getRandomInt(min, max) {
 
 export function isOldEvent(register_before) {
   return moment().diff(register_before, 'days') > 0;
+}
+
+export function getNameFromEmail(email) {
+  return email.split("@")[0].split(".").join(" ")
+}
+
+export function getTeamMembers(payload) {
+  const { emailIds, eventId } = payload;
+  return emailIds.map(email => {
+    return {
+      event_id: eventId,
+      invitee: {
+        email,
+        name: getNameFromEmail(email),
+      },
+      inviter: {
+        email: "",
+        name: '',
+        user_id: localStorage.getItem('user')
+      },
+      status: MEMBER_INVITE_STATUS.PENDING
+    };
+  });
 }
