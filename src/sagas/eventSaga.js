@@ -4,7 +4,7 @@ import {
   fetchEventFail,
   updateEventSuccess,
   updateEventFail,
-  createEventSuccess,
+  // createEventSuccess,
   createEventFail,
 } from 'ACTION/eventAction';
 

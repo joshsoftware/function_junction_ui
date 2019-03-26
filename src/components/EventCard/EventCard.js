@@ -2,19 +2,19 @@ import React from 'react';
 import { Card, Icon, Tooltip } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
-import Quotes from './Quotes';
+// import Quotes from './Quotes';
 
 import './EventCard.scss';
-import { generateRandomColor, getRandomInt } from '../../utils/util';
+import { /* generateRandomColor, */ getRandomInt } from '../../utils/util';
 
 const { Meta } = Card;
 
-const Happen = styled.div`
-  font-size: 10px;
-  font-weight: 100;
-  letter-spacing: 2px;
-  text-align: center;
-`;
+// const Happen = styled.div`
+//   font-size: 10px;
+//   font-weight: 100;
+//   letter-spacing: 2px;
+//   text-align: center;
+// `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,11 +23,11 @@ const Container = styled.div`
   vertical-align: middle;
   display: table-cell;
 `;
-const Label = styled.span`
-  color: grey;
-  font-size: 12px;
-  letter-spacing: 1px;
-`;
+// const Label = styled.span`
+//   color: grey;
+//   font-size: 12px;
+//   letter-spacing: 1px;
+// `;
 const Data = styled.div`
   color: #848181;
   width: 133px;
@@ -69,9 +69,9 @@ function getAvatar(startDateTime) {
 }
 
 function getActionItems({ start_date_time, is_individual_participation, venue }) {
-  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 20 }} type="usergroup-add" /> </Tooltip>;
+  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 16 }} type="team" /> </Tooltip>;
   if (is_individual_participation) {
-    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 20 }} type="user" title="Individual Event"/> </Tooltip>;
+    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 16 }} type="user" title="Individual Event"/> </Tooltip>;
   }
   
   const Venue = (
@@ -79,7 +79,7 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
       {/* <Label>Venue</Label> */}
       <Data>
         <Tooltip title="Venue">
-          {venue}
+        <Icon style={{ fontSize: 16 }} type="home" /> {venue}
         </Tooltip>
       </Data>
     </Container>
@@ -93,11 +93,13 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
   return [getAvatar(start_date_time), Venue, Team]
 }
 
-function getCover(summery = 'No event summery defined') {
-  const colors = ['#4a707a', '#f17171','#05798c', '#7a1a18bf'];
+function getCover(summary = 'No event summery defined') {
+  const colors = ['#07ADD7', '#884B98','#98C857', '#ED6738'];
   const QuoteContainer = styled.div`
     background: ${colors[getRandomInt(0, colors.length-1)]};
-    padding: 4%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     height: 200px;
   `;
   const Quote = styled.div`
@@ -106,20 +108,20 @@ function getCover(summery = 'No event summery defined') {
     letter-spacing: 3px;
     font-weight: 600;
   `;
-  const By = styled.div`
-    text-align: end;
-    color: white;
-    font-weight: 800;
-    font-style: italic;
-    letter-spacing: 1px;
-    margin-top: 11px;
-  `;
-  const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
+  // const By = styled.div`
+  //   text-align: end;
+  //   color: white;
+  //   font-weight: 800;
+  //   font-style: italic;
+  //   letter-spacing: 1px;
+  //   margin-top: 11px;
+  // `;
+  // const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
 
   return (
     <QuoteContainer>
       <Quote>
-        {summery}
+        {summary}
       </Quote>
       {/* <By>
         {`- ${by}`}
@@ -128,12 +130,12 @@ function getCover(summery = 'No event summery defined') {
   )
 }
 
-const eventCard = ({id, title, desc, summery, history, ...rest}) => {
+const eventCard = ({id, title, desc, summary, history, ...rest}) => {
   return (
   <Card
     hoverable
     style={{ margin: 20 }}
-    cover={getCover(summery)}
+    cover={getCover(summary)}
     actions={getActionItems(rest)}
     onClick={() => history.push(`/functions/event-details/${id}`)}
   >
