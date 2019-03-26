@@ -1,6 +1,7 @@
 import React from 'react'
 import { Empty, Avatar, Collapse, Icon } from 'antd';
 import styled from 'styled-components';
+import { MEMBER_INVITE_STATUS } from 'UTILS/constants'
 // import member from '../EventDetails/Members/Member';
 
 
@@ -54,7 +55,7 @@ function getMembers (members = []) {
     if (!members || members.length === 0) {
         return <Empty description="No team members found."/>
     }
-    members = members.filter(member => member.status === 'Accepted');
+    members = members.filter(member => member.status === MEMBER_INVITE_STATUS.ACCEPTED);
     return members.map(({ invitee, id }) => (
         <li key={id}>
             <MemberContainer>
