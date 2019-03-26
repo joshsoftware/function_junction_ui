@@ -69,9 +69,9 @@ function getAvatar(startDateTime) {
 }
 
 function getActionItems({ start_date_time, is_individual_participation, venue }) {
-  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 20 }} type="usergroup-add" /> </Tooltip>;
+  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 16 }} type="team" /> </Tooltip>;
   if (is_individual_participation) {
-    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 20 }} type="user" title="Individual Event"/> </Tooltip>;
+    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 16 }} type="user" title="Individual Event"/> </Tooltip>;
   }
   
   const Venue = (
@@ -79,7 +79,7 @@ function getActionItems({ start_date_time, is_individual_participation, venue })
       {/* <Label>Venue</Label> */}
       <Data>
         <Tooltip title="Venue">
-          {venue}
+        <Icon style={{ fontSize: 16 }} type="home" /> {venue}
         </Tooltip>
       </Data>
     </Container>
