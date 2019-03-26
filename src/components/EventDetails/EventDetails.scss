@@ -6,6 +6,14 @@
         margin: 10px 10px;
         border: 1px solid #eee;
         border-radius: 7px;
+        .going-to-event {
+            font-weight: 600;
+            color: #0e630e;
+            text-align: center;
+            background: #c2f5bf;
+            padding: 7px;
+            border-radius: 19px;
+        }
     }
     .event-details-wrapper {
         .ev-container {
@@ -85,24 +93,15 @@
     align-items: center;
     justify-content: space-around;
     .button {
-        // flex: 1 1 100px;
-        // text-align: center;
-        // cursor: pointer;
+        font-weight: 800;
         color: #fff;
-        // width: 40%;
     }
     .button.yesButton{
-        background-color: #41A746;
-    }
-    .button.noButton{
-        background-color: #DC3B45;
+        background-color: #ee4239;
     }
     .yesButton:hover, .yesButton:focus, .yesButton:visited{
         color: #fff;
-        border-color: #41A746;
+        border-color: #ee4239;
     }
-    .noButton:hover, .noButton:focus, .noButton:visited{
-        color: #fff;
-        border-color: #DC3B45;
-    }
+  
 }

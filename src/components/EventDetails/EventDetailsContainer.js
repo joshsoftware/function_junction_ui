@@ -30,6 +30,7 @@ import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
 import { isOldEvent, isObjectEmpty } from '../../utils/util';
+import member from "./Members/Member";
 
 const initialState = {
   loading: false,
@@ -247,48 +248,57 @@ class EventDetailsContainer extends Component {
     this.props.deleteTeamInitiated({eventId: this.props.event.id, teamId: this.props.attendees.teams[0].id});
   }
 
-  toggleYesNo = (value) => {
+  handleRSVPClick = () => {
     const payLoad = {
-      eventId: this.props.event.id,
-      userID: this.props.user.id,
-      isGoing: value,
+      eventId: this.props.event.id
     };
     this.props.registerIndividualParticipation(payLoad);
   }
 
   renderTeam = () => {
-    if (this.props.event.loading) {
+    const { event, attendees } = this.props;
+    const { loading, is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
+    // If loading
+    if(loading) {
       return <Icon type="loading" />
-    } else if (this.props.attendees && this.props.attendees.teams) {
-      return <>
-        <ShowTeam
-          team={this.props.attendees.teams[0]}
-          isShowcasable={this.props.event.is_showcasable}
-          handleTeamChange={this.handleTeamChange}
-          handleDeleteTeam={this.handleDeleteTeam}
-          register_before={this.props.event.register_before}
-        />
-        <ShowMembers
-          members={this.props.attendees.teams[0].members || []}
-          sendInvites={this.sendInvites}
-          register_before={this.props.event.register_before}
-        />
-      </>
-    } else if (!this.props.event.is_individual_participation) {
-      return <CreateTeam
-        action='Create'
-        handleSubmit={this.handleCreateTeam}
-        register_before={this.props.event.register_before}
-        isShowcasable={this.props.event.is_showcasable}
-      />
-    } else {
-      return !isOldEvent(this.props.event.register_before) ? <IndividualRegistration
-          register_before={this.props.event.register_before}
-          toggleYesNo={this.toggleYesNo}
-          />
-        :null
     }
-  }
+
+    // If individual event
+    if (is_individual_participation) {
+      return (
+        <IndividualRegistration
+          attending={is_attending}
+          handleRSVPClick={this.handleRSVPClick}
+          eventEndDate={end_date_time}
+        />
+      );
+    }
+
+    if (!is_individual_participation) {
+      if (attendees && attendees.teams) {
+        return <>
+            <ShowTeam
+              team={attendees.teams[0]}
+              isShowcasable={is_showcasable}
+              handleTeamChange={this.handleTeamChange}
+              handleDeleteTeam={this.handleDeleteTeam}
+              register_before={register_before}
+            />
+            <ShowMembers
+              members={attendees.teams[0].members || []}
+              sendInvites={this.sendInvites}
+              register_before={register_before}
+            />
+          </>
+      }
+        return <CreateTeam
+          action='Create'
+          handleSubmit={this.handleCreateTeam}
+          register_before={register_before}
+          isShowcasable={is_showcasable}
+        />
+    }
+}
 
   getEvent = props => (
     <div className="event-details-container">

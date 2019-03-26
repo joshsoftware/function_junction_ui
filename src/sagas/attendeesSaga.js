@@ -86,11 +86,8 @@ function* deleteTeam(action) {
 // RSVP
 function* registerParticipant(action) {
   try {
-    const response = yield call(() => RequestHandler.put(
-      `events/${action.payload.eventId}/teams/${action.payload.userID}`,
-      { 
-         isGoing: action.payload.isGoing,
-      }
+    const response = yield call(() => RequestHandler.post(
+      `events/${action.payload.eventId}/rsvp`
     ));
     const data = yield call(() => response.json.bind(response)());
     yield put(registerParticipantSuccess(data))

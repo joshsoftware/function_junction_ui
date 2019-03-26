@@ -55,20 +55,20 @@ function getMembers (members = []) {
         return <Empty description="No team members found."/>
     }
     members = members.filter(member => member.status === 'Accepted');
-    return members.map(({ Invitee, id }) => (
+    return members.map(({ invitee, id }) => (
         <li key={id}>
             <MemberContainer>
                 <Avt>
                     <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                        {Invitee.email[0].toUpperCase()}
+                        {invitee.email[0].toUpperCase()}
                     </Avatar>
                 </Avt>
                 <NameEmail>
                     <Name>
-                        {Invitee.Name}
+                        {invitee.name}
                     </Name>
                     <Eml>
-                        {Invitee.email}
+                        {invitee.email}
                     </Eml>
                 </NameEmail>
             </MemberContainer>
