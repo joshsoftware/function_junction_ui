@@ -2,6 +2,12 @@ import React from 'react';
 import { Icon } from 'antd'
 import { generateRandomColor } from '../../../utils/util';
 
+const memberStatus = {
+    'Accepted': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#41A746' }} type="check-circle" />,
+    'Rejected': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="close-circle" />,
+    'Pending': <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="question-circle" />,
+};
+
 const Member = ({member}) => {
     const avatarStyle={
         backgroundColor: generateRandomColor(),
@@ -13,16 +19,11 @@ const Member = ({member}) => {
         justifyContent: 'center',
         color: '#fff',
     };
-    const memberStatus = member.hasOwnProperty('accepted') ?
-    member.accepted ?
-        <Icon style={{ color: 'green' }} type="check-circle" /> :
-        <Icon style={{ color: 'red' }} type="close-circle" /> :
-    <Icon style={{ color: 'yellow' }} type="question-circle" />;
     return (
         <div className='flex-center m-1'>
             <div style={avatarStyle}>{member.invitee.email.charAt(0).toUpperCase()}</div>
-            <div>{member.email}</div>
-            <div className='member-status'>{memberStatus}</div>
+            <div>{member.invitee.name}</div>
+            <div className='member-status'>{memberStatus[member.status]}</div>
         </div>
     );
 };
