@@ -21,7 +21,7 @@ import { ShowTeam } from './Team/Show';
 import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
-import { isObjectEmpty } from '../../utils/util';
+import { isObjectEmpty, isOldEvent } from '../../utils/util';
 
 const initialState = {
   loading: false,
@@ -236,7 +236,7 @@ class EventDetailsContainer extends Component {
   };
 
   sendInvites = emailIds => {
-    const team = this.props.attendees.myTeam;
+    const team = this.props.myTeam;
     this.props.addTeamMemberInitiated({
       emailIds,
       eventId: this.props.event.id,
@@ -245,11 +245,11 @@ class EventDetailsContainer extends Component {
   };
 
   handleTeamChange = (value, field) => {
-    const team = this.props.attendees.myTeam;
+    const team = this.props.myTeam;
     team[field] = value;
     this.props.updateTeamInitiated({
       eventId: this.props.event.id,
-      teamId: this.props.attendees.myTeam.id,
+      teamId: this.props.myTeam.id,
       team
     });
   };
@@ -257,7 +257,7 @@ class EventDetailsContainer extends Component {
   handleDeleteTeam = teamId => {
     this.props.deleteTeamInitiated({
       eventId: this.props.event.id,
-      teamId: this.props.attendees.myTeam.id
+      teamId: this.props.myTeam.id
     });
   };
 
@@ -269,18 +269,12 @@ class EventDetailsContainer extends Component {
   };
 
   renderTeam = () => {
-    const { event, attendees, myTeam } = this.props;
-    const {
-      loading,
-      is_individual_participation,
-      is_showcasable,
-      end_date_time,
-      register_before,
-      is_attending
-    } = event;
+    const { event, attendees, attendeesLoading, loading, rsvpLoading, rsvpError, myTeam } = this.props;
+    const { is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
+    const isPastEvent = isOldEvent(end_date_time);
     // If loading
-    if (loading) {
-      return <Icon type='loading' />;
+    if(loading || attendeesLoading) {
+      return <Skeleton paragraph active/>
     }
 
     // If individual event
@@ -289,26 +283,28 @@ class EventDetailsContainer extends Component {
         <IndividualRegistration
           attending={is_attending}
           handleRSVPClick={this.handleRSVPClick}
-          eventEndDate={end_date_time}
+          isPastEvent={isPastEvent}
+          loading={rsvpLoading}
+          error={rsvpError}
         />
       );
     }
 
     if (!is_individual_participation) {
-      if (attendees && attendees.teams) {
+      if (attendees && attendees.teams && myTeam) {
         return (
           <>
             <ShowTeam
-              team={attendees.myTeam}
+              team={myTeam}
               isShowcasable={is_showcasable}
               handleTeamChange={this.handleTeamChange}
               handleDeleteTeam={this.handleDeleteTeam}
-              register_before={register_before}
+              isPastEvent={isPastEvent}
             />
             <ShowMembers
-              members={attendees.myTeam.members}
+              members={myTeam.members}
               sendInvites={this.sendInvites}
-              register_before={register_before}
+              isPastEvent={isPastEvent}
             />
           </>
         );
@@ -317,13 +313,23 @@ class EventDetailsContainer extends Component {
         <CreateTeam
           action='Create'
           handleSubmit={this.handleCreateTeam}
-          register_before={register_before}
+          isPastEvent={isPastEvent}
           isShowcasable={is_showcasable}
         />
       );
     }
-  };
-
+}
+  getBackgroundClass = () => {
+    const { event } = this.props;
+    if (!event) {
+      return "background";
+    }
+    if (isOldEvent(event.end_date_time)) {
+      return "background disabled-b";
+    }
+    return "background";
+  }
+  
   getEvent = props => (
     <div className='event-details-container'>
       <Row>
@@ -341,7 +347,9 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className='background'>{this.renderTeam()}</div>
+            <div className={this.getBackgroundClass()}>
+              {this.renderTeam()}
+            </div>
           </Affix>
         </Col>
       </Row>
@@ -349,7 +357,8 @@ class EventDetailsContainer extends Component {
   );
 
   render = () => {
-    const { loading } = this.props;
+    const { loading, rsvpLoading } = this.props;
+    console.log(rsvpLoading);
     const LoaderContainer = styled.div`
       margin: 9% 0%;
       padding: 1% 1%;
@@ -368,12 +377,18 @@ class EventDetailsContainer extends Component {
   };
 }
 
-function mapStateToProp({ event, attendees }, ownProps) {
+function mapStateToProp(state, ownProps) {
+  // console.log(state, "$$$$$$#########")
   return {
-    event: event.data,
-    attendees: attendees.data,
-    loading: event.loading,
-    error: event.error
+    event: state.event.data,
+    attendees: state.attendees.data,
+    myTeam: state.attendees.myTeam,
+    attendeesLoading: state.attendees.isLoading,
+    loading: state.event.isLoading,
+    error: state.event.error,
+
+    rsvpLoading: state.attendees.rsvpLoading,
+    rsvpError: state.attendees.rsvpError,
   };
 }
 

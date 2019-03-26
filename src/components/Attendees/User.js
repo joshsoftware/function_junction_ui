@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import styled from 'styled-components';
 
 const UserContainer = styled.div`
@@ -21,18 +21,27 @@ const UserName = styled.div`
 const Name = styled.div`
     padding: 12px 0px;
 `;
+const Email = styled.div`
+    width: 125px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    color: #7a827f;
+`;
 
 const User = ({ img, name, email }) => (
     <UserContainer>
         <UserIcon>
             <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}><Name>{name[0]}</Name></Avatar>
         </UserIcon>
-        <UserName>
-            <span>{name}</span>
-            {/* <Email>
-                {email || 'NA'}
-            </Email> */}
-        </UserName>
+        <Tooltip title={`${name} ${email}`}>
+            <UserName>
+                <span>{name}</span>
+                <Email>
+                    {email || 'NA'}
+                </Email>
+            </UserName>
+        </Tooltip>
     </UserContainer>
 );
 

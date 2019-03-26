@@ -34,7 +34,7 @@ class Attendees extends PureComponent {
 
         return attendees.map(team => {
             return (
-                <Col span={8} key={team.id}>
+                <Col span={8} key={team.id} offset={1}>
                     <Team
                         name={team.name}
                         description={team.showcase_url}
@@ -53,14 +53,14 @@ class Attendees extends PureComponent {
                 <Empty description="No user yet registered for event."/>
             );
         }
-
-        return Users.map(({name, email}) => {
+        const usersGoing = attendees[0].members.filter(member => member.status.toLowerCase() === 'accepted');
+        return usersGoing.map(({invitee}) => {
             return (
                 <Col span={4} >
                     <div className="user-container">
                         <User
-                            name={name}
-                            email={email}
+                            name={invitee.name}
+                            email={invitee.email}
                         />
                     </div>
                 </Col>
