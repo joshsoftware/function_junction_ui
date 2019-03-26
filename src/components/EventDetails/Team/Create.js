@@ -37,7 +37,7 @@ class TeamCreateForm extends React.PureComponent {
                   message: "Please enter your team name!"
                 }
               ]
-            })(<Input placeholder="Enter team name" />)}
+            })(<Input placeholder="Enter team name" maxLength={25} />)}
           </Form.Item>
           {this.props.isShowcasable && (
             <Form.Item>
@@ -52,7 +52,7 @@ class TeamCreateForm extends React.PureComponent {
                     message: "Please enter a valid URL"
                   }
                 ]
-              })(<Input placeholder="Enter showcaseable URL" />)}
+              })(<Input placeholder="Enter showcaseable URL" maxLength={150} />)}
             </Form.Item>
           )}
           <div className="create-team-button-wrapper">
