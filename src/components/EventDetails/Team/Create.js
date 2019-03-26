@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Icon, Form, Input } from "antd";
 import "./Team.scss";
-import { validateURL, isOldEvent } from "../../../utils/util";
+import { validateURL } from "../../../utils/util";
 
 class TeamCreateForm extends React.PureComponent {
   onSubmit = e => {
@@ -15,7 +15,7 @@ class TeamCreateForm extends React.PureComponent {
       this.props.handleSubmit(values);
     });
   };
-  
+
   validateURL = (rule, value, callback) => {
     if (validateURL(value)) {
       callback();
@@ -24,8 +24,9 @@ class TeamCreateForm extends React.PureComponent {
     }
   };
 
-  renderCreateTeam = (getFieldDecorator) => !isOldEvent(this.props.register_before) ?
-    <div>
+  renderCreateTeam = getFieldDecorator =>
+    !this.props.isOldEvent ? (
+      <div>
         <h3 style={{ textAlign: "center" }}>{this.props.action} Team</h3>
         <Form layout="vertical" onSubmit={this.onSubmit}>
           <Form.Item>
@@ -62,7 +63,7 @@ class TeamCreateForm extends React.PureComponent {
           </div>
         </Form>
       </div>
-      : null
+    ) : null;
 
   render() {
     const { getFieldDecorator } = this.props.form;
