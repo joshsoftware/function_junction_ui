@@ -98,9 +98,7 @@ const Team = ({ members, name, description }) => {
                     </Desc>
 
                 }
-                <ol>
-                    {getMembers(members)}
-                </ol>
+                {getMembers(members)}
             </Collapse.Panel>
         </Collapse> 
         </>

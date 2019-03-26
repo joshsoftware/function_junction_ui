@@ -34,7 +34,7 @@ class Attendees extends PureComponent {
 
         return attendees.map(team => {
             return (
-                <Col span={8} key={team.id}>
+                <Col span={8} key={team.id} offset={1}>
                     <Team
                         name={team.name}
                         description={team.showcase_url}
