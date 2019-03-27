@@ -105,14 +105,14 @@ class CreateEvent extends PureComponent {
                 </Row>
                 <Divider>Event Type</Divider>
                 <Row>
-                  <Col span={5}>
+                  <Col span={6}>
                     <JSwitch
                       label="Show Casing"
                       onChange={(e) => changeHandler('is_showcasable', e)}
                       checked={is_showcasable}
                     />
                   </Col>
-                  <Col span={5} offset={1}>
+                  <Col span={6} offset={1}>
                     <JSwitch
                       label="Individual Event"
                       onChange={(e) => changeHandler('is_individual_participation', e)}
