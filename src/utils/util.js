@@ -41,23 +41,26 @@ export function getNameFromEmail(email) {
   return email.split("@")[0].split(".").join(" ")
 }
 
-export function getTeamMembers(payload) {
+export function getTeamMembers(payload, failedEmails) {
   const { emailIds, eventId } = payload;
-  return emailIds.map(email => {
-    return {
-      event_id: eventId,
-      invitee: {
-        email,
-        name: getNameFromEmail(email),
-      },
-      inviter: {
-        email: "",
-        name: '',
-        user_id: localStorage.getItem('user')
-      },
-      status: MEMBER_INVITE_STATUS.PENDING
-    };
-  });
+  return emailIds.reduce((members, email) => {
+    if (!failedEmails.includes(email)) {
+      members.push({
+        event_id: eventId,
+        invitee: {
+          email,
+          name: getNameFromEmail(email),
+        },
+        inviter: {
+          email: "",
+          name: '',
+          user_id: localStorage.getItem('user')
+        },
+        status: MEMBER_INVITE_STATUS.PENDING
+      })
+    }
+    return members;
+  }, []);
 }
 
 export function getSortedEvents (events) {
