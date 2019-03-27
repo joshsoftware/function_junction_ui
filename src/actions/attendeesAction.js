@@ -16,8 +16,11 @@ import {
   REGISTER_PARTICIPANT_SUCCESS,
   REGISTER_PARTICIPANT_FAIL,
   ADD_TEAM_MEMBER_SUCCESS,
-  ADD_TEAM_MEMBER_FAIL
-} from "../utils/constants";
+  ADD_TEAM_MEMBER_FAIL,
+  INVITATION_ACCEPT_REJECT_INITIATED,
+  INVITATION_ACCEPT_REJECT_SUCCESS,
+  INVITATION_ACCEPT_REJECT_FAIL
+} from '../utils/constants';
 
 export function fetchAttendeesInitiated(eventID) {
   return {
@@ -76,10 +79,10 @@ export function createTeamSuccess(payload) {
 }
 
 export function createTeamFail(payload) {
-    return {
-      type: CREATE_TEAM_FAIL,
-      payload
-    };
+  return {
+    type: CREATE_TEAM_FAIL,
+    payload
+  };
 }
 
 export function updateTeamInitiated(payload) {
@@ -141,6 +144,27 @@ export function registerParticipantSuccess(payload) {
 export function registerParticipantFail(payload) {
   return {
     type: REGISTER_PARTICIPANT_FAIL,
+    payload
+  };
+}
+
+export function invitationAcceptRejectInitiated(payload) {
+  return {
+    type: INVITATION_ACCEPT_REJECT_INITIATED,
+    payload
+  };
+}
+
+export function invitationAcceptRejectSuccess(payload) {
+  return {
+    type: INVITATION_ACCEPT_REJECT_SUCCESS,
+    payload
+  };
+}
+
+export function invitationAcceptRejectFail(payload) {
+  return {
+    type: INVITATION_ACCEPT_REJECT_FAIL,
     payload
   };
 }

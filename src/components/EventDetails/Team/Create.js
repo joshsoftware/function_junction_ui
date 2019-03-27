@@ -43,10 +43,10 @@ class TeamCreateForm extends React.PureComponent {
             <Form.Item>
               {getFieldDecorator("showcase_url", {
                 rules: [
-                  {
+                  /* {
                     required: true,
                     message: "Please enter showcaseable URL"
-                  },
+                  }, */
                   {
                     validator: this.validateURL,
                     message: "Please enter a valid URL"

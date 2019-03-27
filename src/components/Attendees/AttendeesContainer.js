@@ -82,7 +82,7 @@ class Attendees extends PureComponent {
     render = () => (
         <div className="attendees-container">
             <ErrorBoundary name="Attendees">
-                <div className="title">Attendees </div>
+                <div className="title">{this.props.type ? 'Attendees' : 'Teams'} </div>
                 <div className="Single">
                     <Row>
                         {this.getAttendeesDetails()}

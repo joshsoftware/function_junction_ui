@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Skeleton, Button, Icon, Divider, Affix } from 'antd';
+import { Row, Col, Skeleton, Button, Icon, Divider, Affix, Modal } from 'antd';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -11,10 +11,12 @@ import {
   createTeamInitiated,
   deleteTeamInitiated,
   updateTeamInitiated,
-  registerParticipantInitiated
+  registerParticipantInitiated,
+  invitationAcceptRejectInitiated
 } from 'ACTION/attendeesAction';
 import { getUser } from 'ACTION/userDetailsAction';
 import IndividualRegistration from './IndividualParticipation';
+import Invitations from './Team/Invitations';
 import EventDetails from './EventDetails';
 import './EventDetails.scss';
 import { ShowTeam } from './Team/Show';
@@ -22,6 +24,7 @@ import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
 import { isObjectEmpty, isOldEvent } from '../../utils/util';
+import { MEMBER_INVITE_STATUS } from '../../utils/constants';
 
 const initialState = {
   loading: false,
@@ -29,7 +32,7 @@ const initialState = {
   eventDetailsLoading: false,
   sidePanelLoading: false,
   isRegistered: false,
-  isCreateTeamModalOpen: false
+  isInvitationModalOpen: false
 };
 
 class EventDetailsContainer extends Component {
@@ -125,10 +128,10 @@ class EventDetailsContainer extends Component {
     console.log('Clicked Decline Button');
   };
 
-  toggleCreateTeamModal = () => {
+  toggleInvitationModal = () => {
     this.setState(oldState => {
       return {
-        isCreateTeamModalOpen: !oldState.isCreateTeamModalOpen
+        isInvitationModalOpen: !oldState.isInvitationModalOpen
       };
     });
   };
@@ -268,13 +271,40 @@ class EventDetailsContainer extends Component {
     this.props.registerIndividualParticipation(payLoad);
   };
 
+  handleAcceptReject = (value, teamId, memberId) => {
+    const payload = {
+      eventId: this.props.event.id,
+      teamId,
+      userId: /* localStorage.getItem('user') */memberId,
+      value: value
+        ? MEMBER_INVITE_STATUS.ACCEPTED
+        : MEMBER_INVITE_STATUS.REJECTED
+    };
+    this.props.invitationAcceptRejectInitiated(payload);
+  };
+
   renderTeam = () => {
-    const { event, attendees, attendeesLoading, loading, rsvpLoading, rsvpError, myTeam } = this.props;
-    const { is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
+    const {
+      event,
+      attendees,
+      attendeesLoading,
+      loading,
+      rsvpLoading,
+      rsvpError,
+      myTeam,
+      invitations,
+      isInviteLoading
+    } = this.props;
+    const {
+      is_individual_participation,
+      is_showcasable,
+      end_date_time,
+      is_attending
+    } = event;
     const isPastEvent = isOldEvent(end_date_time);
     // If loading
-    if(loading || attendeesLoading) {
-      return <Skeleton paragraph active/>
+    if (loading || attendeesLoading) {
+      return <Skeleton paragraph active />;
     }
 
     // If individual event
@@ -309,6 +339,29 @@ class EventDetailsContainer extends Component {
           </>
         );
       }
+
+      if (invitations && invitations.length && !isPastEvent) {
+        return (
+          <div className='view-invitations'>
+            <div className='animating-text'>You have new invites!</div>
+            <Button
+              type='primary'
+              name='viewInvites'
+              className='view-invite-button'
+              onClick={this.toggleInvitationModal}
+            >
+              View Invites
+            </Button>
+            <Invitations
+              visible={this.state.isInvitationModalOpen}
+              invites={invitations}
+              isLoading={isInviteLoading}
+              toggleModal={this.toggleInvitationModal}
+              handleAcceptReject={this.handleAcceptReject}
+            />
+          </div>
+        );
+      }
       return (
         <CreateTeam
           action='Create'
@@ -318,18 +371,18 @@ class EventDetailsContainer extends Component {
         />
       );
     }
-}
+  };
   getBackgroundClass = () => {
     const { event } = this.props;
     if (!event) {
-      return "background";
+      return 'background';
     }
     if (isOldEvent(event.end_date_time)) {
-      return "background disabled-b";
+      return 'background disabled-b';
     }
-    return "background";
-  }
-  
+    return 'background';
+  };
+
   getEvent = props => (
     <div className='event-details-container'>
       <Row>
@@ -347,9 +400,7 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className={this.getBackgroundClass()}>
-              {this.renderTeam()}
-            </div>
+            <div className={this.getBackgroundClass()}>{this.renderTeam()}</div>
           </Affix>
         </Col>
       </Row>
@@ -358,7 +409,6 @@ class EventDetailsContainer extends Component {
 
   render = () => {
     const { loading, rsvpLoading } = this.props;
-    console.log(rsvpLoading);
     const LoaderContainer = styled.div`
       margin: 9% 0%;
       padding: 1% 1%;
@@ -378,17 +428,18 @@ class EventDetailsContainer extends Component {
 }
 
 function mapStateToProp(state, ownProps) {
-  // console.log(state, "$$$$$$#########")
   return {
     event: state.event.data,
     attendees: state.attendees,
+    invitations: state.attendees.invitations,
+    isInviteLoading: state.attendees.isInviteLoading,
     myTeam: state.attendees.myTeam,
     attendeesLoading: state.attendees.isLoading,
     loading: state.event.isLoading,
     error: state.event.error,
 
     rsvpLoading: state.attendees.rsvpLoading,
-    rsvpError: state.attendees.rsvpError,
+    rsvpError: state.attendees.rsvpError
   };
 }
 
@@ -402,7 +453,9 @@ function mapDispatchToProps(dispatch) {
     deleteTeamInitiated: teamId => dispatch(deleteTeamInitiated(teamId)),
     updateTeamInitiated: payload => dispatch(updateTeamInitiated(payload)),
     registerIndividualParticipation: payload =>
-      dispatch(registerParticipantInitiated(payload))
+      dispatch(registerParticipantInitiated(payload)),
+    invitationAcceptRejectInitiated: payload =>
+      dispatch(invitationAcceptRejectInitiated(payload))
   };
 }
 

@@ -101,6 +101,7 @@ function getCover(summary = 'No event summery defined') {
     align-items: center;
     justify-content: center;
     height: 200px;
+    padding: 4%;
   `;
   const Quote = styled.div`
     color: white;

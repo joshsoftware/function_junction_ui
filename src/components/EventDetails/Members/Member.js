@@ -5,7 +5,7 @@ import { MEMBER_INVITE_STATUS } from 'UTILS/constants';
 
 const memberStatus = {
     [MEMBER_INVITE_STATUS.ACCEPTED]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#41A746' }} type="check-circle" />,
-    [MEMBER_INVITE_STATUS.REJECTED]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="close-circle" />,
+    [MEMBER_INVITE_STATUS.REJECTED]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#DC3B45' }} type="close-circle" />,
     [MEMBER_INVITE_STATUS.PENDING]: <Icon theme='filled' style={{ fontWeight: 700, fontSize: '1.2rem', color: '#FEC23B' }} type="question-circle" />,
 };
 
