@@ -54,7 +54,7 @@ function getMembers (members = []) {
     if (!members || members.length === 0) {
         return <Empty description="No team members found."/>
     }
-    members = members.filter(member => member.status === 'Accepted');
+    members = members.filter(member => member.status.toLowerCase() === 'accepted');
     return members.map(({ invitee, id }) => (
         <li key={id}>
             <MemberContainer>

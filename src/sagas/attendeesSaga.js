@@ -93,8 +93,7 @@ function* registerParticipant(action) {
     const response = yield call(() => RequestHandler.post(
       `events/${action.payload.eventId}/rsvp`
     ));
-    const data = yield call(() => response.json.bind(response)());
-    yield put(registerParticipantSuccess(data))
+    yield put(registerParticipantSuccess(response))
   } catch (error) {
     yield put(registerParticipantFail(error))
   }

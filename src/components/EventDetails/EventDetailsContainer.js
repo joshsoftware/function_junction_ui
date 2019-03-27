@@ -98,13 +98,15 @@ class EventDetailsContainer extends Component {
         </Row>
       );
     }
+    let endDiff = moment(endTime).diff(todaysDate, 'minute');
+    const isHappening = endDiff>=0;
     return (
       <Row>
         <Col span={3}>
           <Icon type='calendar' />
         </Col>
         <Col span={21}>
-          <span style={{ color: 'red' }}>Past Event</span>
+          <span style={{ color: isHappening? 'green' : 'red' }}>{isHappening? 'Happening...':'Past Event'}</span>
         </Col>
       </Row>
     );
@@ -269,7 +271,7 @@ class EventDetailsContainer extends Component {
   };
 
   renderTeam = () => {
-    const { event, attendees, attendeesLoading, loading, rsvpLoading, rsvpError, myTeam } = this.props;
+    const { event, attendees, attendeesLoading, loading, rsvpLoading, rsvpError, myTeam, rsvp } = this.props;
     const { is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
     const isPastEvent = isOldEvent(end_date_time);
     // If loading
@@ -286,6 +288,7 @@ class EventDetailsContainer extends Component {
           isPastEvent={isPastEvent}
           loading={rsvpLoading}
           error={rsvpError}
+          rsvp={rsvp}
         />
       );
     }
@@ -357,8 +360,7 @@ class EventDetailsContainer extends Component {
   );
 
   render = () => {
-    const { loading, rsvpLoading } = this.props;
-    console.log(rsvpLoading);
+    const { loading } = this.props;
     const LoaderContainer = styled.div`
       margin: 9% 0%;
       padding: 1% 1%;
@@ -378,7 +380,6 @@ class EventDetailsContainer extends Component {
 }
 
 function mapStateToProp(state, ownProps) {
-  // console.log(state, "$$$$$$#########")
   return {
     event: state.event.data,
     attendees: state.attendees.data,
@@ -389,6 +390,7 @@ function mapStateToProp(state, ownProps) {
 
     rsvpLoading: state.attendees.rsvpLoading,
     rsvpError: state.attendees.rsvpError,
+    rsvp: state.attendees.rsvp
   };
 }
 

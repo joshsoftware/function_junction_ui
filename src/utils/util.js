@@ -33,5 +33,5 @@ export function getRandomInt(min, max) {
 }
 
 export function isOldEvent(register_before) {
-  return moment().diff(register_before, 'days') > 0;
+  return moment().diff(register_before, 'minute') > 0;
 }

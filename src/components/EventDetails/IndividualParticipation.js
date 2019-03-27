@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
-const individualParticipation = ({ handleRSVPClick, attending, isPastEvent, loading }) => {
-    if (attending) {
+const individualParticipation = ({rsvp,  handleRSVPClick, attending, isPastEvent, loading }) => {
+    if (attending || rsvp) {
         return  <div className={isPastEvent? "going-to-event disabled-b": "going-to-event"}>{isPastEvent? 'You have attended this event': 'You are going.'}</div>
     }
 

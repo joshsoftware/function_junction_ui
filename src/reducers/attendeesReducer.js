@@ -116,13 +116,12 @@ export default function eventReducer(state = initialState, action) {
     return {
       ...state,
       rsvpLoading: true,
-      
     }
     case REGISTER_PARTICIPANT_SUCCESS:
     return {
       ...state,
       rsvpLoading: false,
-      
+      rsvp: true,
     }
     case REGISTER_PARTICIPANT_FAIL:
     return {
