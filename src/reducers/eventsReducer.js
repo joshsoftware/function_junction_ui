@@ -4,6 +4,8 @@ import {
   FETCH_EVENT_LIST_FAIL,
 } from 'UTILS/constants';
 
+import { getSortedEvents } from '../utils/util';
+
 const initialState = {
   isLoading: false,
   data: [],
@@ -19,7 +21,7 @@ export default function eventsReducer (state = initialState, action) {
     }
     case FETCH_EVENT_LIST_SUCCESS: return {
       isLoading: false,
-      data: action.payload,
+      data: getSortedEvents(action.payload),
       error: null,
     }
     case FETCH_EVENT_LIST_FAIL: return {
