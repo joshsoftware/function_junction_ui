@@ -8,6 +8,7 @@ import {
   UPDATE_EVENT_INITIATED,
   UPDATE_EVENT_SUCCESS,
   UPDATE_EVENT_FAIL,
+  CHANGE_GOING_STATUS
 } from 'UTILS/constants';
 
 export function fetchEventInitiated(id) {
@@ -69,5 +70,13 @@ export function updateEventFail(error) {
   return {
     type: UPDATE_EVENT_FAIL,
     payload: error,
+  }
+}
+
+// TODO
+export function updateGoingStatus(data) {
+  return {
+    type: CHANGE_GOING_STATUS,
+    payload: data,
   }
 }

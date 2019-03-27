@@ -48,28 +48,32 @@ const Name = styled.span`
   color: #555a5a;
 `;
 
-function getMembers(members = []) {
-  if (!members || members.length === 0) {
-    return <Empty description='No team members found.' />;
-  }
-  members = members.filter(
-    member => member.status === MEMBER_INVITE_STATUS.ACCEPTED
-  );
-  return members.map(({ invitee, id }) => (
-    <li key={id}>
-      <MemberContainer>
-        <Avt>
-          <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-            {invitee.email[0].toUpperCase()}
-          </Avatar>
-        </Avt>
-        <NameEmail>
-          <Name>{invitee.name}</Name>
-          <Eml>{invitee.email}</Eml>
-        </NameEmail>
-      </MemberContainer>
-    </li>
-  ));
+
+
+function getMembers (members = []) {
+    if (!members || members.length === 0) {
+        return <Empty description="No team members found."/>
+    }
+    members = members.filter(member => member.status.toLowerCase() === 'accepted');
+    return members.map(({ invitee, id }) => (
+        <li key={id}>
+            <MemberContainer>
+                <Avt>
+                    <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+                        {invitee.email[0].toUpperCase()}
+                    </Avatar>
+                </Avt>
+                <NameEmail>
+                    <Name>
+                        {invitee.name}
+                    </Name>
+                    <Eml>
+                        {invitee.email}
+                    </Eml>
+                </NameEmail>
+            </MemberContainer>
+        </li>
+    ));
 }
 const customPanelStyle = {
   background: '#ffffff',
