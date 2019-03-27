@@ -59,3 +59,9 @@ export function getTeamMembers(payload) {
     };
   });
 }
+
+export function getSortedEvents (events) {
+  return events.sort((event1, event2) => {
+    return new Date(event2.start_date_time).getTime() - new Date(event1.start_date_time).getTime()
+  });
+}
