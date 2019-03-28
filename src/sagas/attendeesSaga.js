@@ -25,6 +25,7 @@ import {
   INVITATION_ACCEPT_REJECT_INITIATED
 } from 'UTILS/constants';
 import RequestHandler from '../HTTP';
+import { showFailureNotification } from '../components/shared/Notification';
 
 function* fetchAttendees(action) {
   try {
@@ -48,6 +49,9 @@ function* addTeamMember(action) {
       )
     );
     // const data = yield call(() => response.json.bind(response)());
+    if (response.failed_emails && response.failed_emails.length) {
+      showFailureNotification(`Failed to sent emails to following email ids:\n${response.failed_emails.join(', ')}`);
+    }
     yield put(
       addTeamMemberSuccess({
         failedEmails: response.failed_emails,

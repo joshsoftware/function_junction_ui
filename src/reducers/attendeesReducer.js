@@ -109,7 +109,7 @@ export default function eventReducer(state = initialState, action) {
       const myUpdatedTeam = { ...state.myTeam };
       let myTeamMembers = [...myUpdatedTeam.members];
       myTeamMembers = myTeamMembers.concat(
-        getTeamMembers(action.payload.eventDetails)
+        getTeamMembers(action.payload.eventDetails, action.payload.failedEmails)
       );
       myUpdatedTeam.members = [...myTeamMembers];
       return {

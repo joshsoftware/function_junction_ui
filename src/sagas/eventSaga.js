@@ -36,7 +36,6 @@ function* createEvent(action) {
     // const data = yield call(() => response.json.bind(response)());
     yield put(updateEventSuccess(response.event))
   } catch (error) {
-    console.log('In Create Team Fail', error);
     yield put(createEventFail(error))
   }
 }

@@ -22,7 +22,6 @@ export class ShowTeam extends PureComponent {
   };
   handleShowcasableURLChange = event => {
     event.preventDefault();
-    console.log('URL Value:', event.target.value);
     this.toggleEditing();
     this.props.handleShowcasableURLChange(event.target.value);
   };
