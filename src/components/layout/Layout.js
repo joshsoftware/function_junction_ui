@@ -41,9 +41,6 @@ class AppLayout extends Component {
           defaultActiveFirstOption={false}
           showArrow
           filterOption={false}
-          // onSearch={this.handleSearch}
-          // onChange={this.handleChange}
-          // notFoundContent={null}
           style={{ width: 200, marginRight: '10px' }}
           suffixIcon={<Icon type="search" />}
         >

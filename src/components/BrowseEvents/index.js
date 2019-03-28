@@ -40,13 +40,13 @@ class BrowseEvents extends PureComponent {
         if (isLoading) {
             return (
                 <Row>
-                    <Col md={7} className="loader">
+                    <Col lg={{ span: 7}} md={{span: 12}} className="loader">
                         <Skeleton active paragraph avatar />
                     </Col>
-                    <Col md={7} className="loader">
+                    <Col lg={{ span: 7}} md={{span: 12}} className="loader">
                         <Skeleton active paragraph avatar />
                     </Col>
-                    <Col md={7} className="loader">
+                    <Col lg={{ span: 7}} md={{span: 12}} className="loader">
                         <Skeleton active paragraph avatar />
                     </Col>
                 </Row>
