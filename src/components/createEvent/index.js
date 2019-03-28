@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col, Divider , Radio} from 'antd';
 import styled from 'styled-components';
 import './index.scss';
 import { JInput, JTextArea, JDatePicker, JSwitch, JButton } from '../shared';
@@ -10,10 +10,34 @@ const Summery = styled.span`
   padding-left: 1%;
 `;
 
+const timePickerConfig = { 
+  use12Hours: true,
+  format: 'hh:mm',
+  minuteStep: 15,
+  defaultValue: moment().hour(0).minute(0)
+};
+
 class CreateEvent extends PureComponent {
 
-  disabledDate = (current) => {
-    // Can not select days before today and today
+  disabledStartDate = (current) => {
+    const { end_date_time } = this.props;
+    if (end_date_time) {
+      if (current >= moment(end_date_time).subtract(1, 'h').endOf('m')) {
+        return true;
+      }
+      return current && current <= moment().subtract(1, 'day').endOf('m');
+    }
+    return current && current <= moment().subtract(1, 'day').endOf('m');
+  }
+
+  disableEndDate = (current) => {
+    const { start_date_time } = this.props;
+    if (start_date_time) {
+      if (current <= moment(start_date_time).subtract(1, 'h').endOf('m')) {
+        return true;
+      }
+      return current && current <= moment().subtract(1, 'day').endOf('m');
+    }
     return current && current <= moment().subtract(1, 'day').endOf('m');
   }
     render() {
@@ -25,7 +49,7 @@ class CreateEvent extends PureComponent {
               <Divider/>
               <div className="form">
                 <Row>
-                  <Col span={8}>
+                  <Col lg={{span: 8}}>
                     <JInput
                       label="Title"
                       placeholder="Title"
@@ -34,7 +58,7 @@ class CreateEvent extends PureComponent {
                       required
                     />
                   </Col>
-                  <Col span={15} offset={1}>
+                  <Col lg={{span: 15, offset:1}}>
                     <JInput
                       label="Summary"
                       placeholder="One line event summary "
@@ -46,7 +70,7 @@ class CreateEvent extends PureComponent {
                   </Col>
                 </Row>
                 <Row>
-                  <Col span={8}>
+                  <Col lg={{ span:8}}>
                     <JInput 
                       label="Venue"
                       placeholder="Location"
@@ -55,7 +79,7 @@ class CreateEvent extends PureComponent {
                       required
                     />
                   </Col>
-                  <Col span={15} offset={1}>
+                  <Col lg={{ span:15 ,offset:1}}>
                     <JTextArea
                       label="Description"
                       placeholder="Detailed event description..."
@@ -66,31 +90,31 @@ class CreateEvent extends PureComponent {
                 </Row>
                 <Divider> Event Date Time </Divider>
                 <Row>
-                  <Col span={5}>
+                  <Col lg={{ span:5}} md={{ span: 12}}>
                     <JDatePicker
                       format="DD-MM-YYYY hh:mm a"
                       label="Star Date Time"
                       placeholder="Start Date Time"
                       onChange={(date) => changeHandler('start_date_time', date)}
                       value={start_date_time}
-                      disabledDate={this.disabledDate}
-                      showTime
+                      disabledDate={this.disabledStartDate}
+                      showTime={timePickerConfig}
                       required
                     />
                   </Col>
-                  <Col span={5} offset={2}>
+                  <Col lg={{ span:5, offset:2}} md={{span: 12}}>
                     <JDatePicker
                       format="DD-MM-YYYY hh:mm a"
                       label="End Date Time"
                       placeholder="End Date Time"
                       onChange={(date) => changeHandler('end_date_time', date)}
                       value={end_date_time}
-                      disabledDate={this.disabledDate}
-                      showTime
+                      disabledDate={this.disableEndDate}
+                      showTime={timePickerConfig}
                       required
                     />
                   </Col>
-                  <Col span={5} offset={3}>
+                  <Col lg={{span:5, offset:3}} md={{span:24}}>
                     <JDatePicker
                       format="DD-MM-YYYY hh:mm a"
                       label="Registration End Date"
@@ -98,13 +122,13 @@ class CreateEvent extends PureComponent {
                       onChange={(date) => changeHandler('register_before', date)}
                       value={register_before}
                       disabledDate={this.disabledDate}
-                      showTime
+                      showTime={timePickerConfig}
                     />
                   </Col>
                 </Row>
                 <Divider>Event Type</Divider>
                 <Row>
-                  <Col span={6}>
+                  <Col lg={{span: 6}}>
                     <JSwitch
                       label="Show Casing"
                       onChange={(e) => changeHandler('is_showcasable', e)}
@@ -112,19 +136,20 @@ class CreateEvent extends PureComponent {
                       disabled={isEdit}
                     />
                   </Col>
-                  <Col span={6} offset={1}>
-                    <JSwitch
-                      label="Individual Event"
-                      onChange={(e) => changeHandler('is_individual_participation', e)}
-                      checked={is_individual_participation}
+                  <Col lg={{span: 6, offset:1}}>
+                    <Radio.Group 
+                      options={[{ label: 'Individual Event', value: true}, {label: 'Team Event', value: false},]}
+                      onChange={(e) => changeHandler('is_individual_participation', e.target.value)}
+                      value={is_individual_participation}
                       disabled={isEdit}
-                    />
+                      />
                   </Col>
                 </Row>
                 {!is_individual_participation && (
                   <Row>
-                    <Col span={5}>
+                    <Col lg={{span:5}}>
                       <JInput
+                        disabled={isEdit}
                         label="Team Min Size"
                         type="number"
                         min={0}
@@ -132,8 +157,9 @@ class CreateEvent extends PureComponent {
                         value={min_size}
                       />
                     </Col>
-                    <Col span={5} offset={1}>
+                    <Col lg={{span:5, offset: 1}}>
                       <JInput
+                        disabled={isEdit}
                         label="Team Max Size"
                         type="number"
                         min={0}
@@ -149,14 +175,14 @@ class CreateEvent extends PureComponent {
                 </Row>
                 }
                 <Row style={{padding: 0}}>
-                  <Col span={4} offset={8}>
+                  <Col lg={{span:4, offset:8}}>
                     <JButton
                       name={isEdit ? "Update Event" : "Create Event"}
                       type="primary"
                       onClick={() => submitHandler(true)}
                     />
                   </Col>
-                  <Col span={4}>
+                  <Col lg={{span:4}}>
                     <JButton
                       name="Cancel"
                       onClick={() => redirectToBrowse()}
