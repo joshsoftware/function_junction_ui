@@ -31,6 +31,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={() => window.location.replace(routes.root)} />
           <Route path={routes.root} component={AppLayout} />
+          <Route component={()=> (<h1>No route match</h1>)} />
         </Switch>
       </Router>
     </div>

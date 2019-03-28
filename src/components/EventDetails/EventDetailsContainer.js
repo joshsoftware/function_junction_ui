@@ -399,7 +399,7 @@ class EventDetailsContainer extends Component {
   getEvent = props => (
     <div className='event-details-container'>
       <Row>
-        <Col span={18}>
+        <Col lg={{span: 18}}  >
           {this.getEventDetailsContainers(props)}
           <Row>
             <Col span={24}>
@@ -412,7 +412,7 @@ class EventDetailsContainer extends Component {
             </Col>
           </Row>
         </Col>
-        <Col span={6}>
+        <Col lg={{span: 6}} >
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
             <div className={this.getBackgroundClass()}>{this.renderTeam()}</div>
