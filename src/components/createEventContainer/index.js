@@ -28,6 +28,7 @@ class CreateEventContainer extends PureComponent {
     }
 
     componentWillMount () {
+      window.scrollTo(0,0)
       this.id = this.props.match.params.id;
     }
 
