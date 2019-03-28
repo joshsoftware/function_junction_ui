@@ -25,6 +25,7 @@ import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
 import { isObjectEmpty, isOldEvent } from '../../utils/util';
 import { MEMBER_INVITE_STATUS } from '../../utils/constants';
+import ErrorBoundary from '../shared/ErrorBoundary';
 
 const initialState = {
   loading: false,
@@ -51,9 +52,6 @@ class EventDetailsContainer extends Component {
         console.log(error);
       });
     this.props.fetchEventInitiated(match.params.eventID);
-    if (match.params.userID) {
-      console.log('FETCH USER regiserd or not');
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -142,7 +140,7 @@ class EventDetailsContainer extends Component {
     const { match } = this.props;
     if (match.params.userID) {
       return (
-        <>
+        <ErrorBoundary name="Accept Button">
           <Row
             style={{
               display: 'flex',
@@ -171,7 +169,7 @@ class EventDetailsContainer extends Component {
               </Button>
             </Col>
           </Row>
-        </>
+        </ErrorBoundary>
       );
     }
   };
@@ -183,7 +181,7 @@ class EventDetailsContainer extends Component {
     description,
     venue
   }) => (
-    <>
+    <ErrorBoundary name="Event location">
       <Row>
         <Col span={3}>
           <Icon type='clock-circle' />
@@ -207,7 +205,7 @@ class EventDetailsContainer extends Component {
         </Col>
         <Col span={21}>{venue}</Col>
       </Row>
-    </>
+    </ErrorBoundary>
   );
 
   getPanel = () => {
@@ -314,14 +312,16 @@ class EventDetailsContainer extends Component {
     // If individual event
     if (is_individual_participation) {
       return (
-        <IndividualRegistration
-          attending={is_attending}
-          handleRSVPClick={this.handleRSVPClick}
-          isPastEvent={isPastEvent}
-          loading={rsvpLoading}
-          error={rsvpError}
-          rsvp={rsvp}
-        />
+        <ErrorBoundary name="RSVP button">
+          <IndividualRegistration
+            attending={is_attending}
+            handleRSVPClick={this.handleRSVPClick}
+            isPastEvent={isPastEvent}
+            loading={rsvpLoading}
+            error={rsvpError}
+            rsvp={rsvp}
+          />
+        </ErrorBoundary>
       );
     }
 
@@ -329,6 +329,7 @@ class EventDetailsContainer extends Component {
       if (attendees && attendees.teams && myTeam) {
         return (
           <>
+            <ErrorBoundary name="Show Team Name">
             <ShowTeam
               team={myTeam}
               isShowcasable={is_showcasable}
@@ -336,44 +337,51 @@ class EventDetailsContainer extends Component {
               handleDeleteTeam={this.handleDeleteTeam}
               isPastEvent={isPastEvent}
             />
-            <ShowMembers
-              members={myTeam.members}
-              sendInvites={this.sendInvites}
-              isPastEvent={isPastEvent}
-            />
+            </ErrorBoundary>
+            <ErrorBoundary name="Team Members">
+              <ShowMembers
+                members={myTeam.members}
+                sendInvites={this.sendInvites}
+                isPastEvent={isPastEvent}
+              />
+            </ErrorBoundary>
           </>
         );
       }
 
       if (invitations && invitations.length && !isPastEvent) {
         return (
-          <div className='view-invitations'>
-            <div className='animating-text'>You have new invites!</div>
-            <Button
-              type='primary'
-              name='viewInvites'
-              className='view-invite-button'
-              onClick={this.toggleInvitationModal}
-            >
-              View Invites
-            </Button>
-            <Invitations
-              visible={this.state.isInvitationModalOpen}
-              invites={invitations}
-              isLoading={isInviteLoading}
-              toggleModal={this.toggleInvitationModal}
-              handleAcceptReject={this.handleAcceptReject}
-            />
-          </div>
+          <ErrorBoundary name="Invitations">
+            <div className='view-invitations'>
+              <div className='animating-text'>You have new invites!</div>
+              <Button
+                type='primary'
+                name='viewInvites'
+                className='view-invite-button'
+                onClick={this.toggleInvitationModal}
+              >
+                View Invites
+              </Button>
+              <Invitations
+                visible={this.state.isInvitationModalOpen}
+                invites={invitations}
+                isLoading={isInviteLoading}
+                toggleModal={this.toggleInvitationModal}
+                handleAcceptReject={this.handleAcceptReject}
+              />
+            </div>
+            </ErrorBoundary>
         );
       }
       return (
-        <CreateTeam
-          action='Create'
-          handleSubmit={this.handleCreateTeam}
-          isPastEvent={isPastEvent}
-          isShowcasable={is_showcasable}
-        />
+        <ErrorBoundary name="Create Team">
+          <CreateTeam
+            action='Create'
+            handleSubmit={this.handleCreateTeam}
+            isPastEvent={isPastEvent}
+            isShowcasable={is_showcasable}
+          />
+        </ErrorBoundary>
       );
     }
   };
@@ -395,10 +403,12 @@ class EventDetailsContainer extends Component {
           {this.getEventDetailsContainers(props)}
           <Row>
             <Col span={24}>
-              <Attendees
-                type={props.event.is_individual_participation}
-                attendees={props.attendees.teams}
-              />
+              <ErrorBoundary name="Attendees Container">
+                <Attendees
+                  type={props.event.is_individual_participation}
+                  attendees={props.attendees.teams}
+                />
+              </ErrorBoundary>
             </Col>
           </Row>
         </Col>

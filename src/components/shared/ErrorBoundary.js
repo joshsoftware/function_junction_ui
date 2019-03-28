@@ -29,7 +29,6 @@ class ErrorBoundary extends Component {
         errorInfo: errorInfo
       })
     }
-    9860565656
     render() {
       const { name } = this.props;
 

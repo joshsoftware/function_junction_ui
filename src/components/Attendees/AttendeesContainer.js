@@ -6,17 +6,6 @@ import Team from './Team';
 import './Attendees.scss';
 import { isObjectEmpty } from '../../utils/util';
 
-const Users = [
-    {name: 'Suhas More', email: 'suhas@gmail.com'},
-    {name: 'Ajit Fawade', email: 'ajit@gmail.com'},
-    {name: 'Pragati Garud', email: 'pragati@gmail.com'},
-    {name: 'Shweta Kale', email: 'shweta@gmail.com'},
-    {name: 'Tanya Saroha', email: 'tanya@gmail.com'},
-    {name: 'Priyanka Yadav', email: 'priyanka@gmail.com'},
-    {name: 'Anusha Bhatt', email: 'suhas@gmail.com'},
-]
-
-
 class Attendees extends PureComponent {
     componentDidUpdate(prevProps) {
         if(isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
@@ -28,19 +17,21 @@ class Attendees extends PureComponent {
         const { attendees } = this.props;
         if (!attendees || attendees.length <= 0) {
             return (
-                <Empty description="No teams yet registered for event."/>
+                <Empty description="No teams yet registered for this event."/>
             );
         }
 
         return attendees.map(team => {
             return (
-                <Col span={8} key={team.id} offset={1}>
-                    <Team
-                        name={team.name}
-                        description={team.showcase_url}
-                        members={team.members}
-                    />
-                </Col>
+                <ErrorBoundary name={`Team ${team.name}`}>
+                    <Col span={8} key={team.id} offset={1} style={{ marginBottom: 15}}>
+                        <Team
+                            name={team.name}
+                            description={team.showcase_url}
+                            members={team.members}
+                        />
+                    </Col>
+                </ErrorBoundary>
             )
         })
 
@@ -56,14 +47,16 @@ class Attendees extends PureComponent {
         const usersGoing = attendees[0].members.filter(member => member.status.toLowerCase() === 'accepted');
         return usersGoing.map(({invitee}) => {
             return (
-                <Col span={4} >
-                    <div className="user-container">
-                        <User
-                            name={invitee.name}
-                            email={invitee.email}
-                        />
-                    </div>
-                </Col>
+                <ErrorBoundary name={`User ${invitee.name}`}>
+                    <Col span={4} >
+                        <div className="user-container">
+                            <User
+                                name={invitee.name}
+                                email={invitee.email}
+                            />
+                        </div>
+                    </Col>
+                </ErrorBoundary>
             );
         })
     }

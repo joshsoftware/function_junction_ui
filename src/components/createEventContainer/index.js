@@ -136,18 +136,18 @@ class CreateEventContainer extends PureComponent {
         this.showError('End date is mandatory.');
         return false;
       }
-      if (!register_before) {
-        this.showError('Registration end date is mandatory.');
-        return false;
-      }
-      if (this.dateDifference(moment(), register_before)) {
-        this.showError('Registration end date should not be in past.');
-        return false;
-      }
-      if (this.dateDifference(register_before, start_date_time)) {
-        this.showError('Registration should end before event start date.');
-        return false;
-      }
+      // if (!register_before) {
+      //   this.showError('Registration end date is mandatory.');
+      //   return false;
+      // }
+      // if (this.dateDifference(moment(), register_before)) {
+      //   this.showError('Registration end date should not be in past.');
+      //   return false;
+      // }
+      // if (this.dateDifference(register_before, start_date_time)) {
+      //   this.showError('Registration should end before event start date.');
+      //   return false;
+      // }
       if (this.dateDifference(start_date_time, end_date_time)) {
         this.showError('Event should end after start time.');
         return false;

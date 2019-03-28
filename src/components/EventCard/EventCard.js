@@ -6,15 +6,10 @@ import moment from 'moment';
 
 import './EventCard.scss';
 import { /* generateRandomColor, */ getRandomInt } from '../../utils/util';
+import ErrorBoundary from '../shared/ErrorBoundary';
 
 const { Meta } = Card;
 
-// const Happen = styled.div`
-//   font-size: 10px;
-//   font-weight: 100;
-//   letter-spacing: 2px;
-//   text-align: center;
-// `;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,11 +18,7 @@ const Container = styled.div`
   vertical-align: middle;
   display: table-cell;
 `;
-// const Label = styled.span`
-//   color: grey;
-//   font-size: 12px;
-//   letter-spacing: 1px;
-// `;
+
 const Data = styled.div`
   color: #848181;
   width: 133px;
@@ -52,43 +43,55 @@ function getAvatar(startDateTime) {
   `;
 
   return (
-    <div className="card-avatar">
-        {/* {diff <= 0 ?
-          <Label>Happening on</Label>
-        :
-          <Label>Happened on</Label>
-        } */}
-      <DateContainer>
-        {moment(startDateTime).format('DD MMM YYYY')}
-      </DateContainer>
-      <div className="time">
-        {moment(startDateTime).format('hh:mm a')}
+    <ErrorBoundary name="Event Date">
+      <div className="card-avatar">
+        <DateContainer>
+          {moment(startDateTime).format('DD MMM YYYY')}
+        </DateContainer>
+        <div className="time">
+          {moment(startDateTime).format('hh:mm a')}
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   )
 }
 
-function getActionItems({ start_date_time, is_individual_participation, venue }) {
-  let EventType = <Tooltip title ="Team Participation"><Icon style={{ fontSize: 16 }} type="team" /> </Tooltip>;
+function getActionItems({ start_date_time, is_individual_participation, is_attending, venue }) {
+  let EventType = <Icon style={{ fontSize: 16 }} type= {is_attending?"check":"team"}  title="Team Event"/>;
   if (is_individual_participation) {
-    EventType = <Tooltip title ="Individual Participation"> <Icon style={{ fontSize: 16 }} type="user" title="Individual Event"/> </Tooltip>;
+    EventType =  <Icon style={{ fontSize: 16 }} type= {is_attending?"check":"user"} title="Individual Event"/>;
   }
+  const color = is_attending ? '#0fa544' : '#848181';
+  const VenueData = styled.div`
+    color: ${color};
+    width: 133px;
+    height: 20px;
+    font-weight: 600;
+    overflow: hidden;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  `;
+
   
   const Venue = (
-    <Container>
-      {/* <Label>Venue</Label> */}
-      <Data>
-        <Tooltip title="Venue">
-        <Icon style={{ fontSize: 16 }} type="home" /> {venue}
-        </Tooltip>
-      </Data>
-    </Container>
+    <ErrorBoundary name="Venue Details">
+      <Container>
+        <Data>
+          <Tooltip title="Venue">
+          <Icon style={{ fontSize: 16 }} type="home" /> {venue}
+          </Tooltip>
+        </Data>
+      </Container>
+    </ErrorBoundary>
   );
   const Team = (
-    <Container>
-      {/* <Label>Event Participation</Label> */}
-      <Data>{EventType}</Data>
-    </Container>
+    <ErrorBoundary name="Team Type">
+      <Tooltip title={is_attending? "You are attending this event." : ''}>
+        <Container>
+          <VenueData>{EventType}</VenueData>
+        </Container>
+      </Tooltip>
+    </ErrorBoundary>
   );
   return [getAvatar(start_date_time), Venue, Team]
 }
@@ -109,24 +112,12 @@ function getCover(summary = 'No event summery defined') {
     letter-spacing: 3px;
     font-weight: 600;
   `;
-  // const By = styled.div`
-  //   text-align: end;
-  //   color: white;
-  //   font-weight: 800;
-  //   font-style: italic;
-  //   letter-spacing: 1px;
-  //   margin-top: 11px;
-  // `;
-  // const {saying, by} = Quotes[getRandomInt(0, Quotes.length -1)];
-
+  
   return (
     <QuoteContainer>
       <Quote>
         {summary}
       </Quote>
-      {/* <By>
-        {`- ${by}`}
-      </By> */}
     </QuoteContainer>
   )
 }
@@ -141,9 +132,7 @@ const eventCard = ({id, title, desc, summary, history, ...rest}) => {
     onClick={() => history.push(`/functions/event-details/${id}`)}
   >
     <Meta
-      // avatar={getAvatar(start_date_time)}
       title={title}
-      // description={desc || 'Description not available.'}
     />
   </Card>
 );}

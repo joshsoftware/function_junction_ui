@@ -99,7 +99,6 @@ class CreateEvent extends PureComponent {
                       value={register_before}
                       disabledDate={this.disabledDate}
                       showTime
-                      required
                     />
                   </Col>
                 </Row>
@@ -110,6 +109,7 @@ class CreateEvent extends PureComponent {
                       label="Show Casing"
                       onChange={(e) => changeHandler('is_showcasable', e)}
                       checked={is_showcasable}
+                      disabled={isEdit}
                     />
                   </Col>
                   <Col span={6} offset={1}>
@@ -117,6 +117,7 @@ class CreateEvent extends PureComponent {
                       label="Individual Event"
                       onChange={(e) => changeHandler('is_individual_participation', e)}
                       checked={is_individual_participation}
+                      disabled={isEdit}
                     />
                   </Col>
                 </Row>
