@@ -32,7 +32,6 @@ const initialState = {
   eventDetails: {},
   eventDetailsLoading: false,
   sidePanelLoading: false,
-  isRegistered: false,
   isInvitationModalOpen: false
 };
 
@@ -122,58 +121,12 @@ class EventDetailsContainer extends Component {
     </div>
   );
 
-  handleAcceptInviteClick = () => {
-    console.log('Clicked Accept Button');
-  };
-
-  handleDeclineEventClick = () => {
-    console.log('Clicked Decline Button');
-  };
-
   toggleInvitationModal = () => {
     this.setState(oldState => {
       return {
         isInvitationModalOpen: !oldState.isInvitationModalOpen
       };
     });
-  };
-
-  getRegisterButton = () => {
-    const { match } = this.props;
-    if (match.params.userID) {
-      return (
-        <ErrorBoundary name="Accept Button">
-          <Row
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              textAlign: 'center'
-            }}
-          >
-            <Col span={12}>
-              <Button
-                type='primary'
-                name='Accept'
-                icon='check'
-                onClick={this.handleAcceptInviteClick}
-              >
-                Accept
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button
-                type='danger'
-                name='Accept'
-                icon='stop'
-                onClick={this.handleDeclineEventClick}
-              >
-                Decline
-              </Button>
-            </Col>
-          </Row>
-        </ErrorBoundary>
-      );
-    }
   };
 
   getEventTime = (startDate, endDate) => {
@@ -236,13 +189,10 @@ class EventDetailsContainer extends Component {
   );
 
   getPanel = () => {
-    const { isRegistered } = this.state;
     const { event } = this.props;
     return (
       <>
         <div className='location'>{this.getEventLocation(event)}</div>
-        {!isRegistered && this.getRegisterButton()}
-        {isRegistered && <div className='success-text'> You are going</div>}
       </>
     );
   };
