@@ -69,7 +69,12 @@ const RegistrationDetails = ({
     <>
         <div className="register-before">
             <div>
-                <span>Created By :</span> {created_by ? created_by.name : 'NA' }
+                { created_by && created_by.name.trim().length>0 && (
+                    <>
+                        <span>Created By :</span> {created_by.name}
+                    </>
+                    )
+                }
             </div>
             <div>
                 <span>{`Registration ${getRegistrationLabel(register_before)} on : `}</span>
