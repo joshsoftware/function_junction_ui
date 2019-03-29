@@ -20,10 +20,12 @@ class ShowMembers extends PureComponent {
     this.props.sendInvites(inviteList);
   };
 
-  renderMembers = (members = []) =>
-    members.map(member => (
+  renderMembers = (members = []) => {
+    if(!members || members.length === 0) return null;
+    return members.map(member => (
       <Member key={member.invitee.email} member={member} />
     ));
+  }
 
   render = () => {
     const { isPastEvent } = this.props;
