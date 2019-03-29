@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Row, Col, Empty } from 'antd';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import User from './User';
@@ -6,7 +6,7 @@ import Team from './Team';
 import './Attendees.scss';
 import { isObjectEmpty } from '../../utils/util';
 
-class Attendees extends PureComponent {
+class Attendees extends React.Component {
     componentDidUpdate(prevProps) {
         if(isObjectEmpty(prevProps.event) && !isObjectEmpty(this.props.event)) {
             this.props.getAttendees(this.props.event.id);
