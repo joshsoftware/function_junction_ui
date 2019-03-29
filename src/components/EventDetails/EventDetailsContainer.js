@@ -68,8 +68,22 @@ class EventDetailsContainer extends Component {
   getAddToCalender = (startTime, endTime, title, description, location) => {
     let eventDate = moment(startTime);
     let todaysDate = moment();
-    let diff = todaysDate.diff(eventDate, 'days');
-    if (diff <= 0) {
+    let diff = todaysDate.diff(eventDate, 'minute');
+    let endDiff = moment(endTime).diff(todaysDate, 'minute');
+    const isHappening = endDiff>=0;
+    if (diff >= 0) {
+      return (
+        <Row>
+          <Col span={3}>
+            <Icon type='calendar' />
+          </Col>
+          <Col span={21}>
+            <span style={{ color: isHappening? 'green' : 'red' }}>{isHappening? 'Happening...':'Past Event'}</span>
+          </Col>
+        </Row>
+      );
+    }
+    if (diff < 0) {
       let event = {
         title,
         description,
@@ -100,18 +114,7 @@ class EventDetailsContainer extends Component {
         </Row>
       );
     }
-    let endDiff = moment(endTime).diff(todaysDate, 'minute');
-    const isHappening = endDiff>=0;
-    return (
-      <Row>
-        <Col span={3}>
-          <Icon type='calendar' />
-        </Col>
-        <Col span={21}>
-          <span style={{ color: isHappening? 'green' : 'red' }}>{isHappening? 'Happening...':'Past Event'}</span>
-        </Col>
-      </Row>
-    );
+   
   };
 
   getEventDetailsContainers = ({ loading, event, history }) => (

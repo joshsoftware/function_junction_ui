@@ -1,19 +1,8 @@
 import React from 'react';
 import { Empty, Avatar, Collapse, Icon, Button, Tooltip } from 'antd';
 import styled from 'styled-components';
-import { MEMBER_INVITE_STATUS } from 'UTILS/constants';
+
 const Panel = Collapse.Panel;
-// import member from '../EventDetails/Members/Member';
-
-// const TeamName = styled.div`
-//     text-align: center;
-//     font-weight: 800;
-// `;
-
-// const TeamContainer = styled.div`
-//     padding: 5px 10px;
-// `;
-
 const Desc = styled.div`
   text-align: center;
   color: #65acc1;
@@ -127,7 +116,7 @@ const Team = ({ members, name, description, isInvite, handleAcceptReject }) => {
           style={customPanelStyle}
           extra={getInviteButtons(isInvite, handleAcceptReject, members)}
         >
-          {description && <Desc>{description}</Desc>}
+          {description && <Desc><a href={description} target="_new">{description}</a></Desc>}
           {getMembers(members)}
         </Panel>
       </Collapse>
