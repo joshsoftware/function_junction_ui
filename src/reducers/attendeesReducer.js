@@ -94,17 +94,18 @@ export default function eventReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        data: action.payload,
         error: null
       };
 
     case CREATE_TEAM_SUCCESS:
+      const cloneTeam = state.teams ? [...state.teams] : [];
+      cloneTeam.push(action.payload);
       return {
         ...state,
         isLoading: false,
         error: null,
         myTeam: action.payload,
-        teams: [{ ...action.payload }]
+        teams: cloneTeam,
       };
 
     case CREATE_TEAM_FAIL:
@@ -150,21 +151,19 @@ export default function eventReducer(state = initialState, action) {
 
     case DELETE_TEAM_INITIATED:
       return {
+        ...state,
         isLoading: true,
-        data: {
-          ...action.payload,
-          ...state
-        },
-        error: null
       };
 
     case DELETE_TEAM_SUCCESS:
+      const newTeams = [...state.teams];
+      const deleteIndex = newTeams.findIndex(team => team.id === state.myTeam.id);
+      newTeams.splice(deleteIndex, 1);
       return {
+        ...state,
+        teams: newTeams,
         isLoading: false,
-        data: {
-          ...action.payload,
-          ...state
-        },
+        myTeam: null,
         error: null
       };
 
@@ -181,10 +180,10 @@ export default function eventReducer(state = initialState, action) {
       rsvpLoading: true,
     }
     case REGISTER_PARTICIPANT_SUCCESS:
-    const newTeams = addNewAttendees(state);
+    const updatedTeams = addNewAttendees(state);
     return {
       ...state,
-      members: newTeams,
+      members: updatedTeams,
       rsvpLoading: false,
       rsvp: true,
     }
