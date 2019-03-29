@@ -28,7 +28,7 @@ class Attendees extends React.Component {
 
         return attendees.map(team => {
             return (
-                <ErrorBoundary name={`Team ${team.name}`}>
+                <ErrorBoundary name={`Team ${team.name}`} key={team.id}>
                     <Col span={8} key={team.id} offset={1} style={{ marginBottom: 15}}>
                         <Team
                             name={team.name}
