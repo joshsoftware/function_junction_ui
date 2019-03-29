@@ -89,8 +89,9 @@ function handleInvite (event, value, handler, memberId) {
 }
 
 const getInviteButtons = (isInvite, handleAcceptReject, members) => {
-    const member = members.find(member => member.invitee.user_id === localStorage.getItem('id'));
   if (!isInvite) return null;
+  if(!members) return null;
+  const member = members.find(member => member.invitee.user_id === localStorage.getItem('id'));
   return (
     <div>
       <Tooltip title='Accept Invite'>
@@ -111,12 +112,11 @@ const getInviteButtons = (isInvite, handleAcceptReject, members) => {
     </div>
   );
 };
+
 const Team = ({ members, name, description, isInvite, handleAcceptReject }) => {
   return (
     <>
       <Collapse
-        // bordered={!isInvite}
-        // defaultActiveKey={['1']}
         expandIcon={({ isActive }) => (
           <Icon type='caret-right' rotate={isActive ? 90 : 0} />
         )}
