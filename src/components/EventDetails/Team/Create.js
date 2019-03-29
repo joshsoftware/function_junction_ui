@@ -28,7 +28,7 @@ class TeamCreateForm extends React.PureComponent {
     !this.props.isOldEvent ? (
       <div>
         <h3 style={{ textAlign: "center" }}>{this.props.action} Team</h3>
-        <Form layout="vertical" onSubmit={this.onSubmit}>
+        <Form layout="vertical" onSubmit={this.onSubmit} autoComplete="off">
           <Form.Item>
             {getFieldDecorator("name", {
               rules: [
@@ -42,16 +42,6 @@ class TeamCreateForm extends React.PureComponent {
           {this.props.isShowcasable && (
             <Form.Item>
               {getFieldDecorator("showcase_url", {
-                /* rules: [
-                  {
-                    required: true,
-                    message: "Please enter showcaseable URL"
-                  },
-                  {
-                    validator: this.validateURL,
-                    message: "Please enter a valid URL"
-                  }
-                ] */
               })(<Input placeholder="Enter showcaseable URL" maxLength={150} />)}
             </Form.Item>
           )}
