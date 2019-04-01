@@ -99,8 +99,7 @@ function* deleteTeam(action) {
         `events/${action.payload.eventId}/teams/${action.payload.teamId}`
       )
     );
-    const data = yield call(() => response.json.bind(response)());
-    yield put(deleteTeamSuccess(data));
+    yield put(deleteTeamSuccess(response));
   } catch (error) {
     yield put(deleteTeamFail(error));
   }
