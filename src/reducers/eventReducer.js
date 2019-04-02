@@ -11,6 +11,7 @@ import {
 } from 'UTILS/constants';
 
 const initialState = {
+  redirect: false,
   isLoading: false,
   isUpdating: false,
   data: {},
@@ -20,48 +21,61 @@ const initialState = {
 export default function eventReducer (state = initialState, action) {
   switch(action.type) {
     case FETCH_EVENT_INITIATED: return {
+      ...state,
+      redirect: false,
       isLoading: true,
       data: {},
       error: null,
     }
-    case FETCH_EVENT_SUCCESS: return {
+    case FETCH_EVENT_SUCCESS: 
+    return {
+      ...state,
       isLoading: false,
       data: action.payload,
       error: null,
     }
     case FETCH_EVENT_FAIL: return {
+      ...state,
       isLoading: false,
       data: {},
       error: action.payload,
     }
     case CREATE_EVENT_INITIATED: return {
-      isUpdating: true,
+      ...state,
+      redirect: false,
+      isUpdating: false,
       error: null,
       isLoading: true,
       data: {},
     }
     case CREATE_EVENT_SUCCESS: return {
-      isUpdating: false,
+      ...state,
+      redirect: true,
       error: null,
     }
     case CREATE_EVENT_FAIL: return {
-      isUpdating: false,
+      ...state,
+      redirect: false,
       error: action.payload,
     }
     case UPDATE_EVENT_INITIATED: return {
+      ...state,
+      redirect: false,
       isUpdating: true,
       error: null,
       isLoading: false,
       data: {},
     }
     case UPDATE_EVENT_SUCCESS: return {
-      isUpdating: false,
+      ...state,
+      redirect: true,
       error: null,
       isLoading: false,
       data: {},
     }
     case UPDATE_EVENT_FAIL: return {
-      isUpdating: false,
+      ...state,
+      redirect: false,
       error: action.payload,
       isLoading: false,
       data: {},

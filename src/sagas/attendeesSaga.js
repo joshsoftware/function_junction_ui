@@ -25,7 +25,7 @@ import {
   INVITATION_ACCEPT_REJECT_INITIATED
 } from 'UTILS/constants';
 import RequestHandler from '../HTTP';
-import { showFailureNotification } from '../components/shared/Notification';
+import { showFailureNotification, showSuccessNotification } from '../components/shared/Notification';
 
 function* fetchAttendees(action) {
   try {
@@ -50,7 +50,9 @@ function* addTeamMember(action) {
     );
     // const data = yield call(() => response.json.bind(response)());
     if (response.failed_emails && response.failed_emails.length) {
-      showFailureNotification(`Failed to sent emails to following email ids:\n${response.failed_emails.join(', ')}`);
+      showFailureNotification(`Failed to send invitation to following user :\n${response.failed_emails.join(', ')}`);
+    } else {
+      showSuccessNotification('Invitation Sent Successfully.');
     }
     yield put(
       addTeamMemberSuccess({
@@ -70,7 +72,7 @@ function* createTeam(action) {
     const response = yield call(() =>
       RequestHandler.post(`events/${eventId}/teams`, action.payload)
     );
-    // const data = yield call(() => response.json.bind(response));
+    showSuccessNotification('Team Created Successfully.')
     yield put(createTeamSuccess(response.team));
   } catch (error) {
     yield put(createTeamFail(error));
@@ -85,7 +87,7 @@ function* updateTeam(action) {
         action.payload.team
       )
     );
-    // const data = yield call(() => response.json.bind(response)());
+    showSuccessNotification('Update Team Successful.')
     yield put(updateTeamSuccess(response.team));
   } catch (error) {
     yield put(updateTeamFail(error.message));
@@ -99,6 +101,7 @@ function* deleteTeam(action) {
         `events/${action.payload.eventId}/teams/${action.payload.teamId}`
       )
     );
+    showSuccessNotification('Delete Teams Successful.')
     yield put(deleteTeamSuccess(response));
   } catch (error) {
     yield put(deleteTeamFail(error));

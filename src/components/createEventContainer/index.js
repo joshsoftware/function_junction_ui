@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { showFailureNotification } from '../shared/Notification';
+import { showFailureNotification, showSuccessNotification } from '../shared/Notification';
 import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/eventAction';
 import CreateEvent from 'COMPONENTS/createEvent';
 
@@ -55,8 +55,12 @@ class CreateEventContainer extends PureComponent {
           max_size: data.max_size,
         })
       }
-
-      if(this.props.event.isUpdating && !nextProps.event.isUpdating) {
+      if (nextProps.event.redirect){
+        if(this.props.event.isUpdating) {
+          showSuccessNotification('Event Updated Successfully.');
+        } else {
+          showSuccessNotification('Event Created Successfully.');
+        }
         this.redirectToBrowse();
       }
     }
@@ -162,7 +166,7 @@ class CreateEventContainer extends PureComponent {
 
     }
 
-    submitHandler = (isPublished) => {
+    submitHandler = (is_published) => {
       if (!this.validateForm()) {
         return 0;
       }
@@ -170,13 +174,13 @@ class CreateEventContainer extends PureComponent {
       if(this.id) {
         this.props.updateEventInitiated({
           ...this.state,
-          isPublished,
+          is_published,
           id: this.id,
         })
       } else {
         this.props.createEventInitiated({
           ...this.state,
-          isPublished,
+          is_published,
         })
       }
     }

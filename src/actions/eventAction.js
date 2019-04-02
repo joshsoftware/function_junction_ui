@@ -60,9 +60,10 @@ export function updateEventInitiated(data) {
   }
 }
 
-export function updateEventSuccess() {
+export function updateEventSuccess(data) {
   return {
     type: UPDATE_EVENT_SUCCESS,
+    payload: data
   }
 }
 
