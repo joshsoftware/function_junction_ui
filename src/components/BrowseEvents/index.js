@@ -7,13 +7,16 @@ import EventCard from '../../components/EventCard/EventCard';
 import Slider from '../../components/Carousel';
 import { getUser } from '../../actions/userDetailsAction';
 import './BrowseEvents.scss';
+import img1 from '../../5.png'
+import img2 from '../../6.png'
 
 const items=[
-    // <img src={`${window.origin}/assets/img/5.png`} alt="1" width="100%"/>,
-    // <img src={`${window.origin}/assets/img/6.png`} alt="1" width="100%"/>,
-    <img src="https://cdn.evbstatic.com/s3-build/perm_001//8b6c63/django/images/homepage/bg-desktop-generationdiy.jpg" alt="2" width="100%"/>,
-    <img src="https://cdn.evbstatic.com/s3-build/perm_001//054546/django/images/homepage/bg-desktop-wanderlust.jpg" alt="3" width="100%"/>,
-    <img src="https://cdn.evbstatic.com/s3-build/perm_001//b41172/django/images/homepage/bg-desktop-rapoport.jpg" alt="4" width="100%"/>,
+    <img src={img1} alt="Josh Software" width="100%"/>,
+    <img src={img2} alt="Josh Software" width="100%"/>,
+    // // <img src={`${window.origin}/assets/img/6.png`} alt="1" width="100%"/>,
+    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//8b6c63/django/images/homepage/bg-desktop-generationdiy.jpg" alt="2" width="100%"/>,
+    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//054546/django/images/homepage/bg-desktop-wanderlust.jpg" alt="3" width="100%"/>,
+    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//b41172/django/images/homepage/bg-desktop-rapoport.jpg" alt="4" width="100%"/>,
  ]
 
 class BrowseEvents extends PureComponent {
