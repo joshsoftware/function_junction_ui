@@ -2,8 +2,8 @@
 
 import handleError from './handleHTTPError';
 import { showFailureNotification } from '../components/shared/Notification';
-
-const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/' : `${window.origin}/`
+const hostName = window.origin || 'https://'.concat(window.location.hostname) || 'https://intranet.joshsoftware.com';
+const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/' : `${hostName}/`
 export default class RequestHandler {
   // returns header object
   static getHeader(type, data = {}, isFile = false) {
