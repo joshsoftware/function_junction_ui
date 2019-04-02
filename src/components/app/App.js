@@ -5,6 +5,7 @@ import AppLayout from '../layout/Layout';
 import routes from 'UTILS/routes';
 import 'antd/dist/antd.css';
 import './App.scss';
+import NoRoute from '../shared/NoRoute';
 
 
 
@@ -25,13 +26,13 @@ const App = () => {
   return (
     <div className="App">
     <div className="online">
-      {!online && <Alert message="Seems like you lost internet connection." type="error" showIcon closable />}
+      {!online && <Alert message="Seems like you lost the internet connection." type="error" showIcon closable />}
     </div>
       <Router>
         <Switch>
           <Route path="/" exact component={() => window.location.replace(routes.root)} />
           <Route path={routes.root} component={AppLayout} />
-          <Route component={()=> (<h1>No route match</h1>)} />
+          <Route component={NoRoute} />
         </Switch>
       </Router>
     </div>

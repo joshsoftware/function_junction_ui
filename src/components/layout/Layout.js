@@ -56,6 +56,7 @@ class AppLayout extends Component {
     if (location.pathname !== routes.createEvent && !location.pathname.includes('event-details') && !location.pathname.includes('update')) {
         return (
           <>
+            <a href={window.location.origin || window.origin || 'https://intranet.joshsoftware.com'} style={{ paddingRight: 20}}>Intranet</a>
             <NavLink
               to={routes.createEvent}
               style={{ textDecoration: 'none' }}
