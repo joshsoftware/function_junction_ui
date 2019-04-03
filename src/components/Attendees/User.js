@@ -18,10 +18,10 @@ const UserName = styled.div`
     padding: 0px 8px 20px;
 `;
 
-const Name = styled.div`
+const Initials = styled.div`
     padding: 12px 0px;
 `;
-const Email = styled.div`
+const Name = styled.div`
     width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -32,14 +32,14 @@ const Email = styled.div`
 const User = ({ img, name, email }) => (
     <UserContainer>
         <UserIcon>
-            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}><Name>{name[0]}</Name></Avatar>
+            <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}><Initials>{name[0]}</Initials></Avatar>
         </UserIcon>
         <Tooltip title={`${name} ${email}`}>
             <UserName>
-                <span>{name}</span>
-                <Email>
+                <Name>{name}</Name>
+                <Name>
                     {email || 'NA'}
-                </Email>
+                </Name>
             </UserName>
         </Tooltip>
     </UserContainer>

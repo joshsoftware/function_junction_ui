@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import handleError from './handleHTTPError';
-import { showFailureNotification } from '../components/shared/Notification';
+import { showFailureNotification, showWarningNotification } from '../components/shared/Notification';
 const hostName = window.origin || 'https://'.concat(window.location.hostname) || 'https://intranet.joshsoftware.com';
 const API_BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/' : `${hostName}/`
 export default class RequestHandler {
@@ -33,8 +33,15 @@ export default class RequestHandler {
   }
 
   static isSuccess(response) {
+    if (response.status === 401) {
+      showWarningNotification('Seem\'s like you are not logged in to intranet.');
+      if (window.location) {
+        window.location.href = hostName;
+      }
+      return
+    }
     if (!(response.ok || response.status === 200 || response.status === 201)) {
-      showFailureNotification(handleError(response));
+      // showFailureNotification(handleError(response));
       throw Error(response.statusText);
     }
     return response;
