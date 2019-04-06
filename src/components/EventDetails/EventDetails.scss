@@ -14,6 +14,30 @@
             padding: 7px;
             border-radius: 19px;
         }
+
+        .team {
+            display: flex;
+            font-size: 11px;
+            color: #8c8282;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 29px 50px 0px 50px;
+            padding-left: 10px;
+            text-align: center;
+            border-radius: 10px;
+            line-height: 9px;
+            align-content: center;
+            .data{
+                display: flex;
+                padding: 5px;
+                .label {
+                    padding-right: 1px;
+                }
+                .label::after{
+                    content: ':'
+                }
+            }
+        }
     }
     .event-details-wrapper {
         .ev-container {

@@ -263,6 +263,25 @@ class EventDetailsContainer extends Component {
     this.props.invitationAcceptRejectInitiated(payload);
   };
 
+  getTeamSize = () => {
+    const { event: { is_individual_participation, max_size, min_size } } = this.props;
+    if(is_individual_participation) {
+      return null;
+    }
+    return (
+      <div className="team">
+        <div className="data">
+          <div className="label">Min Size</div>
+          <div className="d">{min_size}</div>
+        </div>
+        <div className="data">
+          <div className="label">Max Size</div>
+          <div className="d">{max_size}</div>
+        </div>
+      </div>
+    );
+  }
+
   renderTeam = () => {
     const {
       event,
@@ -280,7 +299,6 @@ class EventDetailsContainer extends Component {
       is_individual_participation,
       is_showcasable,
       end_date_time,
-      register_before,
       is_attending
     } = event;
     const isPastEvent = isOldEvent(end_date_time);
@@ -398,7 +416,12 @@ class EventDetailsContainer extends Component {
         <Col lg={{span: 6}} >
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className={this.getBackgroundClass()}>{this.renderTeam()}</div>
+            <div className={this.getBackgroundClass()}>
+              <>            
+                {this.renderTeam()}
+                {this.getTeamSize()}   
+              </>
+            </div>
           </Affix>
         </Col>
       </Row>
