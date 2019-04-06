@@ -32,6 +32,7 @@ class CreateEventContainer extends PureComponent {
           is_individual_participation: true,
           min_size: 1,
           max_size: 1,
+          isLoading: false,
         }
     }
 
@@ -68,20 +69,23 @@ class CreateEventContainer extends PureComponent {
           is_individual_participation: data.is_individual_participation,
           min_size: data.min_size,
           max_size: data.max_size,
+          isLoading: false,
         })
       }
       if (nextProps.event.redirect){
         if(this.props.event.isUpdating) {
           showSuccessNotification('Event Updated Successfully.');
+          this.props.history.push(`/functions/event-details/${this.props.match.params.id}`);
+          return 0;
         } else {
           showSuccessNotification('Event Created Successfully.');
+          this.props.history.push(`/functions/event-details/${nextProps.event.data.id}`);
         }
-        this.redirectToBrowse();
       }
     }
 
     redirectToBrowse = () => {
-      this.props.history.push('/functions/');
+      this.props.history.push('/functions');
     }
 
     changeHandler = (key, value) => {
@@ -191,7 +195,9 @@ class CreateEventContainer extends PureComponent {
       if (!this.validateForm()) {
         return 0;
       }
-
+      this.setState({
+        isLoading: true,
+      })
       if(this.id) {
         this.props.updateEventInitiated({
           ...this.state,

@@ -52,6 +52,7 @@ export default function eventReducer (state = initialState, action) {
       ...state,
       redirect: true,
       error: null,
+      data: action.payload
     }
     case CREATE_EVENT_FAIL: return {
       ...state,
@@ -71,7 +72,7 @@ export default function eventReducer (state = initialState, action) {
       redirect: true,
       error: null,
       isLoading: false,
-      data: {},
+      data: action.payload,
     }
     case UPDATE_EVENT_FAIL: return {
       ...state,

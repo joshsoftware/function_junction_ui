@@ -39,7 +39,7 @@ class CreateEvent extends PureComponent {
     return current && current <= moment();
   }
     render() {
-        const {onEditorStateChange,  error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
+        const {onEditorStateChange, isLoading,  error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
            is_individual_participation, min_size, max_size, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
           <>
@@ -195,6 +195,7 @@ class CreateEvent extends PureComponent {
                       name={isEdit ? "Update Event" : "Create Event"}
                       type="primary"
                       onClick={() => submitHandler(true)}
+                      loading={isLoading}
                     />
                   </Col>
                   <Col lg={{span:4}}>
