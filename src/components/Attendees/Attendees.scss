@@ -3,7 +3,12 @@
     .title {
         font-size: 20px;
         text-align: center;
-        letter-spacing: 2px
+        letter-spacing: 2px;
+        span{
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding-left: 5px;
+        }
     }
     .user-container {
         padding: 8px 1px;

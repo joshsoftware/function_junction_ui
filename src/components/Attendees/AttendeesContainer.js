@@ -80,7 +80,15 @@ class Attendees extends React.Component {
     render = () => (
         <div className="attendees-container">
             <ErrorBoundary name="Attendees">
-                <div className="title">{this.props.type ? 'Attendees' : 'Teams'} </div>
+                {this.props.type && <div className="title">Attendees</div>}
+                {!this.props.type && (
+                    <div className="title">
+                        Teams
+                        <span>
+                            {`(Min Size: ${this.props.event.min_size}, Max Size: ${this.props.event.max_size})`}
+                        </span>
+                    </div>
+                )}
                 <div className="Single">
                     <Row>
                         {this.getAttendeesDetails()}

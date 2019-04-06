@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 import { showFailureNotification, showSuccessNotification } from '../shared/Notification';
 import { createEventInitiated, updateEventInitiated, fetchEventInitiated } from 'ACTION/eventAction';
 import CreateEvent from 'COMPONENTS/createEvent';
@@ -8,14 +11,19 @@ import CreateEvent from 'COMPONENTS/createEvent';
 class CreateEventContainer extends PureComponent {
     constructor(props) {
         super(props);
-
+        const html = '';
+        const contentBlock = htmlToDraft(html);
+        let editorState;
+        if (contentBlock) {
+          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+          editorState = EditorState.createWithContent(contentState);
+        }
         this.id = null;
-
         this.state = {
           error: '',
           title: '',
           summary: '',
-          description: '',
+          description: editorState,
           venue: 'Josh Software',
           start_date_time: null,
           end_date_time: null,
@@ -41,10 +49,17 @@ class CreateEventContainer extends PureComponent {
     componentWillReceiveProps (nextProps) {
       if(this.props.event.isLoading && !nextProps.event.isLoading) {
         const { data } = nextProps.event;
+        const html = data.description || '';
+        const contentBlock = htmlToDraft(html);
+        let editorState;
+        if (contentBlock) {
+          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+          editorState = EditorState.createWithContent(contentState);
+        }
         this.setState({
           title: data.title,
           summary: data.summary || '',
-          description: data.description,
+          description: editorState,
           venue: data.venue,
           start_date_time: moment(data.start_date_time),
           end_date_time: moment(data.end_date_time),
@@ -104,6 +119,12 @@ class CreateEventContainer extends PureComponent {
       });
     }
 
+    onEditorStateChange = (description) => {
+      this.setState({
+        description,
+      });
+    };
+
     dateDifference = (start, end) => {
       if (moment(start).diff(moment(end), 'minute') > 0) {
         return true;
@@ -141,18 +162,18 @@ class CreateEventContainer extends PureComponent {
         this.showError('End date is mandatory.');
         return false;
       }
-      // if (!register_before) {
-      //   this.showError('Registration end date is mandatory.');
-      //   return false;
-      // }
-      // if (this.dateDifference(moment(), register_before)) {
-      //   this.showError('Registration end date should not be in past.');
-      //   return false;
-      // }
-      // if (this.dateDifference(register_before, start_date_time)) {
-      //   this.showError('Registration should end before event start date.');
-      //   return false;
-      // }
+      if (!register_before) {
+        this.showError('Registration end date is mandatory.');
+        return false;
+      }
+      if (this.dateDifference(moment(), register_before)) {
+        this.showError('Registration end date should not be in past.');
+        return false;
+      }
+      if (this.dateDifference(register_before, start_date_time)) {
+        this.showError('Registration should end before event start date.');
+        return false;
+      }
       if (this.dateDifference(start_date_time, end_date_time)) {
         this.showError('Event should end after start time.');
         return false;
@@ -174,12 +195,14 @@ class CreateEventContainer extends PureComponent {
       if(this.id) {
         this.props.updateEventInitiated({
           ...this.state,
+          description: draftToHtml(convertToRaw(this.state.description.getCurrentContent())),
           is_published,
           id: this.id,
         })
       } else {
         this.props.createEventInitiated({
           ...this.state,
+          description: draftToHtml(convertToRaw(this.state.description.getCurrentContent())),
           is_published,
         })
       }
@@ -189,10 +212,11 @@ class CreateEventContainer extends PureComponent {
         return (
           <CreateEvent
             {...this.state}
-            isEdit={this.id}
+            isEdit={this.id ? true : false}
             changeHandler={this.changeHandler}
             redirectToBrowse={this.redirectToBrowse}
             submitHandler={this.submitHandler}
+            onEditorStateChange={this.onEditorStateChange}
           />
         );
     }

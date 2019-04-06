@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Divider , Radio} from 'antd';
 import styled from 'styled-components';
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 import './index.scss';
 import { JInput, JTextArea, JDatePicker, JSwitch, JButton } from '../shared';
 import moment from 'moment';
@@ -19,7 +23,6 @@ const timePickerConfig = {
 };
 
 class CreateEvent extends PureComponent {
-
   disabledStartDate = (current) => {
     const { end_date_time } = this.props;
     if (end_date_time && current > moment(end_date_time)) {
@@ -36,9 +39,10 @@ class CreateEvent extends PureComponent {
     return current && current <= moment();
   }
     render() {
-        const { error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
+        const {onEditorStateChange,  error, isEdit, title, summary, description, venue, start_date_time, end_date_time, register_before, is_showcasable,
            is_individual_participation, min_size, max_size, changeHandler, redirectToBrowse, submitHandler } = this.props;
         return (
+          <>
             <div className="event-container">
               <Row className="header">{isEdit? 'Update Event' : 'Create Event'}</Row>
               <Divider/>
@@ -74,13 +78,27 @@ class CreateEvent extends PureComponent {
                       required
                     />
                   </Col>
-                  <Col lg={{ span:15 ,offset:1}}>
-                    <JTextArea
+                  </Row>
+                <Row>
+                  <Col lg={{ span:24 }}>
+                    <span className="desc">Description</span>
+                    <Editor
+                      editorState={description}
+                      wrapperClassName="demo-wrapper"
+                      editorClassName="demo-editor"
+                      onEditorStateChange={onEditorStateChange}
+                      toolbar={{
+                        inline: { inDropdown: true },
+                        list: { inDropdown: true },
+                        embedded:false 
+                      }}
+                    />
+                    {/* <JTextArea
                       label="Description"
                       placeholder="Detailed event description..."
                       value={description}
                       onChange={({ target }) => changeHandler('description',target.value)}
-                    />
+                    /> */}
                   </Col>
                 </Row>
                 <Divider> Event Date Time </Divider>
@@ -188,6 +206,7 @@ class CreateEvent extends PureComponent {
                 </Row>
               </div>
           </div>
+          </>
         );
     }
 }

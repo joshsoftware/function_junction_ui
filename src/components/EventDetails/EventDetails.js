@@ -64,7 +64,10 @@ const EventHeader = ({
 
 const RegistrationDetails = ({
     register_before,
-    created_by
+    created_by,
+    max_size,
+    min_size,
+    is_individual_participation
 }) => (
     <>
         <div className="register-before">
@@ -80,7 +83,22 @@ const RegistrationDetails = ({
                 <span>{`Registration ${getRegistrationLabel(register_before)} on : `}</span>
                 {getFormatedDate(register_before)}
             </div>
-            
+            {/* {!is_individual_participation && (
+                <div className="team-size">
+                    <div className="team">Team Size</div>
+                    <div className="size">
+                        <div>
+                            Max Size:
+                            <span>{min_size}</span>
+                        </div>
+                        <div> 
+                            Min size:
+                            <span>{max_size}</span>
+                        </div>
+                    </div>
+
+                </div>
+            )} */}
         </div>
     </>
 );
@@ -88,8 +106,8 @@ const RegistrationDetails = ({
 const EventDescription = ({
     description
 }) => (
-    <div>
-        {description || 'Description Not Available.'}
+    <div dangerouslySetInnerHTML={{ __html: description }}>
+        {/* {description || 'Description Not Available.'} */}
     </div>
 )
 

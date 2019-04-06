@@ -360,6 +360,7 @@ class EventDetailsContainer extends Component {
             handleSubmit={this.handleCreateTeam}
             isPastEvent={isPastEvent}
             isShowcasable={is_showcasable}
+            event={event}
           />
         </ErrorBoundary>
       );
@@ -388,6 +389,7 @@ class EventDetailsContainer extends Component {
                   type={props.event.is_individual_participation}
                   attendees={props.attendees.teams}
                   members={props.members}
+                  event={props.event}
                 />
               </ErrorBoundary>
             </Col>

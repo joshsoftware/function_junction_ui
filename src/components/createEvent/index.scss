@@ -38,3 +38,25 @@
         }
     }
 }
+
+.demo-wrapper {
+    padding-top: 3px;
+}
+.demo-editor {
+    border: 1px solid #9a9a9a47;
+    padding: 1%;
+}
+
+.rdw-link-modal{
+    height: 220px;
+    border: 1px solid #96969694;
+}
+.rdw-remove-wrapper, .rdw-embedded-wrapper {
+    display: none;
+}
+.desc {
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 13px;
+    padding-left: 2px;
+}

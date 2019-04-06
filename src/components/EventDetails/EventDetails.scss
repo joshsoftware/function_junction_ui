@@ -150,3 +150,20 @@
     75% { background-color: #f07d12; border-color: #f07d12; box-shadow: 0 0 2px 2px #f07d12; }
     100% { background-color: #fc2c36; border-color: #fc2c36; box-shadow: 0 0 2px 2px #fc2c36; }
 }
+
+.team-size {
+    display: flex;
+    .team{
+        padding-right: 10px;
+        font-weight: 100;
+    }
+    .size {
+        display: flex;
+        div{
+            padding-right: 5px;
+        }
+        span{
+            padding-left: 5px;
+        }
+    }
+}

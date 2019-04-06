@@ -1,8 +1,18 @@
 import React from "react";
 import { Button, Icon, Form, Input } from "antd";
+import styled from 'styled-components';
 import "./Team.scss";
 import { validateURL } from "../../../utils/util";
 
+const TeamSizeContainer = styled.div`
+  text-align: center;
+  font-size: 11px;
+  display: flex;
+`;
+
+const Team = styled.div`
+  padding: 0px 7px
+`;
 class TeamCreateForm extends React.PureComponent {
   onSubmit = e => {
     e.preventDefault();
