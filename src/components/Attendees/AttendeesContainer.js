@@ -53,7 +53,7 @@ class Attendees extends React.Component {
         return usersGoing.map(({invitee}) => {
             return (
                 <ErrorBoundary name={`User ${invitee.name}`} key={invitee.user_id}>
-                    <Col span={4} >
+                    <Col lg={{ span: 4}} sm={{ span: 11, offset: 1}} >
                         <div className="user-container">
                             <User
                                 name={invitee.name}

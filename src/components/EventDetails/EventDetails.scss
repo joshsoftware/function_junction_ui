@@ -100,6 +100,16 @@
         }
     }
 }
+@media only screen and (max-width: 600px) {
+    .event-details-container {
+      margin-top: 18%
+    }
+}
+@media only screen and (max-width: 900px) {
+    .event-details-container {
+      margin-top: 10%
+    }
+}
 .success-text {
     text-align: center;
     color: #4ba757;

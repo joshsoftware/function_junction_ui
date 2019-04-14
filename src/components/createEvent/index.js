@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Row, Col, Divider , Radio} from 'antd';
 import styled from 'styled-components';
-import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
+// import 'medium-editor/dist/css/medium-editor.css';
+// import 'medium-editor/dist/css/themes/default.css';
 import './index.scss';
+// import Editor from 'react-medium-editor';
+ 
 import { JInput, JTextArea, JDatePicker, JSwitch, JButton } from '../shared';
 import moment from 'moment';
 
@@ -82,6 +84,13 @@ class CreateEvent extends PureComponent {
                 <Row>
                   <Col lg={{ span:24 }}>
                     <span className="desc">Description</span>
+                    {/* Medium Editor */}
+                    {/* <Editor
+                      tag="pre"
+                      text={description}
+                      onChange={this.handleChange}
+                      options={{toolbar: {buttons: ['bold', 'italic', 'underline', 'h1', 'h2', 'h3', 'quote']}}}
+                    /> */}
                     <Editor
                       editorState={description}
                       wrapperClassName="demo-wrapper"
