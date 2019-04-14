@@ -1,4 +1,4 @@
-# function-junction
+# Function-Junction
 Internal Event Management System
 
 ## To run locally
