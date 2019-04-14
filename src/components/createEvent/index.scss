@@ -41,6 +41,12 @@
 
 .demo-wrapper {
     padding-top: 3px;
+    .rdw-dropdown-selectedtext {
+        color: #000;
+    }
+    .rdw-dropdown-optionwrapper {
+        overflow: hidden;
+    }
 }
 .demo-editor {
     border: 1px solid #9a9a9a47;

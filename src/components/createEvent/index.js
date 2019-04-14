@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Divider , Radio} from 'antd';
+import { Row, Col, Divider , Radio, Select} from 'antd';
 import styled from 'styled-components';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -23,6 +23,42 @@ const timePickerConfig = {
   minuteStep: 15,
   defaultValue: moment().hour(10).minute(0)
 };
+
+const TOOLBAR = {
+  options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'remove', 'history'],
+  inline: {
+    inDropdown: false,
+    options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript'],
+  },
+  blockType: {
+    inDropdown: true,
+    options: ['Normal', 'H1', 'H2', 'H3', 'Blockquote', 'Code'],
+  },
+  fontSize: {
+    options: [8, 10, 12, 14, 16, 18, 24, 30],
+  },
+  fontFamily: {
+    options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
+  },
+  list: {
+    inDropdown: false,
+    options: ['unordered', 'ordered'],
+  },
+  textAlign: {
+    inDropdown: false,
+    options: ['left', 'center', 'right', 'justify'],
+  },
+  link: {
+    inDropdown: false,
+    showOpenOptionOnHover: true,
+    defaultTargetOption: '_self',
+    options: ['link', 'unlink'],
+  },
+  history: {
+    inDropdown: false,
+    options: ['undo', 'redo'],
+  },
+}
 
 class CreateEvent extends PureComponent {
   disabledStartDate = (current) => {
@@ -96,11 +132,7 @@ class CreateEvent extends PureComponent {
                       wrapperClassName="demo-wrapper"
                       editorClassName="demo-editor"
                       onEditorStateChange={onEditorStateChange}
-                      toolbar={{
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        embedded:false 
-                      }}
+                      toolbar={TOOLBAR}
                     />
                     {/* <JTextArea
                       label="Description"

@@ -351,22 +351,24 @@ class EventDetailsContainer extends Component {
         return (
           <ErrorBoundary name="Invitations">
             <div className='view-invitations'>
-              <div className='animating-text'>You have new invites!</div>
-              <Button
-                type='primary'
-                name='viewInvites'
-                className='view-invite-button'
-                onClick={this.toggleInvitationModal}
-              >
-                View Invites
-              </Button>
-              <Invitations
+              <div className='animating-text'>You have been invited by someone to join their team.</div>
+              <Tooltip title=" Accept invitation to join another team or Reject to create your own team.">
+                <Button
+                  type='primary'
+                  name='viewInvites'
+                  className='view-invite-button'
+                  onClick={this.toggleInvitationModal}
+                >
+                  View Invites
+                </Button>
+              </Tooltip>
+              {/* <Invitations
                 visible={this.state.isInvitationModalOpen}
                 invites={invitations}
                 isLoading={isInviteLoading}
                 toggleModal={this.toggleInvitationModal}
                 handleAcceptReject={this.handleAcceptReject}
-              />
+              /> */}
             </div>
             </ErrorBoundary>
         );
