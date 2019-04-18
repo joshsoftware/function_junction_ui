@@ -51,7 +51,10 @@
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     
     .logo {
-        width: 111px;
+        width: 100px;
+    }
+    .event-container {
+      margin: 22% 1%;
     }
     
   }
@@ -64,7 +67,7 @@
   @media (min-width: 481px) and (max-width: 767px) {
     
     .logo {
-        width: 111px;
+        width: 90px;
     }
     
   }
@@ -77,7 +80,8 @@
   @media (min-width: 320px) and (max-width: 480px) {
     
     .logo {
-        width: 111px;
+        width: 80px;
     }
+
     
   }

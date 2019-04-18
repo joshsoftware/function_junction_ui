@@ -29,7 +29,7 @@ class Attendees extends React.Component {
         return attendees.map(team => {
             return (
                 <ErrorBoundary name={`Team ${team.name}`} key={team.id}>
-                    <Col span={8} key={team.id} offset={1} style={{ marginBottom: 15}}>
+                    <Col lg={{ span:8, offset:1}} sm={{ span: 11, offset:1 }} key={team.id} style={{ marginBottom: 15}}>
                         <Team
                             name={team.name}
                             description={team.showcase_url}

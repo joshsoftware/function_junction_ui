@@ -70,3 +70,16 @@
 .public-DraftStyleDefault-block {
     margin: 1px 0px;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .event-container {
+      margin: 22% 1%;
+    }
+    
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .event-container {
+        margin: 22% 1%;
+      }
+  
+}
