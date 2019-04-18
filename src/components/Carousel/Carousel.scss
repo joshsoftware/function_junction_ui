@@ -10,17 +10,4 @@
     color: #fff;
   }
 
-
-@media (min-width: 320px) and (max-width: 480px) {
-  .slick-list {
-      height: 180px !important;
-  }
-}
-@media (min-width: 480px) and (max-width: 700px) {
-  .slick-list {
-      height: 180px !important;
-      .ant-carousel .slick-slide img {
-          height: 200px !important;
-      }
-  }
-}
+  
