@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'antd';
+import { Modal, Skeleton } from 'antd';
 import Team from '../../Attendees/Team';
 
 const invitations = ({
@@ -19,6 +19,7 @@ const invitations = ({
         onCancel={toggleModal}
       >
         <div className='invite-team-wrapper'>
+          {/* {isInviteLoading && <Skeleton active paragraph={2} />} */}
           {invites.map(invite => (
             <div key={invite.id} className='invitor-team'>
               <Team
