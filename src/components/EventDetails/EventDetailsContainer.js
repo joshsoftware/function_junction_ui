@@ -316,7 +316,7 @@ class EventDetailsContainer extends Component {
             handleRSVPClick={this.handleRSVPClick}
             isPastEvent={isPastEvent}
             loading={rsvpLoading}
-            error={rsvpError}
+            // error={rsvpError}
             rsvp={rsvp}
           />
         </ErrorBoundary>
@@ -362,13 +362,13 @@ class EventDetailsContainer extends Component {
                   View Invites
                 </Button>
               </Tooltip>
-              {/* <Invitations
+              <Invitations
                 visible={this.state.isInvitationModalOpen}
                 invites={invitations}
-                isLoading={isInviteLoading}
+                isInviteLoading={isInviteLoading}
                 toggleModal={this.toggleInvitationModal}
                 handleAcceptReject={this.handleAcceptReject}
-              /> */}
+              />
             </div>
             </ErrorBoundary>
         );

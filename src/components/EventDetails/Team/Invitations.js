@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Divider } from 'antd';
+import { Modal } from 'antd';
 import Team from '../../Attendees/Team';
 
 const invitations = ({
