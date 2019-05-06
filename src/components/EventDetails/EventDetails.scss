@@ -87,11 +87,17 @@
         text-decoration: underline;
     }
 }
+.disabled-b {
+    pointer-events: none !important;
+    background: #c0c5c5 !important;
+    cursor: not-allowed !important;
+}
 
 .yes-no-buttons-wrapper{
     display: flex;
     align-items: center;
     justify-content: space-around;
+   
     .button {
         font-weight: 800;
         color: #fff;

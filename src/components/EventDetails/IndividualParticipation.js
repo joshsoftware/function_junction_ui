@@ -1,23 +1,22 @@
 import React from 'react';
 import { Button } from 'antd';
 import { isOldEvent } from '../../utils/util';
-const individualParticipation = ({ handleRSVPClick, attending }) => {
+const individualParticipation = ({ handleRSVPClick, attending, isPastEvent }) => {
 
     if (attending) {
-        return  <div className="going-to-event"> You are going.</div>
+        return  <div className={isPastEvent? "going-to-event disabled-b": "going-to-event"}>{isPastEvent? 'You have attended this event': 'You are going.'}</div>
     }
 
     return (
         <div>
             <div>
-                <div style={{ textAlign: 'center', marginBottom: '10px' }}>Want to attend?</div>
                 <div className='yes-no-buttons-wrapper'>
                     <Button
-                        className='button yesButton'
+                        className= {isPastEvent? "disabled-b button yesButton": 'button yesButton'}
                         type='ghost'
                         icon='check'
                         block
-                        onClick={handleRSVPClick}
+                        onClick={isPastEvent? ()=>{}: handleRSVPClick}
                     >
                         RSVP
                     </Button>

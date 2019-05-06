@@ -24,13 +24,13 @@ class ShowMembers extends PureComponent {
     members.map(member => <Member key={member.email} member={member} />);
 
   render = () => {
-    const { isOldEvent } = this.props;
+    const { isPastEvent } = this.props;
     return (
       <>
         <div className="flex-center mt-2">
           <div className="flex-center">
             <span>Members</span>
-            {!this.state.isAddingMember && !isOldEvent && (
+            {!this.state.isAddingMember && !isPastEvent && (
               <Icon
                 theme="twoTone"
                 onClick={this.toggleAddingMembers}

@@ -21,7 +21,7 @@ import { ShowTeam } from './Team/Show';
 import CreateTeam from './Team/Create';
 import ShowMembers from './Members/Show';
 import Attendees from '../Attendees/';
-import { isObjectEmpty } from '../../utils/util';
+import { isObjectEmpty, isOldEvent } from '../../utils/util';
 
 const initialState = {
   loading: false,
@@ -271,6 +271,8 @@ class EventDetailsContainer extends Component {
   renderTeam = () => {
     const { event, attendees } = this.props;
     const { loading, is_individual_participation, is_showcasable, end_date_time, register_before, is_attending} = event;
+    const isPastEvent = isOldEvent(end_date_time);
+    console.log(isPastEvent);
     // If loading
     if(loading) {
       return <Icon type="loading" />
@@ -282,7 +284,7 @@ class EventDetailsContainer extends Component {
         <IndividualRegistration
           attending={is_attending}
           handleRSVPClick={this.handleRSVPClick}
-          eventEndDate={end_date_time}
+          isPastEvent={isPastEvent}
         />
       );
     }
@@ -295,24 +297,34 @@ class EventDetailsContainer extends Component {
               isShowcasable={is_showcasable}
               handleTeamChange={this.handleTeamChange}
               handleDeleteTeam={this.handleDeleteTeam}
-              register_before={register_before}
+              isPastEvent={isPastEvent}
             />
             <ShowMembers
               members={attendees.teams[0].members || []}
               sendInvites={this.sendInvites}
-              register_before={register_before}
+              isPastEvent={isPastEvent}
             />
           </>
       }
         return <CreateTeam
           action='Create'
           handleSubmit={this.handleCreateTeam}
-          register_before={register_before}
+          isPastEvent={isPastEvent}
           isShowcasable={is_showcasable}
         />
     }
 }
-
+  getBackgroundClass = () => {
+    const { event } = this.props;
+    if (!event) {
+      return "background";
+    }
+    if (isOldEvent(event.end_date_time)) {
+      return "background disabled-b";
+    }
+    return "background";
+  }
+  
   getEvent = props => (
     <div className="event-details-container">
       <Row>
@@ -330,7 +342,9 @@ class EventDetailsContainer extends Component {
         <Col span={6}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
-            <div className="background">{this.renderTeam()}</div>
+              <div className={this.getBackgroundClass()}>
+                {this.renderTeam()}
+              </div>
           </Affix>
         </Col>
       </Row>

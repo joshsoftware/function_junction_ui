@@ -28,7 +28,7 @@ export class ShowTeam extends PureComponent {
   };
   render() {
     const { isEditing } = this.state;
-    const { team, isShowcasable, isOldEvent } = this.props;
+    const { team, isShowcasable, isPastEvent } = this.props;
     return (
       <>
         {!isEditing ? (
@@ -38,7 +38,7 @@ export class ShowTeam extends PureComponent {
                 <Icon type="team" style={{ marginRight: "0.5rem" }} />
                 {team.name}
               </h4>
-              {!isOldEvent && (
+              {!isPastEvent && (
                 <h4 style={{ marginLeft: "auto" }}>
                   <Tooltip title="Edit Team">
                     <Icon
@@ -58,7 +58,8 @@ export class ShowTeam extends PureComponent {
                 </h4>
               )}
             </div>
-            <div className="showcasable-url">
+            {team.showcase_url && (
+              <div className="showcasable-url">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -67,7 +68,8 @@ export class ShowTeam extends PureComponent {
                 {team.showcase_url}
               </a>
             </div>
-          </>
+            )}
+            </>
         ) : (
           <>
             <Icon
@@ -81,6 +83,7 @@ export class ShowTeam extends PureComponent {
               onBlur={event => this.handleTeamChange(event, "name")}
               placeholder="Enter team name"
               name="name"
+              disabled={isPastEvent}
             />
             <Input
               className="showcasable-url"
@@ -88,6 +91,7 @@ export class ShowTeam extends PureComponent {
               defaultValue={team.showcase_url}
               onBlur={event => this.handleTeamChange(event, "showcase_url")}
               name="showcase_url"
+              disabled={isPastEvent}
             />
           </>
         )}
