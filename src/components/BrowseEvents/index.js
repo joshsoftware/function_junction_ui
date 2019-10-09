@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Row, Col, Empty, Skeleton } from 'antd';
+import { Row, Col, Empty, Skeleton, Tabs } from 'antd';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { fetchEventListInitiated } from 'ACTION/eventsAction';
@@ -9,14 +9,11 @@ import { getUser } from '../../actions/userDetailsAction';
 import './BrowseEvents.scss';
 import img1 from '../../5.png'
 import img2 from '../../6.png'
+import { getAscendingEvents, getDescendingEvents, getUpcomingEvents, getPastEvents } from '../../utils/util';
 
 const items=[
     <img src={img1} alt="Josh Software" width="100%"/>,
     <img src={img2} alt="Josh Software" width="100%"/>,
-    // // <img src={`${window.origin}/assets/img/6.png`} alt="1" width="100%"/>,
-    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//8b6c63/django/images/homepage/bg-desktop-generationdiy.jpg" alt="2" width="100%"/>,
-    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//054546/django/images/homepage/bg-desktop-wanderlust.jpg" alt="3" width="100%"/>,
-    // <img src="https://cdn.evbstatic.com/s3-build/perm_001//b41172/django/images/homepage/bg-desktop-rapoport.jpg" alt="4" width="100%"/>,
  ]
 
 class BrowseEvents extends PureComponent {
@@ -33,8 +30,8 @@ class BrowseEvents extends PureComponent {
       this.props.fetchEventListInitiated();
     }
 
-    getEventsCards = () => {
-        const { events: { data, isLoading } } = this.props;
+    getEventsCards = (eventList) => {
+        const { isLoading } = this.props;
         if (isLoading) {
             return (
                 <Row>
@@ -50,11 +47,11 @@ class BrowseEvents extends PureComponent {
                 </Row>
             )
         }
-        if (!data || data.length === 0) {
-            return <Empty description="No events found."/>;
+        if (!eventList || eventList.length === 0) {
+            return <Empty description="No event found."/>;
         }
-        return data.map(({id, title, description, ...rest}, index) => (
-            <Col md={8} key={id}>
+        return eventList.map(({id, title, description, ...rest}, index) => (
+            <Col xl={8} md={12} xs={24} key={id}>
                 <EventCard
                     title={title}
                     desc={description}
@@ -73,19 +70,35 @@ class BrowseEvents extends PureComponent {
                 <div className="slider">
                     <Slider items={items}/>
                 </div>
-                <div className="events">
-                    <Row>
-                      {this.getEventsCards()}
-                    </Row>
-                </div>
+                <Tabs defaultActiveKey="1">
+                    <Tabs.TabPane tab="Upcoming" key="1">
+                        <div className="events">
+                            <Row>
+                                {this.getEventsCards(this.props.upcomingEvents)}
+                            </Row>
+                        </div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Past" key="2">
+                        <div className="events">
+                            <Row>
+                                {this.getEventsCards(this.props.pastEvents)}
+                            </Row>
+                        </div>
+                    </Tabs.TabPane>
+                </Tabs>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-  events: state.events,
-})
+
+const mapStateToProps = ({events: { data: events, isLoading }}) => {
+    return {
+        upcomingEvents: getAscendingEvents(getUpcomingEvents(events)),
+        pastEvents: getDescendingEvents(getPastEvents(events)),
+        isLoading
+    }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   fetchEventListInitiated: () => dispatch(fetchEventListInitiated()),

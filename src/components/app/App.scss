@@ -10,3 +10,21 @@
     top: -5px;
     z-index: 11;
 }
+
+.ant-tabs-nav .ant-tabs-tab-active {
+    color: #1890ff;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.ant-tabs-tab {
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+.ant-tabs-nav-wrap {
+    background-color: #fafafa;
+    justify-content: center;
+    text-align: center;
+}
+.ant-tab {
+    background: #fafafa;
+}
