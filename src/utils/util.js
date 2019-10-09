@@ -116,6 +116,13 @@ export function getTeamMembers(payload, failedEmails) {
 
 export function getSortedEvents (events) {
   return events.sort((event1, event2) => {
-    return new Date(event1.start_date_time).getTime() - new Date(event2.start_date_time).getTime()
+    return new Date(event2.start_date_time).getTime() - new Date(event1.start_date_time).getTime()
   });
 }
+
+export const getAscendingEvents = (eventList) => eventList.sort((firstEvent, secondEvent) => new Date(firstEvent.start_date_time).getTime() - new Date(secondEvent.start_date_time).getTime());
+export const getDescendingEvents = (eventList) => eventList.sort((firstEvent, secondEvent) => new Date(secondEvent.start_date_time).getTime() - new Date(firstEvent.start_date_time).getTime());
+
+export const getUpcomingEvents = (eventList) => eventList.filter((item) => new Date(item.start_date_time).getTime() >= new Date().getTime())
+
+export const getPastEvents = (eventList) => eventList.filter((item) => new Date(item.start_date_time).getTime() < new Date().getTime())
