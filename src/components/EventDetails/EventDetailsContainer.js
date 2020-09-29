@@ -251,6 +251,14 @@ class EventDetailsContainer extends Component {
     this.props.registerIndividualParticipation(payLoad);
   };
 
+  handleRSVPCancel = () => {
+    const payload = {
+      eventId: this.props.event.id
+    };
+
+    this.props.cancelIndividualParticipation(payload);
+  };
+
   handleAcceptReject = (value, teamId, memberId) => {
     const payload = {
       eventId: this.props.event.id,
@@ -314,6 +322,7 @@ class EventDetailsContainer extends Component {
           <IndividualRegistration
             attending={is_attending}
             handleRSVPClick={this.handleRSVPClick}
+            handleRSVPCancel={this.handleRSVPCancel}
             isPastEvent={isPastEvent}
             loading={rsvpLoading}
             // error={rsvpError}
@@ -480,7 +489,9 @@ function mapDispatchToProps(dispatch) {
     registerIndividualParticipation: payload =>
       dispatch(registerParticipantInitiated(payload)),
     invitationAcceptRejectInitiated: payload =>
-      dispatch(invitationAcceptRejectInitiated(payload))
+      dispatch(invitationAcceptRejectInitiated(payload)),
+    cancelIndividualParticipation: payload =>
+      dispatch(cancelParticipationInitiated(payload))
   };
 }
 

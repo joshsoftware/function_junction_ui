@@ -15,12 +15,15 @@ import {
   REGISTER_PARTICIPANT_INITIATED,
   REGISTER_PARTICIPANT_SUCCESS,
   REGISTER_PARTICIPANT_FAIL,
+  CANCEL_PARTICIPATION_INITIATED,
+  CANCEL_PARTICIPATION_SUCCESS,
+  CANCEL_PARTICIPATION_FAIL,
   ADD_TEAM_MEMBER_SUCCESS,
   ADD_TEAM_MEMBER_FAIL,
   INVITATION_ACCEPT_REJECT_INITIATED,
   INVITATION_ACCEPT_REJECT_SUCCESS,
   INVITATION_ACCEPT_REJECT_FAIL
-} from '../utils/constants';
+} from "../utils/constants";
 
 export function fetchAttendeesInitiated(eventID) {
   return {
@@ -165,6 +168,27 @@ export function invitationAcceptRejectSuccess(payload) {
 export function invitationAcceptRejectFail(payload) {
   return {
     type: INVITATION_ACCEPT_REJECT_FAIL,
+    payload
+  };
+}
+
+export function cancelParticipationInitiated(payload) {
+  return {
+    type: CANCEL_PARTICIPATION_INITIATED,
+    payload
+  };
+}
+
+export function cancelParticipationSuccess(payload) {
+  return {
+    type: CANCEL_PARTICIPATION_SUCCESS,
+    payload
+  };
+}
+
+export function cancelParticipationFail(payload) {
+  return {
+    type: CANCEL_PARTICIPATION_FAIL,
     payload
   };
 }
