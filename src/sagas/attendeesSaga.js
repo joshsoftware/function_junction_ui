@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   fetchAttendeesSuccess,
   fetchAttendeesFailed,
@@ -13,8 +13,10 @@ import {
   registerParticipantSuccess,
   registerParticipantFail,
   invitationAcceptRejectSuccess,
-  invitationAcceptRejectFail
-} from 'ACTION/attendeesAction';
+  invitationAcceptRejectFail,
+  cancelParticipationSuccess,
+  cancelParticipationFail
+} from "ACTION/attendeesAction";
 import {
   FETCH_ATTENDEES_INITIATED,
   ADD_TEAM_MEMBER_INITIATED,
@@ -22,10 +24,14 @@ import {
   UPDATE_TEAM_INITIATED,
   DELETE_TEAM_INITIATED,
   REGISTER_PARTICIPANT_INITIATED,
+  CANCEL_PARTICIPATION_INITIATED,
   INVITATION_ACCEPT_REJECT_INITIATED
-} from 'UTILS/constants';
-import RequestHandler from '../HTTP';
-import { showFailureNotification, showSuccessNotification } from '../components/shared/Notification';
+} from "UTILS/constants";
+import RequestHandler from "../HTTP";
+import {
+  showFailureNotification,
+  showSuccessNotification
+} from "../components/shared/Notification";
 
 function* fetchAttendees(action) {
   try {
@@ -144,6 +150,19 @@ function* inviteAcceptReject(action) {
   }
 }
 
+function* cancelParticipation(action) {
+  try {
+    const response = yield call(() =>
+      RequestHandler.delete(`events/${action.payload.eventId}/rsvp`)
+    );
+    showSuccessNotification("Cancelled RSVP!");
+
+    yield put(cancelParticipationSuccess(response));
+  } catch (error) {
+    yield put(cancelParticipationFail(error));
+  }
+}
+
 export default function* attendeesSaga() {
   yield takeEvery(FETCH_ATTENDEES_INITIATED, fetchAttendees);
   yield takeEvery(ADD_TEAM_MEMBER_INITIATED, addTeamMember);
@@ -152,4 +171,5 @@ export default function* attendeesSaga() {
   yield takeEvery(DELETE_TEAM_INITIATED, deleteTeam);
   yield takeEvery(REGISTER_PARTICIPANT_INITIATED, registerParticipant);
   yield takeEvery(INVITATION_ACCEPT_REJECT_INITIATED, inviteAcceptReject);
+  yield takeLatest(CANCEL_PARTICIPATION_INITIATED, cancelParticipation);
 }
