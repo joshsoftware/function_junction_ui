@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, Popconfirm } from "antd";
 import ConfirmPopup from "./ConfirmPopup";
 const individualParticipation = ({
   rsvp,
@@ -25,7 +24,7 @@ const individualParticipation = ({
             disabled={isPastEvent}
             loading={loading}
             btnText="Cancel RSVP"
-            icon="close"
+            btnClass="btn-dangerous button ant-btn-round cancel-mt"
           />
         </div>
       );
@@ -40,6 +39,9 @@ const individualParticipation = ({
           loading={loading}
           btnText="RSVP"
           icon="check"
+          btnClass="button yesButton ant-btn-round"
+          type="ghost"
+          parentClass="yes-no-buttons-wrapper "
         />
       </div>
     </div>

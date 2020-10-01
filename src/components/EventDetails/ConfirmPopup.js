@@ -1,9 +1,18 @@
 import React from "react";
 import { Button, Popconfirm } from "antd";
 
-const ConfirmPopup = ({ handleConfirm, btnText, disabled, loading, icon }) => {
+const ConfirmPopup = ({
+  handleConfirm,
+  btnText,
+  disabled,
+  loading,
+  icon,
+  btnClass,
+  type,
+  parentClass
+}) => {
   return (
-    <div className="yes-no-buttons-wrapper">
+    <div className={parentClass}>
       <Popconfirm
         title="Are you sure？"
         okText="Yes"
@@ -11,10 +20,8 @@ const ConfirmPopup = ({ handleConfirm, btnText, disabled, loading, icon }) => {
         onConfirm={handleConfirm}
       >
         <Button
-          className={
-            disabled ? "disabled-b button yesButton" : "button yesButton"
-          }
-          type="ghost"
+          className={disabled ? `${btnClass} disabled-b` : btnClass}
+          type={type}
           icon={icon}
           block
           loading={loading}

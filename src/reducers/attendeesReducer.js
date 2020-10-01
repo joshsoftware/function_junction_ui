@@ -20,9 +20,12 @@ import {
   REGISTER_PARTICIPANT_FAIL,
   INVITATION_ACCEPT_REJECT_INITIATED,
   INVITATION_ACCEPT_REJECT_SUCCESS,
-  INVITATION_ACCEPT_REJECT_FAIL
-} from 'UTILS/constants';
-import { getTeamMembers } from '../utils/util';
+  INVITATION_ACCEPT_REJECT_FAIL,
+  CANCEL_PARTICIPATION_FAIL,
+  CANCEL_PARTICIPATION_INITIATED,
+  CANCEL_PARTICIPATION_SUCCESS
+} from "UTILS/constants";
+import { getTeamMembers } from "../utils/util";
 
 const initialState = {
   isLoading: false,
@@ -41,6 +44,12 @@ function addNewAttendees({members}) {
   };
   members && members.push({invitee: user, status: 'accepted'})
   return members || [];
+}
+
+function removeAttendee({ members }) {
+  const email = localStorage.getItem("email") || "";
+
+  return members.filter(m => m.invitee && m.invitee.email !== email);
 }
 
 export default function eventReducer(state = initialState, action) {
@@ -218,6 +227,26 @@ export default function eventReducer(state = initialState, action) {
         ...state,
         isInviteLoading: false,
         error: action.payload
+      };
+
+    case CANCEL_PARTICIPATION_INITIATED:
+      return {
+        ...state,
+        rsvpLoading: true
+      };
+    case CANCEL_PARTICIPATION_SUCCESS:
+      const newMembers = removeAttendee(state);
+      return {
+        ...state,
+        members: newMembers,
+        rsvpLoading: false,
+        rsvp: false
+      };
+    case CANCEL_PARTICIPATION_FAIL:
+      return {
+        ...state,
+        rsvpLoading: false,
+        rsvpError: action.payload
       };
 
     default:
