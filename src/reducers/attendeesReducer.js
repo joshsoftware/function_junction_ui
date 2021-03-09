@@ -21,8 +21,13 @@ import {
   INVITATION_ACCEPT_REJECT_INITIATED,
   INVITATION_ACCEPT_REJECT_SUCCESS,
   INVITATION_ACCEPT_REJECT_FAIL
-} from 'UTILS/constants';
-import { getTeamMembers } from '../utils/util';
+} from "UTILS/constants";
+import {
+  RSVP_REJECT,
+  RSVP_REJECT_FAIL,
+  RSVP_REJECT_SUCCESS
+} from "../utils/constants";
+import { getTeamMembers } from "../utils/util";
 
 const initialState = {
   isLoading: false,
@@ -33,13 +38,13 @@ const initialState = {
   rsvpError: null
 };
 
-function addNewAttendees({members}) {
+function addNewAttendees({ members }) {
   const user = {
-    email: localStorage.getItem('email') || '',
-    name: localStorage.getItem('name') || '',
-    user_id: localStorage.getItem('id') || '',
+    email: localStorage.getItem("email") || "",
+    name: localStorage.getItem("name") || "",
+    user_id: localStorage.getItem("id") || ""
   };
-  members && members.push({invitee: user, status: 'accepted'})
+  members && members.push({ invitee: user, status: "accepted" });
   return members || [];
 }
 
@@ -61,10 +66,10 @@ export default function eventReducer(state = initialState, action) {
         myTeam: action.payload.teams
           ? action.payload.teams.find(currentTeam => {
               return (
-                currentTeam.creator_id === localStorage.getItem('id') ||
+                currentTeam.creator_id === localStorage.getItem("id") ||
                 currentTeam.members.find(
                   member =>
-                    member.invitee.user_id === localStorage.getItem('id') &&
+                    member.invitee.user_id === localStorage.getItem("id") &&
                     member.status === MEMBER_INVITE_STATUS.ACCEPTED
                 )
               );
@@ -74,13 +79,21 @@ export default function eventReducer(state = initialState, action) {
           ? action.payload.teams.filter(currentTeam => {
               return currentTeam.members.find(
                 member =>
-                  member.invitee.user_id === localStorage.getItem('id') &&
+                  member.invitee.user_id === localStorage.getItem("id") &&
                   member.status === MEMBER_INVITE_STATUS.PENDING
               );
             })
           : [],
         error: null,
-        members: action.payload.teams ? action.payload.teams[0].members : [], 
+        members: action.payload.teams ? action.payload.teams[0].members : [],
+        rsvpCancelled: action.payload.teams
+          ? !!action.payload.teams[0].members.find(member => {
+              return (
+                member.invitee.user_id === localStorage.getItem("id") &&
+                member.status === MEMBER_INVITE_STATUS.REJECTED
+              );
+            })
+          : false
       };
 
     case FETCH_ATTENDEES_FAILED:
@@ -105,7 +118,7 @@ export default function eventReducer(state = initialState, action) {
         isLoading: false,
         error: null,
         myTeam: action.payload,
-        teams: cloneTeam,
+        teams: cloneTeam
       };
 
     case CREATE_TEAM_FAIL:
@@ -152,12 +165,14 @@ export default function eventReducer(state = initialState, action) {
     case DELETE_TEAM_INITIATED:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       };
 
     case DELETE_TEAM_SUCCESS:
       const newTeams = [...state.teams];
-      const deleteIndex = newTeams.findIndex(team => team.id === state.myTeam.id);
+      const deleteIndex = newTeams.findIndex(
+        team => team.id === state.myTeam.id
+      );
       newTeams.splice(deleteIndex, 1);
       return {
         ...state,
@@ -175,18 +190,18 @@ export default function eventReducer(state = initialState, action) {
       };
 
     case REGISTER_PARTICIPANT_INITIATED:
-    return {
-      ...state,
-      rsvpLoading: true,
-    }
+      return {
+        ...state,
+        rsvpLoading: true
+      };
     case REGISTER_PARTICIPANT_SUCCESS:
-    const updatedTeams = addNewAttendees(state);
-    return {
-      ...state,
-      members: updatedTeams,
-      rsvpLoading: false,
-      rsvp: true,
-    }
+      const updatedTeams = addNewAttendees(state);
+      return {
+        ...state,
+        members: updatedTeams,
+        rsvpLoading: false,
+        rsvp: true
+      };
     case REGISTER_PARTICIPANT_FAIL:
       return {
         ...state,
@@ -203,7 +218,7 @@ export default function eventReducer(state = initialState, action) {
         )
       };
       const memberIndex = team.members.findIndex(
-        member => member.invitee.user_id === localStorage.getItem('id')
+        member => member.invitee.user_id === localStorage.getItem("id")
       );
       team.members[memberIndex].status = action.payload.status;
       return {
@@ -220,6 +235,25 @@ export default function eventReducer(state = initialState, action) {
         error: action.payload
       };
 
+    case RSVP_REJECT:
+      return {
+        ...state,
+        rsvpLoading: true
+      };
+
+    case RSVP_REJECT_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        rsvpLoading: false
+      };
+
+    case RSVP_REJECT_FAIL:
+      return {
+        ...state,
+        rsvpLoading: false,
+        error: action.payload
+      };
     default:
       return state;
   }

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Row, Col, Skeleton, Button, Icon, Affix, Tooltip } from 'antd';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import AddToCalendar from 'react-add-to-calendar';
-import { fetchEventInitiated } from 'ACTION/eventAction';
+import React, { Component } from "react";
+import { Row, Col, Skeleton, Button, Icon, Affix, Tooltip } from "antd";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import moment from "moment";
+import AddToCalendar from "react-add-to-calendar";
+import { fetchEventInitiated } from "ACTION/eventAction";
 import {
   fetchAttendeesInitiated,
   addTeamMemberInitiated,
@@ -12,20 +12,21 @@ import {
   deleteTeamInitiated,
   updateTeamInitiated,
   registerParticipantInitiated,
-  invitationAcceptRejectInitiated
-} from 'ACTION/attendeesAction';
-import { getUser } from 'ACTION/userDetailsAction';
-import IndividualRegistration from './IndividualParticipation';
-import Invitations from './Team/Invitations';
-import EventDetails from './EventDetails';
-import './EventDetails.scss';
-import { ShowTeam } from './Team/Show';
-import CreateTeam from './Team/Create';
-import ShowMembers from './Members/Show';
-import Attendees from '../Attendees/';
-import { isObjectEmpty, isOldEvent } from '../../utils/util';
-import { MEMBER_INVITE_STATUS } from '../../utils/constants';
-import ErrorBoundary from '../shared/ErrorBoundary';
+  invitationAcceptRejectInitiated,
+  rsvpReject
+} from "ACTION/attendeesAction";
+import { getUser } from "ACTION/userDetailsAction";
+import IndividualRegistration from "./IndividualParticipation";
+import Invitations from "./Team/Invitations";
+import EventDetails from "./EventDetails";
+import "./EventDetails.scss";
+import { ShowTeam } from "./Team/Show";
+import CreateTeam from "./Team/Create";
+import ShowMembers from "./Members/Show";
+import Attendees from "../Attendees/";
+import { isObjectEmpty, isOldEvent } from "../../utils/util";
+import { MEMBER_INVITE_STATUS } from "../../utils/constants";
+import ErrorBoundary from "../shared/ErrorBoundary";
 
 const initialState = {
   loading: false,
@@ -45,9 +46,9 @@ class EventDetailsContainer extends Component {
     const { match } = this.props;
     getUser()
       .then(data => {
-        localStorage.setItem('name', data.name);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('id', data.id);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("id", data.id);
       })
       .catch(error => {
         console.log(error);
@@ -68,17 +69,19 @@ class EventDetailsContainer extends Component {
   getAddToCalender = (startTime, endTime, title, description, location) => {
     let eventDate = moment(startTime);
     let todaysDate = moment();
-    let diff = todaysDate.diff(eventDate, 'minute');
-    let endDiff = moment(endTime).diff(todaysDate, 'minute');
-    const isHappening = endDiff>=0;
+    let diff = todaysDate.diff(eventDate, "minute");
+    let endDiff = moment(endTime).diff(todaysDate, "minute");
+    const isHappening = endDiff >= 0;
     if (diff >= 0) {
       return (
         <Row>
           <Col span={3}>
-            <Icon type='calendar' />
+            <Icon type="calendar" />
           </Col>
           <Col span={21}>
-            <span style={{ color: isHappening? 'green' : 'red' }}>{isHappening? 'Happening...':'Past Event'}</span>
+            <span style={{ color: isHappening ? "green" : "red" }}>
+              {isHappening ? "Happening..." : "Past Event"}
+            </span>
           </Col>
         </Row>
       );
@@ -92,33 +95,32 @@ class EventDetailsContainer extends Component {
         endTime
       };
       let items = [
-        { google: 'Google Calender' },
-        { outlook: 'Outlook' },
-        { outlookcom: 'Outlook.com' },
-        { yahoo: 'Yahoo' },
-        { apple: 'Apple Calendar' }
+        { google: "Google Calender" },
+        { outlook: "Outlook" },
+        { outlookcom: "Outlook.com" },
+        { yahoo: "Yahoo" },
+        { apple: "Apple Calendar" }
       ];
 
       return (
         <Row>
           <Col span={3}>
-            <Icon type='calendar' />
+            <Icon type="calendar" />
           </Col>
           <Col span={21}>
             <AddToCalendar
               event={event}
-              buttonLabel='Add to calendar'
+              buttonLabel="Add to calendar"
               listItems={items}
             />
           </Col>
         </Row>
       );
     }
-   
   };
 
   getEventDetailsContainers = ({ loading, event, history }) => (
-    <div className='event-details-wrapper background'>
+    <div className="event-details-wrapper background">
       {!loading && this.getEventDetails(event, history)}
       {loading && <Skeleton active avatar paragraph={{ rows: 5 }} />}
     </div>
@@ -142,22 +144,24 @@ class EventDetailsContainer extends Component {
     if (!start.diff(end, "days")) {
       return (
         <Container>
-          <span>{`${start.format('ddd Do, MMM YYYY')}`}</span>
-          <span>{`${start.format('hh:mm a')} To ${end.format('hh:mm a')}`}</span>
+          <span>{`${start.format("ddd Do, MMM YYYY")}`}</span>
+          <span>{`${start.format("hh:mm a")} To ${end.format(
+            "hh:mm a"
+          )}`}</span>
         </Container>
       );
     }
     return (
       <Container>
         <Tooltip title="Start Date">
-          <span>{`${start.format('Do, MMM YYYY hh:mm a')}`}</span>
+          <span>{`${start.format("Do, MMM YYYY hh:mm a")}`}</span>
         </Tooltip>
         <Tooltip title="End Date">
-          <span>{`${end.format('Do, MMM YYYY hh:mm a')}`}</span>
+          <span>{`${end.format("Do, MMM YYYY hh:mm a")}`}</span>
         </Tooltip>
       </Container>
     );
-  }
+  };
 
   getEventLocation = ({
     start_date_time,
@@ -169,11 +173,9 @@ class EventDetailsContainer extends Component {
     <ErrorBoundary name="Event location">
       <Row>
         <Col span={3}>
-          <Icon type='clock-circle' />
+          <Icon type="clock-circle" />
         </Col>
-        <Col span={21}>
-          {this.getEventTime(start_date_time, end_date_time)}
-        </Col>
+        <Col span={21}>{this.getEventTime(start_date_time, end_date_time)}</Col>
       </Row>
       {this.getAddToCalender(
         start_date_time,
@@ -184,7 +186,7 @@ class EventDetailsContainer extends Component {
       )}
       <Row>
         <Col span={3}>
-          <Icon type='home' />
+          <Icon type="home" />
         </Col>
         <Col span={21}>{venue}</Col>
       </Row>
@@ -195,13 +197,13 @@ class EventDetailsContainer extends Component {
     const { event } = this.props;
     return (
       <>
-        <div className='location'>{this.getEventLocation(event)}</div>
+        <div className="location">{this.getEventLocation(event)}</div>
       </>
     );
   };
 
   getRightSidePanel = ({ loading }) => (
-    <div className='right-panel background'>
+    <div className="right-panel background">
       {!loading && this.getPanel()}
       {loading && <Skeleton active />}
     </div>
@@ -251,11 +253,18 @@ class EventDetailsContainer extends Component {
     this.props.registerIndividualParticipation(payLoad);
   };
 
+  handleRSVPReject = () => {
+    const payload = {
+      eventId: this.props.event.id
+    };
+    this.props.rejectRSVP(payload);
+  };
+
   handleAcceptReject = (value, teamId, memberId) => {
     const payload = {
       eventId: this.props.event.id,
       teamId,
-      userId: /* localStorage.getItem('user') */memberId,
+      userId: /* localStorage.getItem('user') */ memberId,
       value: value
         ? MEMBER_INVITE_STATUS.ACCEPTED
         : MEMBER_INVITE_STATUS.REJECTED
@@ -264,8 +273,10 @@ class EventDetailsContainer extends Component {
   };
 
   getTeamSize = () => {
-    const { event: { is_individual_participation, max_size, min_size } } = this.props;
-    if(is_individual_participation) {
+    const {
+      event: { is_individual_participation, max_size, min_size }
+    } = this.props;
+    if (is_individual_participation) {
       return null;
     }
     return (
@@ -280,7 +291,7 @@ class EventDetailsContainer extends Component {
         </div>
       </div>
     );
-  }
+  };
 
   renderTeam = () => {
     const {
@@ -293,7 +304,8 @@ class EventDetailsContainer extends Component {
       rsvp,
       myTeam,
       invitations,
-      isInviteLoading
+      isInviteLoading,
+      rsvpCancelled
     } = this.props;
     const {
       is_individual_participation,
@@ -318,6 +330,8 @@ class EventDetailsContainer extends Component {
             loading={rsvpLoading}
             // error={rsvpError}
             rsvp={rsvp}
+            handleRSVPReject={this.handleRSVPReject}
+            rsvpCancelled={rsvpCancelled}
           />
         </ErrorBoundary>
       );
@@ -328,13 +342,13 @@ class EventDetailsContainer extends Component {
         return (
           <>
             <ErrorBoundary name="Show Team Name">
-            <ShowTeam
-              team={myTeam}
-              isShowcasable={is_showcasable}
-              handleTeamChange={this.handleTeamChange}
-              handleDeleteTeam={this.handleDeleteTeam}
-              isPastEvent={isPastEvent}
-            />
+              <ShowTeam
+                team={myTeam}
+                isShowcasable={is_showcasable}
+                handleTeamChange={this.handleTeamChange}
+                handleDeleteTeam={this.handleDeleteTeam}
+                isPastEvent={isPastEvent}
+              />
             </ErrorBoundary>
             <ErrorBoundary name="Team Members">
               <ShowMembers
@@ -350,13 +364,15 @@ class EventDetailsContainer extends Component {
       if (invitations && invitations.length && !isPastEvent) {
         return (
           <ErrorBoundary name="Invitations">
-            <div className='view-invitations'>
-              <div className='animating-text'>You have been invited by someone to join their team.</div>
+            <div className="view-invitations">
+              <div className="animating-text">
+                You have been invited by someone to join their team.
+              </div>
               <Tooltip title=" Accept invitation to join another team or Reject to create your own team.">
                 <Button
-                  type='primary'
-                  name='viewInvites'
-                  className='view-invite-button'
+                  type="primary"
+                  name="viewInvites"
+                  className="view-invite-button"
                   onClick={this.toggleInvitationModal}
                 >
                   View Invites
@@ -370,13 +386,13 @@ class EventDetailsContainer extends Component {
                 handleAcceptReject={this.handleAcceptReject}
               />
             </div>
-            </ErrorBoundary>
+          </ErrorBoundary>
         );
       }
       return (
         <ErrorBoundary name="Create Team">
           <CreateTeam
-            action='Create'
+            action="Create"
             handleSubmit={this.handleCreateTeam}
             isPastEvent={isPastEvent}
             isShowcasable={is_showcasable}
@@ -389,18 +405,18 @@ class EventDetailsContainer extends Component {
   getBackgroundClass = () => {
     const { event } = this.props;
     if (!event) {
-      return 'background';
+      return "background";
     }
     if (isOldEvent(event.end_date_time)) {
-      return 'background disabled-b';
+      return "background disabled-b";
     }
-    return 'background';
+    return "background";
   };
 
   getEvent = props => (
-    <div className='event-details-container'>
+    <div className="event-details-container">
       <Row>
-        <Col lg={{span: 18}}  >
+        <Col lg={{ span: 18 }}>
           {this.getEventDetailsContainers(props)}
           <Row>
             <Col span={24}>
@@ -415,13 +431,13 @@ class EventDetailsContainer extends Component {
             </Col>
           </Row>
         </Col>
-        <Col lg={{span: 6}} >
+        <Col lg={{ span: 6 }}>
           <Affix offsetTop={68}>
             {this.getRightSidePanel(props)}
             <div className={this.getBackgroundClass()}>
-              <>            
+              <>
                 {this.renderTeam()}
-                {this.getTeamSize()}   
+                {this.getTeamSize()}
               </>
             </div>
           </Affix>
@@ -464,7 +480,8 @@ function mapStateToProp(state, ownProps) {
 
     rsvpLoading: state.attendees.rsvpLoading,
     rsvpError: state.attendees.rsvpError,
-    rsvp: state.attendees.rsvp
+    rsvp: state.attendees.rsvp,
+    rsvpCancelled: state.attendees.rsvpCancelled
   };
 }
 
@@ -480,7 +497,8 @@ function mapDispatchToProps(dispatch) {
     registerIndividualParticipation: payload =>
       dispatch(registerParticipantInitiated(payload)),
     invitationAcceptRejectInitiated: payload =>
-      dispatch(invitationAcceptRejectInitiated(payload))
+      dispatch(invitationAcceptRejectInitiated(payload)),
+    rejectRSVP: payload => dispatch(rsvpReject(payload))
   };
 }
 

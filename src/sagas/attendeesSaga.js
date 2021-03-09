@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from "redux-saga/effects";
 import {
   fetchAttendeesSuccess,
   fetchAttendeesFailed,
@@ -13,8 +13,10 @@ import {
   registerParticipantSuccess,
   registerParticipantFail,
   invitationAcceptRejectSuccess,
-  invitationAcceptRejectFail
-} from 'ACTION/attendeesAction';
+  invitationAcceptRejectFail,
+  rsvpRejectSuccess,
+  rsvpRejectFail
+} from "ACTION/attendeesAction";
 import {
   FETCH_ATTENDEES_INITIATED,
   ADD_TEAM_MEMBER_INITIATED,
@@ -22,10 +24,14 @@ import {
   UPDATE_TEAM_INITIATED,
   DELETE_TEAM_INITIATED,
   REGISTER_PARTICIPANT_INITIATED,
-  INVITATION_ACCEPT_REJECT_INITIATED
-} from 'UTILS/constants';
-import RequestHandler from '../HTTP';
-import { showFailureNotification, showSuccessNotification } from '../components/shared/Notification';
+  INVITATION_ACCEPT_REJECT_INITIATED,
+  RSVP_REJECT
+} from "UTILS/constants";
+import RequestHandler from "../HTTP";
+import {
+  showFailureNotification,
+  showSuccessNotification
+} from "../components/shared/Notification";
 
 function* fetchAttendees(action) {
   try {
@@ -50,9 +56,13 @@ function* addTeamMember(action) {
     );
     // const data = yield call(() => response.json.bind(response)());
     if (response.failed_emails && response.failed_emails.length) {
-      showFailureNotification(`Failed to send invitation to following user :\n${response.failed_emails.join(', ')}`);
+      showFailureNotification(
+        `Failed to send invitation to following user :\n${response.failed_emails.join(
+          ", "
+        )}`
+      );
     } else {
-      showSuccessNotification('Invitation Sent Successfully.');
+      showSuccessNotification("Invitation Sent Successfully.");
     }
     yield put(
       addTeamMemberSuccess({
@@ -72,7 +82,7 @@ function* createTeam(action) {
     const response = yield call(() =>
       RequestHandler.post(`events/${eventId}/teams`, action.payload)
     );
-    showSuccessNotification('Team Created Successfully.')
+    showSuccessNotification("Team Created Successfully.");
     yield put(createTeamSuccess(response.team));
   } catch (error) {
     yield put(createTeamFail(error));
@@ -87,7 +97,7 @@ function* updateTeam(action) {
         action.payload.team
       )
     );
-    showSuccessNotification('Update Team Successful.')
+    showSuccessNotification("Update Team Successful.");
     yield put(updateTeamSuccess(response.team));
   } catch (error) {
     yield put(updateTeamFail(error.message));
@@ -101,7 +111,7 @@ function* deleteTeam(action) {
         `events/${action.payload.eventId}/teams/${action.payload.teamId}`
       )
     );
-    showSuccessNotification('Delete Teams Successful.')
+    showSuccessNotification("Delete Teams Successful.");
     yield put(deleteTeamSuccess(response));
   } catch (error) {
     yield put(deleteTeamFail(error));
@@ -111,10 +121,10 @@ function* deleteTeam(action) {
 // RSVP
 function* registerParticipant(action) {
   try {
-    const response = yield call(() => RequestHandler.post(
-      `events/${action.payload.eventId}/rsvp`
-    ));
-    yield put(registerParticipantSuccess(response))
+    const response = yield call(() =>
+      RequestHandler.post(`events/${action.payload.eventId}/rsvp`)
+    );
+    yield put(registerParticipantSuccess(response));
   } catch (error) {
     yield put(registerParticipantFail(error));
   }
@@ -139,8 +149,19 @@ function* inviteAcceptReject(action) {
       })
     );
   } catch (error) {
-    console.log('PRinting error:', error);
+    console.log("PRinting error:", error);
     yield put(invitationAcceptRejectFail(error));
+  }
+}
+
+function* rsvpReject(action) {
+  try {
+    const response = yield call(() =>
+      RequestHandler.get(`events/${action.payload.eventId}/no`)
+    );
+    yield put(rsvpRejectSuccess({ rsvpCancelled: true }));
+  } catch (error) {
+    yield put(rsvpRejectFail(error));
   }
 }
 
@@ -152,4 +173,5 @@ export default function* attendeesSaga() {
   yield takeEvery(DELETE_TEAM_INITIATED, deleteTeam);
   yield takeEvery(REGISTER_PARTICIPANT_INITIATED, registerParticipant);
   yield takeEvery(INVITATION_ACCEPT_REJECT_INITIATED, inviteAcceptReject);
+  yield takeEvery(RSVP_REJECT, rsvpReject);
 }

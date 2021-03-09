@@ -19,8 +19,11 @@ import {
   ADD_TEAM_MEMBER_FAIL,
   INVITATION_ACCEPT_REJECT_INITIATED,
   INVITATION_ACCEPT_REJECT_SUCCESS,
-  INVITATION_ACCEPT_REJECT_FAIL
-} from '../utils/constants';
+  INVITATION_ACCEPT_REJECT_FAIL,
+  RSVP_REJECT,
+  RSVP_REJECT_SUCCESS,
+  RSVP_REJECT_FAIL
+} from "../utils/constants";
 
 export function fetchAttendeesInitiated(eventID) {
   return {
@@ -165,6 +168,26 @@ export function invitationAcceptRejectSuccess(payload) {
 export function invitationAcceptRejectFail(payload) {
   return {
     type: INVITATION_ACCEPT_REJECT_FAIL,
+    payload
+  };
+}
+
+export function rsvpReject(payload) {
+  return {
+    type: RSVP_REJECT,
+    payload
+  };
+}
+export function rsvpRejectSuccess(payload) {
+  return {
+    type: RSVP_REJECT_SUCCESS,
+    payload
+  };
+}
+
+export function rsvpRejectFail(payload) {
+  return {
+    type: RSVP_REJECT_FAIL,
     payload
   };
 }
